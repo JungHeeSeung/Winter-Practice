@@ -7,6 +7,7 @@
     public class PolygonPlaneVisualizer : NRTrackableBehaviour
     {
         public Material Material;
+        public Material trapMaterial;
         private MeshRenderer m_Renderer;
         private MeshFilter m_Filter;
         private MeshCollider m_Collider;

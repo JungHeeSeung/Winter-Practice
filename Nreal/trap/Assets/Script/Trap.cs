@@ -20,7 +20,9 @@ public class Trap : MonoBehaviour
         string info = null;
         for (int i =0; i<traps.Count; ++i)
         {
-            info += "Trap [" + i + "]" + " pos: " + traps[i].transform.position + "\n";
+            info += "Trap [" + i + "]" + " pos: " + traps[i].transform.position + 
+                "Rotation: " + traps[i].transform.rotation.eulerAngles + "\n";
+
         }
         text.text = info;
     }

@@ -10,13 +10,15 @@ public class GameManage : MonoBehaviour
 
     public Text text;
 
+    public float trapRange = 0.5f;
+
     private void Update()
     {
         for(int i=0; i<trapManger.traps.Count; ++i)
         {
             var trapPos = trapManger.GetTrapPos(i);
 
-            if(Equals(player.Pos, trapPos))
+            if (trapRange > Vector2.Distance(player.GetPlayerPosXZ(), trapPos))
             {
                 text.text = "Player Touched Trap [" + i + "]";
             }
@@ -25,8 +27,6 @@ public class GameManage : MonoBehaviour
                 text.text = "Player Touched Nothing";
             }
         }
-
-        text.text = "" + trapManger.traps.Count;
     }
 
 
