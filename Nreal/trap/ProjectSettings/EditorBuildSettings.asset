@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Trap.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Trap/StartScene.unity
+    guid: 508146482867ce84d8f2c4c85b0f9820
+  - enabled: 1
+    path: Assets/Scenes/Trap/MainScene.unity
+    guid: f29066a0e9c21ce47818d93f6fa1a0cc
   m_configObjects: {}

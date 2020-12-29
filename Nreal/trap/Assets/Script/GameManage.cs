@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManage : MonoBehaviour
 {
@@ -10,24 +11,31 @@ public class GameManage : MonoBehaviour
 
     public Text text;
 
-    public float trapRange = 0.5f;
-
-    private void Update()
+  
+    private void Awake()
     {
-        for(int i=0; i<trapManger.traps.Count; ++i)
-        {
-            var trapPos = trapManger.GetTrapPos(i);
-
-            if (trapRange > Vector2.Distance(player.GetPlayerPosXZ(), trapPos))
-            {
-                text.text = "Player Touched Trap [" + i + "]";
-            }
-            else
-            {
-                text.text = "Player Touched Nothing";
-            }
-        }
+        DontDestroyOnLoad(this);
     }
 
+    //private void Update()
+    //{
+    //    //for(int i=0; i<trapManger.traps.Count; ++i)
+    //    //{
+    //    //    var trapPos = trapManger.GetTrapPos(i);
+
+    //    //    if (trapRange > Vector2.Distance(player.GetPlayerPosXZ(), trapPos))
+    //    //    {
+
+    //    //    }
+
+    //    //}
+
+
+    //}
+
+    public void LoadMainScene()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
 
 }

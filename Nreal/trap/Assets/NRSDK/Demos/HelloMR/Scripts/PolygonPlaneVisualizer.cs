@@ -7,7 +7,6 @@
     public class PolygonPlaneVisualizer : NRTrackableBehaviour
     {
         public Material Material;
-        public Material trapMaterial;
         private MeshRenderer m_Renderer;
         private MeshFilter m_Filter;
         private MeshCollider m_Collider;
@@ -43,6 +42,7 @@
 #if UNITY_EDITOR
             var center = new Pose(transform.position, transform.rotation);
             GetBoundaryPolygon(transform, m_PosList);
+
 #else
             var center = Trackable.GetCenterPose();
             ((NRTrackablePlane)Trackable).GetBoundaryPolygon(m_PosList);

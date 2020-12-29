@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
+using UnityEngine.UI;
 
 namespace NRKernal.NRExamples
 {
@@ -24,6 +26,11 @@ namespace NRKernal.NRExamples
 
         public UnityEvent OnPlaneEvenet;
 
+        public float timer = 0f;
+        public float delay = 10f;
+
+        public Text text;
+
         void Update()
         {
             // If the player doesn't click the trigger button, we are done with this update.
@@ -46,11 +53,12 @@ namespace NRKernal.NRExamples
                         return;
                     }
 
+
                     // Instantiate Andy model at the hit point / compensate for the hit point rotation.
                     var newObj = Instantiate(AndyPlanePrefab, hitResult.point, Quaternion.identity, behaviour.transform);
-                    
+
                     OnPlaneEvenet.Invoke(newObj);
-                                      
+
                 }
             }
         }
