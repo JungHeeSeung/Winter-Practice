@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-using UnityEngine.UI;
 
 namespace NRKernal.NRExamples
 {
@@ -26,10 +25,7 @@ namespace NRKernal.NRExamples
 
         public UnityEvent OnPlaneEvenet;
 
-        public float timer = 0f;
-        public float delay = 10f;
-
-        public Text text;
+     
 
         void Update()
         {

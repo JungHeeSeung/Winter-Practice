@@ -1,2 +1,32 @@
 Base path: 'C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data', plugins path 'C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
+Cmd: preprocess
+  insize=1930 outsize=615 ok=1
+Cmd: preprocess
+  insize=1344 outsize=1508 ok=1
+Cmd: preprocess
+  insize=896 outsize=262 ok=1
+Cmd: preprocess
+  insize=840 outsize=229 ok=1
+Cmd: preprocess
+  insize=1153 outsize=315 ok=1
+Cmd: preprocess
+  insize=1665 outsize=708 ok=1
+Cmd: preprocess
+  insize=1513 outsize=557 ok=1
+Cmd: preprocess
+  insize=879 outsize=226 ok=1
+Cmd: preprocess
+  insize=2494 outsize=567 ok=1
+Cmd: preprocess
+  insize=2414 outsize=2035 ok=1
+Cmd: preprocess
+  insize=4395 outsize=2681 ok=1
+Cmd: preprocess
+  insize=665 outsize=665 ok=1
+Cmd: preprocess
+  insize=1205 outsize=418 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1276 outsize=690 kw= pd=UNITY_NO_DXT5nm UNITY_ENABLE_REFLECTION_BUFFERS UNITY_NO_CUBEMAP_ARRAY UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 SHADER_API_DESKTOP UNITY_HARDWARE_TIER3 UNITY_COLORSPACE_GAMMA UNITY_LIGHTMAP_DLDR_ENCODING ok=1
+Cmd: compileSnippet
+  api=4 type=1 insize=1276 outsize=518 kw= pd=UNITY_NO_DXT5nm UNITY_ENABLE_REFLECTION_BUFFERS UNITY_NO_CUBEMAP_ARRAY UNITY_NO_SCREENSPACE_SHADOWS UNITY_PBS_USE_BRDF2 SHADER_API_DESKTOP UNITY_HARDWARE_TIER3 UNITY_COLORSPACE_GAMMA UNITY_LIGHTMAP_DLDR_ENCODING ok=1
