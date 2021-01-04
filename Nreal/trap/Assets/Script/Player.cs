@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public Text text;
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         pos = this.transform.position;
-        text.text = "Pos:" + pos;
+        text.text = "Scene Name: " + SceneManager.GetActiveScene().name + "   Pos:" + pos;
     }
 
     public Vector2 GetPlayerPosXZ()

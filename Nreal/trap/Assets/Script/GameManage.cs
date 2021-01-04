@@ -11,6 +11,7 @@ public class GameManage : MonoBehaviour
     public Player player;
     public ExitManager exitManger;
 
+    private bool isRecord = false;
  
     public UnityEngine.Events.UnityEvent startCapture;
     public UnityEngine.Events.UnityEvent stopCapture;
@@ -33,19 +34,31 @@ public class GameManage : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
-    private void Update()
+    void StartAndStopRecord()
     {
-        if(NRInput.GetButtonDown(ControllerButton.APP) || (Input.GetKeyDown(KeyCode.Return)))
-        {
-            stopCapture.Invoke();
-        }
-        if (NRInput.GetButtonDown(ControllerButton.HOME) || (Input.GetKeyDown(KeyCode.Space)))
+        if (false == isRecord)
         {
             startCapture.Invoke();
         }
-        if(Input.touchCount >=2 )
+        else
         {
-            LoadMainScene();
+            stopCapture.Invoke();
+        }
+        isRecord = !isRecord;
+    }
+
+    private void Update()
+    {
+        if(NRInput.GetButtonDown(ControllerButton.APP) )
+        {
+            StartAndStopRecord();
+        }
+        if (NRInput.GetButtonDown(ControllerButton.HOME) )
+        {
+            if (SceneManager.GetActiveScene().name == "StartScene")
+            {
+                LoadMainScene();
+            }
         }
     }
 

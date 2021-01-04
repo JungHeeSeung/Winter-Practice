@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 using NRKernal;
 
 public class TrapMaker : MonoBehaviour
@@ -19,16 +20,16 @@ public class TrapMaker : MonoBehaviour
     public Text text;
 
     private int numOfTrap = 5;
-    private string debugTxt;
+
+    private int cnt = 0;
 
     private void Start()
     {
         gameManager = GameObject.FindWithTag("Manager");
         exitManager = gameManager.GetComponent<ExitManager>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
-
+         
         text = gameManager.transform.Find("Debug/DebugTxt3").GetComponent<Text>();
-
 
         MakeTrap();
     }
@@ -38,6 +39,8 @@ public class TrapMaker : MonoBehaviour
     public void ShowTrapPos()
     {
         string info = null;
+
+        text.text = "";
         for (int i = 0; i < traps.Count; ++i)
         {
             info += "Trap [" + i + "]" + " pos: " + traps[i].transform.position + "\n";
@@ -62,7 +65,14 @@ public class TrapMaker : MonoBehaviour
         //traps.Add(newTrap);
         //// 랜덤으로 만들기 전에 일단 고정 생성 해보자
 
+       
+        // 랜덤으로 함정 만들기
         int count = 0;
+        cnt += 1;
+
+        text.text = cnt + "만큼 반복됨\n"; 
+
+        traps.Clear();
 
         while (traps.Count < numOfTrap)
         {
@@ -81,8 +91,7 @@ public class TrapMaker : MonoBehaviour
             if (collision.Length == 0)  // 주변에 겹치는 게 없다면
             {
                 var newTrap = Instantiate(trapPrefab, spawnPos, Quaternion.identity);
-                newTrap.transform.Rotate(90, 0, 0);
-
+              
                 traps.Add(newTrap);
             }
             if(count > 1000)
@@ -90,11 +99,18 @@ public class TrapMaker : MonoBehaviour
                 return; 
             }
         }
+        // 랜덤으로 함정 만들기
+
+        ShowTrapPos();
     }
 
     private void Update()
     {
-        ShowTrapPos();
+        
+        if(Input.touchCount >= 1)
+        {
+            MakeTrap();
+        }
     }
 
 

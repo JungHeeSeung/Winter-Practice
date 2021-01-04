@@ -165,12 +165,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traps: []
-  text: {fileID: 0}
   gameManager: {fileID: 0}
   exitManager: {fileID: 0}
   player: {fileID: 0}
-  trapPrefab: {fileID: 8175753284099001118, guid: 391f296b40b3a1d4bb27151a270176e6,
+  trapPrefab: {fileID: 8840746762398104086, guid: 79b4c0561152b164f93e9a38f9a67b3c,
     type: 3}
+  text: {fileID: 0}
 --- !u!1 &541816903
 GameObject:
   m_ObjectHideFlags: 0

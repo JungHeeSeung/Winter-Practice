@@ -1,55 +1,37 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Consolation.Console
-    - Exit
-    - ExitManager
-    - GameManage
     - NRKernal.CanvasRaycastTarget
-    - NRKernal.ControllerAnchorsHelper
-    - NRKernal.ControllerTracker
     - NRKernal.FinchShiftControllerVisual
-    - NRKernal.GazeTracker
-    - NRKernal.MainThreadDispather
-    - NRKernal.MultiScreenController
-    - NRKernal.NRButton
     - NRKernal.NREmulatorController
     - NRKernal.NREmulatorHeadPose
     - NRKernal.NREmulatorManager
-    - NRKernal.NRExamples.AppManager
     - NRKernal.NRExamples.CameraSmoothFollow
-    - NRKernal.NRExamples.HelloMRController
     - NRKernal.NRExamples.NRHomeMenu
-    - NRKernal.NRExamples.PlaneDetector
-    - NRKernal.NRExamples.PolygonPlaneVisualizer
-    - NRKernal.NRExamples.VideoCapture2LocalExample
     - NRKernal.NRGlassesInitErrorTip
-    - NRKernal.NRHMDPoseTracker
-    - NRKernal.NRInput
-    - NRKernal.NRLaserReticle
-    - NRKernal.NRLaserVisual
-    - NRKernal.NRMultScrPointerRaycaster
-    - NRKernal.NRMultiDisplayManager
     - NRKernal.NRNotificationListener
     - NRKernal.NRNotificationWindow
     - NRKernal.NRPhoneControllerVisual
-    - NRKernal.NRPointerRaycaster
-    - NRKernal.NRSessionBehaviour
-    - NRKernal.NRSessionConfig
-    - NRKernal.NRTrackingImageDatabase
-    - NRKernal.NRVirtualDisplayer
     - NRKernal.NRVisualProfiler
     - NRKernal.NrealLightControllerVisual
     - NRKernal.Record.NRCameraInitializer
     - NRKernal.Record.NRCaptureBehaviour
     - NRKernal.Record.NRPreviewer
     - NRKernal.Record.NRRecordBehaviour
-    - Player
-    - ScrollingUVs_Layers
     - TrapMaker
-    - UI
+    Unity.2D.Tilemap.Editor.dll:
+    - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
+    - UnityEditor.Tilemaps.SceneViewGridManager
+    - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
@@ -76,39 +58,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 4
       Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 23
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 33
-      Script: {instanceID: 0}
-    - Class: 43
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 65
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 108
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 14746}
-    - Class: 114
-      Script: {instanceID: 15490}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    Assets/Scenes/Trap/StartScene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
     - Class: 20
       Script: {instanceID: 0}
     - Class: 21
@@ -123,11 +72,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 54
+    - Class: 49
       Script: {instanceID: 0}
     - Class: 64
-      Script: {instanceID: 0}
-    - Class: 65
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
@@ -136,114 +83,68 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 14534}
+      Script: {instanceID: 11294}
     - Class: 114
-      Script: {instanceID: 14598}
+      Script: {instanceID: 11296}
     - Class: 114
-      Script: {instanceID: 14678}
+      Script: {instanceID: 11298}
     - Class: 114
-      Script: {instanceID: 14694}
+      Script: {instanceID: 11300}
     - Class: 114
-      Script: {instanceID: 14724}
+      Script: {instanceID: 11566}
     - Class: 114
-      Script: {instanceID: 14776}
+      Script: {instanceID: 11640}
     - Class: 114
-      Script: {instanceID: 14852}
+      Script: {instanceID: 11772}
     - Class: 114
-      Script: {instanceID: 14882}
+      Script: {instanceID: 11806}
     - Class: 114
-      Script: {instanceID: 14970}
+      Script: {instanceID: 11982}
     - Class: 114
-      Script: {instanceID: 14982}
+      Script: {instanceID: 12006}
     - Class: 114
-      Script: {instanceID: 15016}
+      Script: {instanceID: 12042}
     - Class: 114
-      Script: {instanceID: 15040}
+      Script: {instanceID: 12044}
     - Class: 114
-      Script: {instanceID: 15180}
+      Script: {instanceID: 12074}
     - Class: 114
-      Script: {instanceID: 15190}
+      Script: {instanceID: 12294}
     - Class: 114
-      Script: {instanceID: 15212}
+      Script: {instanceID: 12378}
     - Class: 114
-      Script: {instanceID: 15232}
+      Script: {instanceID: 12414}
     - Class: 114
-      Script: {instanceID: 15248}
+      Script: {instanceID: 12508}
     - Class: 114
-      Script: {instanceID: 15250}
+      Script: {instanceID: 12558}
     - Class: 114
-      Script: {instanceID: 15308}
+      Script: {instanceID: 12764}
     - Class: 114
-      Script: {instanceID: 15564}
+      Script: {instanceID: 12800}
     - Class: 114
-      Script: {instanceID: 15572}
+      Script: {instanceID: 12818}
     - Class: 114
-      Script: {instanceID: 15586}
+      Script: {instanceID: 13124}
     - Class: 114
-      Script: {instanceID: 15588}
+      Script: {instanceID: 13260}
     - Class: 114
-      Script: {instanceID: 15592}
+      Script: {instanceID: 13302}
     - Class: 114
-      Script: {instanceID: 15608}
+      Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 15698}
+      Script: {instanceID: 13364}
     - Class: 114
-      Script: {instanceID: 15720}
+      Script: {instanceID: 13386}
     - Class: 114
-      Script: {instanceID: 15750}
+      Script: {instanceID: 13400}
     - Class: 114
-      Script: {instanceID: 15862}
+      Script: {instanceID: 13470}
     - Class: 114
-      Script: {instanceID: 15942}
+      Script: {instanceID: 13480}
     - Class: 114
-      Script: {instanceID: 16026}
-    - Class: 114
-      Script: {instanceID: 16046}
-    - Class: 114
-      Script: {instanceID: 16062}
-    - Class: 114
-      Script: {instanceID: 16146}
-    - Class: 114
-      Script: {instanceID: 16230}
-    - Class: 114
-      Script: {instanceID: 16280}
-    - Class: 114
-      Script: {instanceID: 16292}
-    - Class: 114
-      Script: {instanceID: 16316}
-    - Class: 114
-      Script: {instanceID: 16330}
-    - Class: 114
-      Script: {instanceID: 16426}
-    - Class: 114
-      Script: {instanceID: 16514}
-    - Class: 114
-      Script: {instanceID: 16528}
-    - Class: 114
-      Script: {instanceID: 16550}
-    - Class: 114
-      Script: {instanceID: 16564}
-    - Class: 114
-      Script: {instanceID: 16638}
-    - Class: 114
-      Script: {instanceID: 16648}
-    - Class: 114
-      Script: {instanceID: 16652}
-    - Class: 114
-      Script: {instanceID: 16656}
-    - Class: 114
-      Script: {instanceID: 16722}
-    - Class: 114
-      Script: {instanceID: 16724}
-    - Class: 114
-      Script: {instanceID: 16768}
-    - Class: 114
-      Script: {instanceID: 16770}
-    - Class: 114
-      Script: {instanceID: 16792}
+      Script: {instanceID: 13556}
     - Class: 115
-      Script: {instanceID: 0}
-    - Class: 120
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -268,10 +169,34 @@ ScriptsOnlyBuild:
   scriptHashData:
   - hash:
       serializedVersion: 2
+      Hash: 5f1752ed2092162f016c19510c28a8b9
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Button
+  - hash:
+      serializedVersion: 2
+      Hash: ae83e830e7a90c0aff918c4c2e520825
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: GraphicRaycaster
+  - hash:
+      serializedVersion: 2
+      Hash: aeb62f729c52c814dec86c47dcac1471
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: Text
+  - hash:
+      serializedVersion: 2
       Hash: 4bc4346a71a8df53a6b106f68ef3a190
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: CanvasScaler
+  - hash:
+      serializedVersion: 2
+      Hash: 7ab0e790220bdca831fdd886b339039d
+    assemblyName: UnityEngine.UI.dll
+    namespaceName: UnityEngine.UI
+    className: GridLayoutGroup
   - hash:
       serializedVersion: 2
       Hash: c42672c997f8be6b1aa86a927ebea785
@@ -376,12 +301,6 @@ ScriptsOnlyBuild:
     className: AutoRotate
   - hash:
       serializedVersion: 2
-      Hash: aeb62f729c52c814dec86c47dcac1471
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Text
-  - hash:
-      serializedVersion: 2
       Hash: 499fd23433e68e265d153aa6b95d0047
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -446,12 +365,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_InputField
-  - hash:
-      serializedVersion: 2
-      Hash: 7ab0e790220bdca831fdd886b339039d
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: GridLayoutGroup
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -712,6 +625,12 @@ ScriptsOnlyBuild:
     className: NRInputModule
   - hash:
       serializedVersion: 2
+      Hash: b3ab2106268377ffe25dd18ac23dca28
+    assemblyName: Unity.TextMeshPro.dll
+    namespaceName: TMPro
+    className: TMP_Asset
+  - hash:
+      serializedVersion: 2
       Hash: 8112f203b8e7eddae7c79ea89886ad5c
     assemblyName: Assembly-CSharp.dll
     namespaceName: NRKernal
@@ -814,12 +733,6 @@ ScriptsOnlyBuild:
     className: NRPhoneControllerVisual
   - hash:
       serializedVersion: 2
-      Hash: 5f1752ed2092162f016c19510c28a8b9
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: Button
-  - hash:
-      serializedVersion: 2
       Hash: f84d945e5e1ca985698660fc26e9657f
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -904,7 +817,7 @@ ScriptsOnlyBuild:
     className: NRAnchor
   - hash:
       serializedVersion: 2
-      Hash: 87ad3705a58f19c47136728d4a6e9c47
+      Hash: 0b72c8cb307a829156936043ce529602
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_Settings
@@ -964,7 +877,7 @@ ScriptsOnlyBuild:
     className: Exit
   - hash:
       serializedVersion: 2
-      Hash: 6939772cb3ce775a8e8d99f332534491
+      Hash: 9f34e9d6611e05c266d981bdb6171b6c
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
@@ -980,12 +893,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AudioTrack
-  - hash:
-      serializedVersion: 2
-      Hash: ae83e830e7a90c0aff918c4c2e520825
-    assemblyName: UnityEngine.UI.dll
-    namespaceName: UnityEngine.UI
-    className: GraphicRaycaster
   - hash:
       serializedVersion: 2
       Hash: 39d0850c624e363f9e62396f5d01a634
@@ -1096,7 +1003,7 @@ ScriptsOnlyBuild:
     className: NRHomeMenu
   - hash:
       serializedVersion: 2
-      Hash: 8cd1cbba27f3cb1717254f668e9e0d5a
+      Hash: db3e2c79e60b32ea01807a738249acd1
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshPro
@@ -1174,7 +1081,7 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 5dea360fb0b147724ac344e6f399c2f3
+      Hash: 8649814970b42d345b89944b862453cc
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_SubMesh
@@ -1280,8 +1187,187 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 33badda6b92c3e875f259be12aad6481
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Plexus
+  - hash:
+      serializedVersion: 2
+      Hash: afc5b93a7b192de2dcb3832fe35a5c7e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: U10PS_DissolveOverTime
+  - hash:
+      serializedVersion: 2
+      Hash: 6f6522516784e5c18d9ac1917fc0e318
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: U10PS_ExampleReview
+  - hash:
+      serializedVersion: 2
+      Hash: 4fb2059caa7215e1505829bdcfbf177c
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: U10PS_MouseRotation
+  - hash:
+      serializedVersion: 2
+      Hash: afc5b93a7b192de2dcb3832fe35a5c7e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: U10PS_SnowOverTime
+  - hash:
+      serializedVersion: 2
+      Hash: 71f7f12b8d0f4fd73590db8bcb6d453c
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: Bloom
+  - hash:
+      serializedVersion: 2
+      Hash: ac6acd886c54c48c599ab5fed5781ea7
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: AmbientOcclusion
+  - hash:
+      serializedVersion: 2
+      Hash: 726fcf7961cbb4108aa5be5e55b8c8bf
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: ColorGrading
+  - hash:
+      serializedVersion: 2
+      Hash: e82c0521cdfe8cb6a168ef7208a98d4a
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: Vignette
+  - hash:
+      serializedVersion: 2
+      Hash: 38bcb4d3f9a1812fd650f92e87a4cf64
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessProfile
+  - hash:
+      serializedVersion: 2
+      Hash: d5630f96bd5a6a6eed7e1754c3fb8703
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessVolume
+  - hash:
+      serializedVersion: 2
+      Hash: a1f19ad47d3094e235f21b74dfc423a8
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessLayer
+  - hash:
+      serializedVersion: 2
+      Hash: b13de7a0a457cb8e026d4237dc1b5797
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: LensDistortion
+  - hash:
+      serializedVersion: 2
+      Hash: af93f9c42e90877a9ba31e37adfd900c
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: MotionBlur
+  - hash:
+      serializedVersion: 2
+      Hash: f542c1afca5bb4022f91fdda19b8d622
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: DepthOfField
+  - hash:
+      serializedVersion: 2
+      Hash: 63d7b9b64a11859f416d72ba9a3c3fec
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: ScreenSpaceReflections
+  - hash:
+      serializedVersion: 2
+      Hash: 7e6ed836cbaa230e56d6a2bbae1b9bb5
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessEffectSettings
+  - hash:
+      serializedVersion: 2
+      Hash: 61b9d9b6f4b6a222dfea8b131b3d3227
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: ChromaticAberration
+  - hash:
+      serializedVersion: 2
+      Hash: d6fc8d3165070298511ec776ea575626
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessResources
+  - hash:
+      serializedVersion: 2
+      Hash: a53651ee3996fbba20dfe0fce02f0b23
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: AutoExposure
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Unity.ProGrids.dll
+    namespaceName: UnityEngine.ProGrids
+    className: IgnoreSnap
+  - hash:
+      serializedVersion: 2
+      Hash: 50c443b12ccc0b475183318b5088bcc5
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: PostProcessDebug
+  - hash:
+      serializedVersion: 2
+      Hash: d0987ce3e9092dbe0fa30d73f333fffa
+    assemblyName: Unity.Postprocessing.Runtime.dll
+    namespaceName: UnityEngine.Rendering.PostProcessing
+    className: Grain
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AdjustTimeScale
+  - hash:
+      serializedVersion: 2
+      Hash: 498da3fe40fc83ad3a4de930efd7d267
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ProximityActivate
+  - hash:
+      serializedVersion: 2
+      Hash: bb1f0eabf586c59f439d232ff8a83b3b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SimpleCharacterMotor
+  - hash:
+      serializedVersion: 2
+      Hash: 36808e0bceda2a44a651d2c754474786
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SpawnEffect
+  - hash:
+      serializedVersion: 2
+      Hash: 8860633d29a22ff64e02e18da3716cdf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: UnityTemplateProjects
+    className: SimpleCameraController
+  - hash:
+      serializedVersion: 2
+      Hash: 58e68364412c67eae2bdb4954be2dcc2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Readme
+  - hash:
+      serializedVersion: 2
+      Hash: 7b3216bb34fdd4bb3a48518a010216c7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RampAsset
   platform: 13
   scenePathNames:
-  - Assets/Scenes/Trap/StartScene.unity
   - Assets/Scenes/Trap/MainScene.unity
   playerPath: C:/Users/dnsoft/Desktop/Practice/Winter-Practice/Nreal/trap/trap.apk

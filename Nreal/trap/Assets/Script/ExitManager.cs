@@ -10,7 +10,7 @@ public class ExitManager : MonoBehaviour
     public Text text;
 
 
-    public void GetTrap(GameObject newObj)
+    public void GetExit(GameObject newObj)
     {
         if (exit != null)
         {

@@ -1717,4 +1717,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/SetFloor.unity
   - Assets/Scenes/gogo.unity
   - Assets/Scenes/GameOver.unity
-  playerPath: C:/Users/dnsoft/Desktop/Tutorial/Nreal/reference/shooting.apk
+  playerPath: C:/Users/dnsoft/Desktop/Practice/Winter-Practice/Nreal/reference/shooting.apk
