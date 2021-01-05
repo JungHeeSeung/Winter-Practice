@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
+    public GameObject prefab;
     public GameObject player;
+
+    public List<GameObject> traps;
 
     private void Update()
     {
-        //Vector3 target = (transform.position - player.transform.position).normalized;
+     
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            var newTrap = Instantiate(prefab, transform.position, Quaternion.identity);
+            //newTrap.transform.Rotate(90, 0, 0);
+            //newTrap.transform.LookAt(player.transform);
 
-        //float dot = Vector3.Dot(player.transform.forward, target);
+            traps.Add(newTrap);
+        }
 
-        //float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-
-        //transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        transform.LookAt(player.transform);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShowInfo();
+        }
+      
     }
+
+    void ShowInfo()
+    {
+        foreach(var obj in traps)
+        {
+            Debug.Log("Forward: " + obj.transform.forward);
+            Debug.Log("Up: " + obj.transform.up);
+        }
+    }
+
 }
 

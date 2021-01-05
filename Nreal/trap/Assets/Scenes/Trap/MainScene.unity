@@ -168,7 +168,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   exitManager: {fileID: 0}
   player: {fileID: 0}
-  trapPrefab: {fileID: 8840746762398104086, guid: 79b4c0561152b164f93e9a38f9a67b3c,
+  trapPrefab: {fileID: 2560620230618709313, guid: 6b51b4825d6114c4e8485b581e7bddd8,
     type: 3}
   text: {fileID: 0}
 --- !u!1 &541816903

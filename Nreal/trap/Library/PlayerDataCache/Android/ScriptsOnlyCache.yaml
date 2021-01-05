@@ -10,6 +10,7 @@ ScriptsOnlyBuild:
     - NRKernal.ControllerTracker
     - NRKernal.FinchShiftControllerVisual
     - NRKernal.GazeTracker
+    - NRKernal.MainThreadDispather
     - NRKernal.MultiScreenController
     - NRKernal.NRButton
     - NRKernal.NREmulatorController
@@ -44,6 +45,7 @@ ScriptsOnlyBuild:
     - NRKernal.Record.NRPreviewer
     - NRKernal.Record.NRRecordBehaviour
     - Player
+    - ScrollingUVs_Layers
     - TrapMaker
     - UI
     Unity.2D.Tilemap.Editor.dll:
@@ -103,6 +105,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11748}
     - Class: 114
       Script: {instanceID: 12644}
     - Class: 115
@@ -363,7 +367,7 @@ ScriptsOnlyBuild:
     className: PolygonPlaneVisualizer
   - hash:
       serializedVersion: 2
-      Hash: 83e769eee07fc231384c812eedbb8224
+      Hash: 1d7f28ea18446171f1c7aeb53e453c24
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TestScript

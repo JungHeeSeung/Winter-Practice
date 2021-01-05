@@ -19,21 +19,29 @@ public class TrapMaker : MonoBehaviour
 
     public Text text;
 
-    private int numOfTrap = 5;
 
-    private int cnt = 0;
+    private int numOfTrap = 5;
 
     private void Start()
     {
         gameManager = GameObject.FindWithTag("Manager");
+        text = gameManager.transform.Find("Debug/DebugTxt3").GetComponent<Text>();
+        if(gameManager != null)
+        {
+            text.text = "gameManager 찾음";
+        }
+
         exitManager = gameManager.GetComponent<ExitManager>();
         player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        if(player != null)
+        {
+            text.text += "Player 찾음";
+        }
          
-        text = gameManager.transform.Find("Debug/DebugTxt3").GetComponent<Text>();
 
+        text.text = "Scene 시작";
         MakeTrap();
     }
-
 
 
     public void ShowTrapPos()
@@ -65,12 +73,9 @@ public class TrapMaker : MonoBehaviour
         //traps.Add(newTrap);
         //// 랜덤으로 만들기 전에 일단 고정 생성 해보자
 
-       
+
         // 랜덤으로 함정 만들기
         int count = 0;
-        cnt += 1;
-
-        traps.Clear();
 
         while (traps.Count < numOfTrap)
         {
@@ -84,24 +89,28 @@ public class TrapMaker : MonoBehaviour
                 | (1 << LayerMask.NameToLayer("Portal")) | (1 << LayerMask.NameToLayer("Player"));
 
 
-            var bound = trapPrefab.GetComponent<MeshRenderer>().bounds.size;
-            var collision = Physics.OverlapSphere(spawnPos, bound.x, layer);
+            var collision = Physics.OverlapSphere(spawnPos, 0.5f, layer);
 
             if (collision.Length == 0)  // 주변에 겹치는 게 없다면
             {
                 var newTrap = Instantiate(trapPrefab, spawnPos, Quaternion.identity);
 
-                //newTrap.transform.LookAt(player.transform);
-              
+
                 traps.Add(newTrap);
             }
-            if(count > 1000)
-            { 
-                return; 
+            if (count > 1000)        // 무한 루프 방지용... 이 부분은 수정될 가능성이 큼
+            {
+                text.text = "으악 무한루프다";
+                break;
             }
         }
         // 랜덤으로 함정 만들기
 
+
+    }
+
+    private void Update()
+    {
         ShowTrapPos();
     }
 

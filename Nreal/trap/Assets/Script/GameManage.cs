@@ -53,7 +53,7 @@ public class GameManage : MonoBehaviour
         {
             StartAndStopRecord();
         }
-        if (NRInput.GetButtonDown(ControllerButton.HOME) )
+        if (NRInput.GetButtonDown(ControllerButton.HOME) || (Input.GetKeyDown(KeyCode.Return)) )
         {
             if (SceneManager.GetActiveScene().name == "StartScene")
             {
