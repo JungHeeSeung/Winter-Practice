@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         pos = this.transform.position;
-        text.text = "Scene Name: " + SceneManager.GetActiveScene().name + "   Pos:" + pos;
+        text.text = "Scene Name: " + SceneManager.GetActiveScene().name + "\nPos:" + pos;
     }
 
     public Vector2 GetPlayerPosXZ()

@@ -76,10 +76,10 @@ public class TrapMaker : MonoBehaviour
         {
             count++;
             var ranPosX = Random.Range(exitPos.x, playerPos.x);
-            var ranPosY = Random.Range(exitPos.y, playerPos.y);
+            //var ranPosY = Random.Range(exitPos.y, playerPos.y);
             var ranPosZ = Random.Range(exitPos.z, playerPos.z);
 
-            Vector3 spawnPos = new Vector3(ranPosX, ranPosY, ranPosZ);
+            Vector3 spawnPos = new Vector3(ranPosX, exitPos.y, ranPosZ);
             var layer = (1 << LayerMask.NameToLayer("Trap"))
                 | (1 << LayerMask.NameToLayer("Portal")) | (1 << LayerMask.NameToLayer("Player"));
 
