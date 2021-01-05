@@ -70,17 +70,16 @@ public class TrapMaker : MonoBehaviour
         int count = 0;
         cnt += 1;
 
-        text.text = cnt + "만큼 반복됨\n"; 
-
         traps.Clear();
 
         while (traps.Count < numOfTrap)
         {
             count++;
             var ranPosX = Random.Range(exitPos.x, playerPos.x);
+            var ranPosY = Random.Range(exitPos.y, playerPos.y);
             var ranPosZ = Random.Range(exitPos.z, playerPos.z);
 
-            Vector3 spawnPos = new Vector3(ranPosX, exitPos.y, ranPosZ);
+            Vector3 spawnPos = new Vector3(ranPosX, ranPosY, ranPosZ);
             var layer = (1 << LayerMask.NameToLayer("Trap"))
                 | (1 << LayerMask.NameToLayer("Portal")) | (1 << LayerMask.NameToLayer("Player"));
 
@@ -91,6 +90,8 @@ public class TrapMaker : MonoBehaviour
             if (collision.Length == 0)  // 주변에 겹치는 게 없다면
             {
                 var newTrap = Instantiate(trapPrefab, spawnPos, Quaternion.identity);
+
+                //newTrap.transform.LookAt(player.transform);
               
                 traps.Add(newTrap);
             }
@@ -102,15 +103,6 @@ public class TrapMaker : MonoBehaviour
         // 랜덤으로 함정 만들기
 
         ShowTrapPos();
-    }
-
-    private void Update()
-    {
-        
-        if(Input.touchCount >= 1)
-        {
-            MakeTrap();
-        }
     }
 
 
