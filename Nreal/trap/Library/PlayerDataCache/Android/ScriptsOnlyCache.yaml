@@ -2,7 +2,6 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Consolation.Console
-    - Exit
     - ExitManager
     - GameManage
     - NRKernal.CanvasRaycastTarget
@@ -46,6 +45,7 @@ ScriptsOnlyBuild:
     - NRKernal.Record.NRRecordBehaviour
     - Player
     - ScrollingUVs_Layers
+    - TrapDestroy
     - TrapMaker
     - UI
     Unity.2D.Tilemap.Editor.dll:
@@ -106,9 +106,11 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11748}
+      Script: {instanceID: 11750}
     - Class: 114
-      Script: {instanceID: 12644}
+      Script: {instanceID: 12646}
+    - Class: 114
+      Script: {instanceID: 49108}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -161,111 +163,109 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11458}
     - Class: 114
-      Script: {instanceID: 11566}
+      Script: {instanceID: 11568}
     - Class: 114
-      Script: {instanceID: 11666}
+      Script: {instanceID: 11668}
     - Class: 114
-      Script: {instanceID: 11692}
+      Script: {instanceID: 11694}
     - Class: 114
-      Script: {instanceID: 11780}
+      Script: {instanceID: 11782}
     - Class: 114
-      Script: {instanceID: 11866}
+      Script: {instanceID: 11868}
     - Class: 114
-      Script: {instanceID: 11902}
+      Script: {instanceID: 11904}
     - Class: 114
-      Script: {instanceID: 12016}
+      Script: {instanceID: 12018}
     - Class: 114
-      Script: {instanceID: 12028}
+      Script: {instanceID: 12030}
     - Class: 114
-      Script: {instanceID: 12066}
+      Script: {instanceID: 12068}
     - Class: 114
-      Script: {instanceID: 12094}
+      Script: {instanceID: 12096}
     - Class: 114
-      Script: {instanceID: 12264}
+      Script: {instanceID: 12266}
     - Class: 114
-      Script: {instanceID: 12274}
+      Script: {instanceID: 12276}
     - Class: 114
-      Script: {instanceID: 12300}
+      Script: {instanceID: 12302}
     - Class: 114
-      Script: {instanceID: 12324}
-    - Class: 114
-      Script: {instanceID: 12342}
+      Script: {instanceID: 12326}
     - Class: 114
       Script: {instanceID: 12344}
     - Class: 114
-      Script: {instanceID: 12382}
+      Script: {instanceID: 12346}
     - Class: 114
-      Script: {instanceID: 12412}
+      Script: {instanceID: 12384}
     - Class: 114
-      Script: {instanceID: 12740}
+      Script: {instanceID: 12414}
     - Class: 114
-      Script: {instanceID: 12748}
+      Script: {instanceID: 12742}
     - Class: 114
-      Script: {instanceID: 12780}
+      Script: {instanceID: 12750}
     - Class: 114
-      Script: {instanceID: 12784}
+      Script: {instanceID: 12782}
     - Class: 114
-      Script: {instanceID: 12792}
+      Script: {instanceID: 12786}
     - Class: 114
-      Script: {instanceID: 12808}
+      Script: {instanceID: 12794}
     - Class: 114
-      Script: {instanceID: 12922}
+      Script: {instanceID: 12810}
     - Class: 114
-      Script: {instanceID: 12976}
+      Script: {instanceID: 12924}
     - Class: 114
-      Script: {instanceID: 13122}
+      Script: {instanceID: 12978}
     - Class: 114
-      Script: {instanceID: 13226}
+      Script: {instanceID: 13124}
     - Class: 114
-      Script: {instanceID: 13266}
+      Script: {instanceID: 13228}
     - Class: 114
-      Script: {instanceID: 13286}
+      Script: {instanceID: 13268}
     - Class: 114
-      Script: {instanceID: 13322}
+      Script: {instanceID: 13288}
     - Class: 114
-      Script: {instanceID: 13348}
+      Script: {instanceID: 13324}
     - Class: 114
-      Script: {instanceID: 13368}
+      Script: {instanceID: 13350}
     - Class: 114
-      Script: {instanceID: 13466}
+      Script: {instanceID: 13370}
     - Class: 114
-      Script: {instanceID: 13586}
+      Script: {instanceID: 13588}
     - Class: 114
-      Script: {instanceID: 13660}
+      Script: {instanceID: 13662}
     - Class: 114
-      Script: {instanceID: 13690}
+      Script: {instanceID: 13692}
     - Class: 114
-      Script: {instanceID: 13710}
+      Script: {instanceID: 13712}
     - Class: 114
-      Script: {instanceID: 13822}
+      Script: {instanceID: 13824}
     - Class: 114
-      Script: {instanceID: 13874}
+      Script: {instanceID: 13876}
     - Class: 114
-      Script: {instanceID: 13928}
+      Script: {instanceID: 13930}
     - Class: 114
-      Script: {instanceID: 13944}
+      Script: {instanceID: 13946}
     - Class: 114
-      Script: {instanceID: 13968}
+      Script: {instanceID: 13970}
     - Class: 114
-      Script: {instanceID: 13984}
+      Script: {instanceID: 13986}
     - Class: 114
-      Script: {instanceID: 14066}
+      Script: {instanceID: 14068}
     - Class: 114
-      Script: {instanceID: 14076}
+      Script: {instanceID: 14078}
     - Class: 114
-      Script: {instanceID: 14082}
+      Script: {instanceID: 14084}
     - Class: 114
-      Script: {instanceID: 14086}
-    - Class: 114
-      Script: {instanceID: 14164}
+      Script: {instanceID: 14088}
     - Class: 114
       Script: {instanceID: 14166}
     - Class: 114
-      Script: {instanceID: 14222}
+      Script: {instanceID: 14168}
     - Class: 114
-      Script: {instanceID: 14226}
+      Script: {instanceID: 14224}
     - Class: 114
-      Script: {instanceID: 14260}
+      Script: {instanceID: 14228}
+    - Class: 114
+      Script: {instanceID: 14262}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -367,7 +367,7 @@ ScriptsOnlyBuild:
     className: PolygonPlaneVisualizer
   - hash:
       serializedVersion: 2
-      Hash: 1d7f28ea18446171f1c7aeb53e453c24
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TestScript
@@ -433,7 +433,7 @@ ScriptsOnlyBuild:
     className: GroupTrack
   - hash:
       serializedVersion: 2
-      Hash: 5f4bdc99cfc912dd811e3f0768f01a24
+      Hash: 6a3f0fbf4a5f5dfec9de52e7b9691518
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManage
@@ -1093,7 +1093,7 @@ ScriptsOnlyBuild:
     className: Console
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 4ce15e99c635d2567873d27549d1f16f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: UI
@@ -1139,12 +1139,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: NRKernal
     className: NRKernalUpdater
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Exit
   - hash:
       serializedVersion: 2
       Hash: 58e68364412c67eae2bdb4954be2dcc2
@@ -1363,7 +1357,7 @@ ScriptsOnlyBuild:
     className: NRMultiDisplayManager
   - hash:
       serializedVersion: 2
-      Hash: 33d02fcfb1fcc9d4a8276873c71d3ff4
+      Hash: 242a50e1e14eacfc1ec2119b2b733e56
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -1493,6 +1487,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 2ad797ebe98b9d520ae56625e7e3e058
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: NewBehaviourScript
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TrapDestroy
   platform: 13
   scenePathNames:
   - Assets/Scenes/Trap/StartScene.unity

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+
 public class Player : MonoBehaviour
 {
     public Text text;
 
     public Vector3 pos;
 
-
+    public UnityEvent Victory;
+    public UnityEvent Dead;
 
     void Update()
     {
@@ -17,10 +20,18 @@ public class Player : MonoBehaviour
         text.text = "Scene Name: " + SceneManager.GetActiveScene().name + "\nPos:" + pos;
     }
 
-    public Vector2 GetPlayerPosXZ()
-    {
-        var newPos = new Vector2(pos.x, pos.z);
 
-        return newPos;
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Portal"))
+        {
+            Victory.Invoke();
+        }    
+        if (other.gameObject.layer == LayerMask.NameToLayer("Trap"))
+        {
+            Dead.Invoke();
+        }
     }
+
+  
 }

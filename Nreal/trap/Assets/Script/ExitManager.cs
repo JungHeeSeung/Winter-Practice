@@ -24,7 +24,6 @@ public class ExitManager : MonoBehaviour
         string info = null;
 
         info += "Exit pos: " + exit.transform.position + " ";
-        info += exit.GetComponent<Exit>().debugTxt + "\n";
         text.text = info;
     }
 

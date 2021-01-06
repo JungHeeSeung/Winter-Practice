@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 433072873}
   - component: {fileID: 433072874}
+  - component: {fileID: 433072875}
   m_Layer: 0
   m_Name: TrapManager
   m_TagString: Untagged
@@ -171,6 +172,18 @@ MonoBehaviour:
   trapPrefab: {fileID: 2560620230618709313, guid: 6b51b4825d6114c4e8485b581e7bddd8,
     type: 3}
   text: {fileID: 0}
+--- !u!114 &433072875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433072872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09474b3076f85214a86ee48152a4d258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &541816903
 GameObject:
   m_ObjectHideFlags: 0

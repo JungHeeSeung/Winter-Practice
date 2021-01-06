@@ -334,7 +334,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press App Button to Start
+  m_Text: '
+
+'
 --- !u!222 &134022004
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -359,7 +361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &201584437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7649aa687517441b48df4d0d162a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 134022003}
 --- !u!4 &201584438
 Transform:
   m_ObjectHideFlags: 0
@@ -837,6 +840,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ui: {fileID: 201584437}
 --- !u!114 &1114040585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1327,6 +1331,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 2048619263}
   pos: {x: 0, y: 0, z: 0}
+  Victory:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1114040584}
+        m_MethodName: PlayerVictory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Dead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1114040584}
+        m_MethodName: PlayerDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &2065554013
 Rigidbody:
   m_ObjectHideFlags: 0
