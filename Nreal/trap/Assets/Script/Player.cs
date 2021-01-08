@@ -23,12 +23,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+       
         if(other.gameObject.layer == LayerMask.NameToLayer("Portal"))
         {
+            Debug.Log("Portal하고 충돌함");
             Victory.Invoke();
         }    
         if (other.gameObject.layer == LayerMask.NameToLayer("Trap"))
         {
+            Debug.Log("Trap하고 충돌함");
             Dead.Invoke();
         }
     }

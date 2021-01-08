@@ -7,6 +7,7 @@ public class UI : MonoBehaviour
 {
     public Text text;
 
+
     // Update is called once per frame
     void Update()
     {

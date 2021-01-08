@@ -23,6 +23,7 @@ public class GameManage : MonoBehaviour
 
     private void Awake()
     {
+        // 중복검사
         var objs = FindObjectsOfType<GameManage>();
 
         if (objs.Length == 1)
@@ -54,6 +55,8 @@ public class GameManage : MonoBehaviour
         // 다시 시작 화면으로 돌아오면 활성화 시켜준다
         pd.enabled = true;
         helloMR.enabled = true;
+
+        ui.gameObject.SetActive(false);
 
         SceneManager.LoadScene("StartScene");
     }
@@ -92,11 +95,28 @@ public class GameManage : MonoBehaviour
 
     public void PlayerVictory()
     {
+        if (false == ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
+        }
         ui.text.text = "Victory!";
+        StartCoroutine(ResetUiText());
     }
 
     public void PlayerDead()
     {
+        if (false == ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
+        }
         ui.text.text = "You Died";
+        StartCoroutine(ResetUiText());
+    }
+
+
+    IEnumerator ResetUiText()
+    {
+        yield return new WaitForSeconds(3f);
+        ui.text.text = "";
     }
 }
