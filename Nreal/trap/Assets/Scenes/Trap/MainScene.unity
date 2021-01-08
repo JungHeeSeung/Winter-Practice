@@ -171,6 +171,8 @@ MonoBehaviour:
   player: {fileID: 0}
   trapPrefab: {fileID: 2560620230618709313, guid: 6b51b4825d6114c4e8485b581e7bddd8,
     type: 3}
+  bigPrefab: {fileID: 2621487286088845699, guid: 30affa51b1539c14f91a4263beb05ab3,
+    type: 3}
   text: {fileID: 0}
 --- !u!114 &433072875
 MonoBehaviour:

@@ -24,7 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
                          + new Vector3(Random.Range(-size / 2, size / 2),   /* 그리고 랜덤 벡터값을 더하는데 두 점 절반지점 거리까지만 더한다 */
                            0,                                                   /* 그러면 사각형 범위 안에서 점을 랜덤으로 구할 수 있다 */
                            Random.Range(-size / 2, size / 2));
-        //Vector3 spawnPos = new Vector3(Random.Range(player.transform.position.x, exit.transform.position.x),
+        //Vector3 spawn Pos = new Vector3(Random.Range(player.transform.position.x, exit.transform.position.x),
         //   exit.transform.position.y,
         //   Random.Range(player.transform.position.z, exit.transform.position.z));
 
@@ -49,6 +49,11 @@ public class NewBehaviourScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
+           foreach(var obj in objs)
+            {
+                Destroy(obj);
+            }
+
             objs.Clear();
         }
     }

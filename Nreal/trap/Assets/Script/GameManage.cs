@@ -55,6 +55,9 @@ public class GameManage : MonoBehaviour
         pd.enabled = true;
         helloMR.enabled = true;
 
+
+        ui.gameObject.SetActive(false);
+
         SceneManager.LoadScene("StartScene");
     }
 
@@ -92,11 +95,30 @@ public class GameManage : MonoBehaviour
 
     public void PlayerVictory()
     {
-        ui.text.text = "Victory!";
+        if (false == ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
+        }
+        ui.text.text = "Victory!" ;
+
+        StartCoroutine(ResetText());
     }
 
     public void PlayerDead()
     {
+        if (false == ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
+        }
         ui.text.text = "You Died";
+
+        StartCoroutine(ResetText());
     }
+
+    IEnumerator ResetText()
+    {
+        yield return new WaitForSeconds(3f);
+        ui.text.text = "";
+    }
+
 }

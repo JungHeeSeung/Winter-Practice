@@ -17,6 +17,8 @@ public class TrapMaker : MonoBehaviour
 
     public GameObject trapPrefab;
 
+    public GameObject bigPrefab;
+
     public Text text;
 
     private int numOfTrap =7;
@@ -48,7 +50,7 @@ public class TrapMaker : MonoBehaviour
 
         // 랜덤으로 함정 만들기
         int count = 0;
-
+      
         while (traps.Count < numOfTrap)
         {
             count++;
@@ -82,5 +84,10 @@ public class TrapMaker : MonoBehaviour
         }
         ShowTrapPos();
         // 랜덤으로 함정 만들기
+
+        var newPos = (playerPos + exitPos) / 2;
+
+        Instantiate(bigPrefab, new Vector3(newPos.x, playerPos.y - 10f, newPos.z)
+            , Quaternion.identity);
     }
 }

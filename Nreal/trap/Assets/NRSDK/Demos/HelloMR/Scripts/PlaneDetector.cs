@@ -6,12 +6,10 @@ namespace NRKernal.NRExamples
 {
     [HelpURL("https://developer.nreal.ai/develop/discover/introduction-nrsdk")]
 
-
     public class PlaneDetector : MonoBehaviour
     {
         public GameObject DetectedPlanePrefab;
 
-    
         // A list to hold new planes NRSDK began tracking in the current frame. This object is used across
         // the application to avoid per-frame allocations.
         private List<NRTrackablePlane> m_NewPlanes = new List<NRTrackablePlane>();
@@ -25,6 +23,7 @@ namespace NRKernal.NRExamples
                 // the origin with an identity rotation since the mesh for our prefab is updated in Unity World coordinates.
                 GameObject planeObject = Instantiate(DetectedPlanePrefab, Vector3.zero, Quaternion.identity, transform);
                 planeObject.GetComponent<NRTrackableBehaviour>().Initialize(m_NewPlanes[i]);
+
             }
         }
     }
