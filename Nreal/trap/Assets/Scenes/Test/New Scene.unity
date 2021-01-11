@@ -162,7 +162,7 @@ Camera:
   m_GameObject: {fileID: 1154402556}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 3
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -204,7 +204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154402556}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.12, y: 0, z: 24.9}
+  m_LocalPosition: {x: 0.12, y: 0, z: 44.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1526783973}
@@ -429,6 +429,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomLava (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2621487286088845699, guid: 30affa51b1539c14f91a4263beb05ab3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4284302344875913613, guid: 30affa51b1539c14f91a4263beb05ab3,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -441,13 +446,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.3
+      value: -28.9
       objectReference: {fileID: 0}
     - target: {fileID: 5390771680261307060, guid: 30affa51b1539c14f91a4263beb05ab3,
         type: 3}
@@ -557,6 +577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: teleporter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3100650800408599792, guid: 5b1f40118deba3448af1d8cc29ea1be4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b1f40118deba3448af1d8cc29ea1be4, type: 3}

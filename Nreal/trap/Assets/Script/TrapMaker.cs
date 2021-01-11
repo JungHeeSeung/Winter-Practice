@@ -81,13 +81,14 @@ public class TrapMaker : MonoBehaviour
             {
                 break;
             }
-        }
+        }  
         ShowTrapPos();
         // 랜덤으로 함정 만들기
 
+        // 바닥에 큰 용암 지대 생성 스케일은 맞춰봐야겠다
         var newPos = (playerPos + exitPos) / 2;
 
-        Instantiate(bigPrefab, new Vector3(newPos.x, playerPos.y - 10f, newPos.z)
+        Instantiate(bigPrefab, new Vector3(newPos.x, playerPos.y - 50f, newPos.z)
             , Quaternion.identity);
     }
 }
