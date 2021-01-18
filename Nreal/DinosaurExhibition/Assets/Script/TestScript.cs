@@ -48,6 +48,13 @@ public class TestScript : MonoBehaviour
             oldPos = newPos;
 
         }
+
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log(transform.localScale);
+            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
+            Debug.Log(transform.localScale);
+        }
     }
 
     private void OnDrawGizmos()

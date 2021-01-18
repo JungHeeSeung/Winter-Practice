@@ -12,7 +12,7 @@ public class ObjController : MonoBehaviour
     private Touch OldTouch;
 
     public float rotSpd = 0.1f;
-   
+
     // Update is called once per frame
     void Update()
     {
@@ -27,14 +27,17 @@ public class ObjController : MonoBehaviour
             {
                 if (TargetVal.Image != null)
                 {
-                    if (Input.touchCount > 0)
+                    // Rotation & Single Touch //
+                    if (Input.touchCount == 1)
                     {
                         Touch touch = Input.GetTouch(0);
+
+
                         if (touch.phase == TouchPhase.Began)
                         {
                             OldTouch = touch;
                         }
-                        else if(touch.phase == TouchPhase.Moved)
+                        else if (touch.phase == TouchPhase.Moved)
                         {
 
                             float deltaX = OldTouch.position.x - touch.position.x;
@@ -42,27 +45,50 @@ public class ObjController : MonoBehaviour
 
                             float rotX = deltaX * Time.deltaTime * rotSpd;
                             float rotY = deltaY * Time.deltaTime * rotSpd;
-                         
+
                             TargetVal.Obj.transform.Rotate(Vector3.up, rotX);
                             TargetVal.Obj.transform.Rotate(Vector3.forward, rotY);
 
                             OldTouch = touch;
                         }
+                        // Rotation & Single Touch //
                     }
+
+
+                    if (Input.touchCount == 2)
+                    {
+                        Touch touchOne = Input.GetTouch(0);
+                        Touch touchTwo = Input.GetTouch(1);
+
+                        Vector2 oldPosTouchOne = touchOne.position - touchOne.deltaPosition;
+                        Vector2 oldPosTouchTwo = touchTwo.position - touchTwo.deltaPosition;
+
+                        float oldDis = (oldPosTouchOne - oldPosTouchTwo).magnitude;
+                        float newDis = (touchOne.position - touchTwo.position).magnitude;
+
+                        float diff = newDis - oldDis;
+
+                        Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
+
+                        TargetVal.Obj.transform.localScale += delta;
+
+                    }
+
                 }
             }
 
-            if(NRInput.GetButton(ControllerButton.HOME))
+            if (NRInput.GetButton(ControllerButton.HOME))
             {
                 foreach (var TargetVal in target.Values)
                 {
                     TargetVal.Obj.transform.rotation = Quaternion.identity;
+                    TargetVal.Obj.transform.localScale = new Vector3(1f, 1f, 1f);
                 }
             }
         }
     }
 
-   
-       
-   
+
+
+
 }

@@ -121,6 +121,87 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &40919615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5232385483942361541, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 223974226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa31cd8cbc7602f418d8e0cc450b0d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &223974226
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361540, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232385483942361542, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
+        type: 3}
+      propertyPath: m_Name
+      value: VideoCaptureExample
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9770ae3ad89f2d445ac117e6b2b499d3, type: 3}
 --- !u!1001 &442643095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -941,6 +1022,7 @@ GameObject:
   - component: {fileID: 1517053444}
   - component: {fileID: 1517053443}
   - component: {fileID: 1517053445}
+  - component: {fileID: 1517053446}
   m_Layer: 0
   m_Name: ExampleController
   m_TagString: Untagged
@@ -991,9 +1073,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackingImage: {fileID: 1517053443}
   rotSpd: 10
-  dir: -1
-  rotX: 0
-  rotY: 0
+--- !u!114 &1517053446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517053442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c53f4b53d036f5c4c993ab7f36dce21d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnRecord:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 40919615}
+        m_MethodName: StartVideoCapture
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OffRecord:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 40919615}
+        m_MethodName: StopVideoCapture
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1605966940
 GameObject:
   m_ObjectHideFlags: 0
