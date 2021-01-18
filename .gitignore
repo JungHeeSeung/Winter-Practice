@@ -2,13 +2,20 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Mm]emoryCaptures/
+#/[Ll]ibrary/
+#/[Tt]emp/
+#/[Oo]bj/
+#/[Bb]uild/
+#/[Bb]uilds/
+#/[Ll]ogs/
+#/[Mm]emoryCaptures/
+/Nreal/DinosaurExhibition/[Ll]ibrary/
+/Nreal/DinosaurExhibition/[Tt]emp/
+/Nreal/DinosaurExhibition/[Oo]bj/
+/Nreal/DinosaurExhibition/[Bb]uild/
+/Nreal/DinosaurExhibition/[Bb]uilds/
+/Nreal/DinosaurExhibition/[Ll]ogs/
+/Nreal/DinosaurExhibition/[Mm]emoryCaptures/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
