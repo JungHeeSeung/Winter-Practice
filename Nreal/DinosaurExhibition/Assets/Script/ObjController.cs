@@ -9,14 +9,14 @@ public class ObjController : MonoBehaviour
 {
     public TrackingImageExampleController trackingImage;
 
-    private Touch OldTouch;
-
     public float rotSpd = 0.1f;
+
+    private Dictionary<int, TrackingImageVisualizer> target;
 
     // Update is called once per frame
     void Update()
     {
-        var target = trackingImage.data;
+        target = trackingImage.data;
 
         if (target != null)
         {
@@ -30,65 +30,117 @@ public class ObjController : MonoBehaviour
                     // Rotation & Single Touch //
                     if (Input.touchCount == 1)
                     {
-                        Touch touch = Input.GetTouch(0);
-
-
-                        if (touch.phase == TouchPhase.Began)
+                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
                         {
-                            OldTouch = touch;
+                            RotateObj(TargetVal.GridObj);
                         }
-                        else if (touch.phase == TouchPhase.Moved)
+                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
                         {
-
-                            float deltaX = OldTouch.position.x - touch.position.x;
-                            float deltaY = OldTouch.position.y - touch.position.y;
-
-                            float rotX = deltaX * Time.deltaTime * rotSpd;
-                            float rotY = deltaY * Time.deltaTime * rotSpd;
-
-                            TargetVal.Obj.transform.Rotate(Vector3.up, rotX);
-                            TargetVal.Obj.transform.Rotate(Vector3.forward, rotY);
-
-                            OldTouch = touch;
+                            RotateObj(TargetVal.Obj);
                         }
-                        // Rotation & Single Touch //
                     }
+                    // Rotation With Single Touch //
 
 
+                    // Zoom in & out With Double Touch // 
                     if (Input.touchCount == 2)
                     {
-                        Touch touchOne = Input.GetTouch(0);
-                        Touch touchTwo = Input.GetTouch(1);
-
-                        Vector2 oldPosTouchOne = touchOne.position - touchOne.deltaPosition;
-                        Vector2 oldPosTouchTwo = touchTwo.position - touchTwo.deltaPosition;
-
-                        float oldDis = (oldPosTouchOne - oldPosTouchTwo).magnitude;
-                        float newDis = (touchOne.position - touchTwo.position).magnitude;
-
-                        float diff = newDis - oldDis;
-
-                        Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
-
-                        TargetVal.Obj.transform.localScale += delta;
-
+                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
+                        {
+                            ZoomInAndOutObj(TargetVal.GridObj);
+                        }
+                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
+                        {
+                            ZoomInAndOutObj(TargetVal.Obj);
+                        }
                     }
+                    // Zoom in & out With Double Touch // 
+
+
+
+                    // -----------------------------에러 나서 죽음
+
+                    // Change Texture <-> Grid Mode With Triple Touch // 
+                    if (Input.touchCount == 3)
+                    {
+                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
+                        {
+                            TargetVal.Obj.SetActive(true);
+                            TargetVal.GridObj.SetActive(false);
+                        }
+                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
+                        {
+                            TargetVal.GridObj.SetActive(true);
+                            TargetVal.Obj.SetActive(false);
+                        }
+                        ResetObj();
+                    }
+                    // Change Texture <-> Grid Mode With Triple Touch // 
+
+                    // ----------------------------에러 나서 죽음
 
                 }
             }
 
             if (NRInput.GetButton(ControllerButton.HOME))
             {
-                foreach (var TargetVal in target.Values)
-                {
-                    TargetVal.Obj.transform.rotation = Quaternion.identity;
-                    TargetVal.Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-                }
+                ResetObj();
             }
         }
     }
 
+    void ZoomInAndOutObj(GameObject obj)
+    {
+        Touch touchOne = Input.GetTouch(0);
+        Touch touchTwo = Input.GetTouch(1);
 
+        Vector2 oldPosTouchOne = touchOne.position - touchOne.deltaPosition;
+        Vector2 oldPosTouchTwo = touchTwo.position - touchTwo.deltaPosition;
 
+        float oldDis = (oldPosTouchOne - oldPosTouchTwo).magnitude;
+        float newDis = (touchOne.position - touchTwo.position).magnitude;
+
+        float diff = newDis - oldDis;
+
+        Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
+
+        obj.transform.localScale += delta;
+    }
+
+    void RotateObj(GameObject obj)
+    {
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.phase == TouchPhase.Moved)
+        {
+            // deltaPosition으로 한 방에 해결이 가능한가?
+            float deltaX = touch.deltaPosition.x;
+            float deltaY = touch.deltaPosition.y;
+
+            float rotX = deltaX * Time.deltaTime * rotSpd;
+            float rotY = deltaY * Time.deltaTime * rotSpd;
+
+            obj.transform.Rotate(Vector3.up, rotX);
+            obj.transform.Rotate(Vector3.forward, rotY);
+        }
+    }
+
+    void ResetObj()
+    {
+        foreach (var tar in target.Values)
+        {
+            if (true == tar.Obj.activeSelf)
+            {
+                tar.Obj.transform.rotation = Quaternion.identity;
+                tar.Obj.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+
+            if (true == tar.GridObj.activeSelf)
+            {
+                tar.GridObj.transform.rotation = Quaternion.identity;
+                tar.GridObj.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+        }
+    }
 
 }

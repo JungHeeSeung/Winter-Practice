@@ -198,7 +198,7 @@ PrefabInstance:
     - target: {fileID: 5232385483942361542, guid: 9770ae3ad89f2d445ac117e6b2b499d3,
         type: 3}
       propertyPath: m_Name
-      value: VideoCaptureExample
+      value: VideoCapture
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9770ae3ad89f2d445ac117e6b2b499d3, type: 3}
@@ -1024,7 +1024,7 @@ GameObject:
   - component: {fileID: 1517053445}
   - component: {fileID: 1517053446}
   m_Layer: 0
-  m_Name: ExampleController
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
