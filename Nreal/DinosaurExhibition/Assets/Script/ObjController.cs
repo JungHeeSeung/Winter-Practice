@@ -56,25 +56,37 @@ public class ObjController : MonoBehaviour
                     }
                     // Zoom in & out With Double Touch // 
 
+                    // -----------------------------테스트용
 
+                    if(Input.touchCount == 3)
+                    {
+                        TargetVal.Obj.SetActive(!TargetVal.Obj.activeSelf);
+                    }
+
+
+
+
+
+
+                    // -----------------------------테스트용
 
                     // -----------------------------에러 나서 죽음
 
                     // Change Texture <-> Grid Mode With Triple Touch // 
-                    if (Input.touchCount == 3)
-                    {
-                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                        {
-                            TargetVal.Obj.SetActive(true);
-                            TargetVal.GridObj.SetActive(false);
-                        }
-                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                        {
-                            TargetVal.GridObj.SetActive(true);
-                            TargetVal.Obj.SetActive(false);
-                        }
-                        ResetObj();
-                    }
+                    //if (Input.touchCount == 3)
+                    //{
+                    //    if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
+                    //    {
+                    //        TargetVal.Obj.SetActive(true);
+                    //        TargetVal.GridObj.SetActive(false);
+                    //    }
+                    //    else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
+                    //    {
+                    //        TargetVal.GridObj.SetActive(true);
+                    //        TargetVal.Obj.SetActive(false);
+                    //    }
+                    //    ResetObj();
+                    //}
                     // Change Texture <-> Grid Mode With Triple Touch // 
 
                     // ----------------------------에러 나서 죽음
