@@ -27,40 +27,47 @@ public class ObjController : MonoBehaviour
             {
                 if (TargetVal.Image != null)
                 {
-                    // Rotation & Single Touch //
-                    if (Input.touchCount == 1)
-                    {
-                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                        {
-                            RotateObj(TargetVal.GridObj);
-                        }
-                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                        {
-                            RotateObj(TargetVal.Obj);
-                        }
-                    }
-                    // Rotation With Single Touch //
+                    //// Rotation & Single Touch //
+                    //if (Input.touchCount == 1)
+                    //{
+                    //    // if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
+                    //    {
+                    //        RotateObj(TargetVal.GridObj);
+                    //    }
+                    //    //  else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
+                    //    {
+                    //        RotateObj(TargetVal.Obj);
+                    //    }
+                    //}
+                    //// Rotation With Single Touch //
 
 
-                    // Zoom in & out With Double Touch // 
-                    if (Input.touchCount == 2)
-                    {
-                        if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                        {
-                            ZoomInAndOutObj(TargetVal.GridObj);
-                        }
-                        else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                        {
-                            ZoomInAndOutObj(TargetVal.Obj);
-                        }
-                    }
-                    // Zoom in & out With Double Touch // 
+                    //// Zoom in & out With Double Touch // 
+                    //else if (Input.touchCount == 2)
+                    //{
+                    //    //   if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
+                    //    {
+                    //        ZoomInAndOutObj(TargetVal.GridObj);
+                    //    }
+                    //    //  else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
+                    //    {
+                    //        ZoomInAndOutObj(TargetVal.Obj);
+                    //    }
+                    //}
+                    //// Zoom in & out With Double Touch // 
 
                     // -----------------------------테스트용
 
-                    if(Input.touchCount == 3)
+
+                    // 이것도 죽음... 
+
+                    // 걍 터치 3손가락으로 하니까 죽는데??
+                    // 터치 했을 떄 바뀌는지 확인해보자
+
+                    if (Input.touchCount > 0 /*NRInput.GetButton(ControllerButton.HOME)*/)
                     {
                         TargetVal.Obj.SetActive(!TargetVal.Obj.activeSelf);
+                        TargetVal.GridObj.SetActive(!TargetVal.GridObj.activeSelf);
                     }
 
 
@@ -94,10 +101,10 @@ public class ObjController : MonoBehaviour
                 }
             }
 
-            if (NRInput.GetButton(ControllerButton.HOME))
-            {
-                ResetObj();
-            }
+            //if (NRInput.GetButton(ControllerButton.HOME))
+            //{
+            //    ResetObj();
+            //}
         }
     }
 
@@ -137,22 +144,10 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    void ResetObj()
+    void ResetObj(GameObject obj)
     {
-        foreach (var tar in target.Values)
-        {
-            if (true == tar.Obj.activeSelf)
-            {
-                tar.Obj.transform.rotation = Quaternion.identity;
-                tar.Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-            }
-
-            if (true == tar.GridObj.activeSelf)
-            {
-                tar.GridObj.transform.rotation = Quaternion.identity;
-                tar.GridObj.transform.localScale = new Vector3(1f, 1f, 1f);
-            }
-        }
+        obj.transform.rotation = Quaternion.identity;
+        obj.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
 }
