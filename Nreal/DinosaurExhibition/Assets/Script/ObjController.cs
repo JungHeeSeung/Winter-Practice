@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using NRKernal;
 using NRKernal.NRExamples;
 
@@ -13,99 +12,91 @@ public class ObjController : MonoBehaviour
 
     private Dictionary<int, TrackingImageVisualizer> target;
 
+
+    // Grid <-> Texture 변경용
+
+    public Material mat;    // Grid용
+
+    private List<Material> m_Mat = new List<Material>();    // 원본
+
+    private bool isChange = false;
+
+    private List<MeshRenderer> Childrens = new List<MeshRenderer>();    // 대상
+
+    // Grid <-> Texture 변경용
+
     // Update is called once per frame
     void Update()
     {
         target = trackingImage.data;
 
-        if (target != null)
+        foreach (var TargetVal in target.Values)
         {
-            // 딕셔너리의 밸류를 가져왔음
-            // 아마도.. 여러 종류 이미지 트래킹이 필요하면 바뀔지도...??
-
-            foreach (var TargetVal in target.Values)
+            if (TargetVal.Image != null)
             {
-                if (TargetVal.Image != null)
+                var img = TargetVal.Image.GetDataBaseIndex();
+
+                //      Rotation & Single Touch                      //
+                if (Input.touchCount == 1)
                 {
-                    //// Rotation & Single Touch //
-                    //if (Input.touchCount == 1)
-                    //{
-                    //    // if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                    //    {
-                    //        RotateObj(TargetVal.GridObj);
-                    //    }
-                    //    //  else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                    //    {
-                    //        RotateObj(TargetVal.Obj);
-                    //    }
-                    //}
-                    //// Rotation With Single Touch //
-
-
-                    //// Zoom in & out With Double Touch // 
-                    //else if (Input.touchCount == 2)
-                    //{
-                    //    //   if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                    //    {
-                    //        ZoomInAndOutObj(TargetVal.GridObj);
-                    //    }
-                    //    //  else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                    //    {
-                    //        ZoomInAndOutObj(TargetVal.Obj);
-                    //    }
-                    //}
-                    //// Zoom in & out With Double Touch // 
-
-                    // -----------------------------테스트용
-
-
-                    // 이것도 죽음... 
-
-                    // 걍 터치 3손가락으로 하니까 죽는데??
-                    // 터치 했을 떄 바뀌는지 확인해보자
-
-                    if (Input.touchCount > 0 /*NRInput.GetButton(ControllerButton.HOME)*/)
-                    {
-                        TargetVal.Obj.SetActive(!TargetVal.Obj.activeSelf);
-                        TargetVal.GridObj.SetActive(!TargetVal.GridObj.activeSelf);
-                    }
-
-
-
-
-
-
-                    // -----------------------------테스트용
-
-                    // -----------------------------에러 나서 죽음
-
-                    // Change Texture <-> Grid Mode With Triple Touch // 
-                    //if (Input.touchCount == 3)
-                    //{
-                    //    if (false == TargetVal.Obj.activeSelf && true == TargetVal.GridObj.activeSelf)
-                    //    {
-                    //        TargetVal.Obj.SetActive(true);
-                    //        TargetVal.GridObj.SetActive(false);
-                    //    }
-                    //    else if (false == TargetVal.GridObj.activeSelf && true == TargetVal.Obj.activeSelf)
-                    //    {
-                    //        TargetVal.GridObj.SetActive(true);
-                    //        TargetVal.Obj.SetActive(false);
-                    //    }
-                    //    ResetObj();
-                    //}
-                    // Change Texture <-> Grid Mode With Triple Touch // 
-
-                    // ----------------------------에러 나서 죽음
+                    RotateObj(TargetVal.Obj[img]);
 
                 }
-            }
+                //      Rotation With Single Touch                   //
 
-            //if (NRInput.GetButton(ControllerButton.HOME))
-            //{
-            //    ResetObj();
-            //}
+
+
+                //      Zoom in & out With Double Touch              // 
+                if (Input.touchCount == 2)
+                {
+                    ZoomInAndOutObj(TargetVal.Obj[img]);
+
+                }
+                //      Zoom in & out With Double Touch              // 
+
+
+
+                //      Grid <-> Texture With Home Button            //
+                if (NRInput.GetButtonDown(ControllerButton.HOME))
+                {
+                    SwapTextureObj(TargetVal.Obj[img]);
+                }
+                //      Grid <-> Texture With Home Button            //
+
+                if (NRInput.GetButtonDown(ControllerButton.APP))
+                {
+                    ResetObj(TargetVal.Obj[img]);
+                }
+            }
         }
+    }
+
+
+    void SwapTextureObj(GameObject obj)
+    {
+        if (Childrens.Count == 0)
+        {
+            Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+        }
+
+        foreach (var child in Childrens)
+        {
+            m_Mat.Add(child.material);
+        }
+
+        for (int i = 0; i < Childrens.Count; ++i)
+        {
+            if (false == isChange)
+            {
+                Childrens[i].material = mat;
+
+            }
+            else
+            {
+                Childrens[i].material = m_Mat[i];
+            }
+        }
+        isChange = !isChange;
     }
 
     void ZoomInAndOutObj(GameObject obj)
@@ -132,22 +123,18 @@ public class ObjController : MonoBehaviour
 
         if (touch.phase == TouchPhase.Moved)
         {
-            // deltaPosition으로 한 방에 해결이 가능한가?
-            float deltaX = touch.deltaPosition.x;
-            float deltaY = touch.deltaPosition.y;
 
+            float deltaX = touch.deltaPosition.x;
             float rotX = deltaX * Time.deltaTime * rotSpd;
-            float rotY = deltaY * Time.deltaTime * rotSpd;
 
             obj.transform.Rotate(Vector3.up, rotX);
-            obj.transform.Rotate(Vector3.forward, rotY);
         }
     }
 
-    void ResetObj(GameObject obj)
+    void ResetObj(GameObject Obj)
     {
-        obj.transform.rotation = Quaternion.identity;
-        obj.transform.localScale = new Vector3(1f, 1f, 1f);
-    }
+        Obj.transform.rotation = Quaternion.identity;
+        Obj.transform.localScale = new Vector3(1f, 1f, 1f);
 
+    }
 }

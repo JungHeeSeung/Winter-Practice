@@ -18,7 +18,6 @@
         private Dictionary<int, TrackingImageVisualizer> m_Visualizers
             = new Dictionary<int, TrackingImageVisualizer>();
 
-
         public Dictionary<int, TrackingImageVisualizer> data
         {
             get => m_Visualizers;
@@ -50,7 +49,7 @@
                 {
                     NRDebugger.Log("Create new TrackingImageVisualizer!");
                     // Create an anchor to ensure that NRSDK keeps tracking this augmented image.
-                    visualizer = Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
+                    visualizer = (TrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;
                     visualizer.transform.parent = transform;
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);

@@ -22,33 +22,28 @@ public class TestScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
 
+            if (false == Obj.activeSelf && true == GridObj.activeSelf)
+            {
+                Obj.SetActive(true);
+                GridObj.SetActive(false);
+            }
+            else if (false == GridObj.activeSelf && true == Obj.activeSelf)
+            {
+                Obj.SetActive(false);
+                GridObj.SetActive(true);
+            }
 
-           Obj.SetActive(!Obj.activeSelf);
-           GridObj.SetActive(!GridObj.activeSelf);
+            if (true == Obj.activeSelf)
+            {
+                Obj.transform.rotation = Quaternion.identity;
+                Obj.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
 
-
-            //if (false == Obj.activeSelf && true == GridObj.activeSelf)
-            //{
-            //    Obj.SetActive(true);
-            //    GridObj.SetActive(false);
-            //}
-            //else if (false == GridObj.activeSelf && true == Obj.activeSelf)
-            //{
-            //    Obj.SetActive(false);
-            //    GridObj.SetActive(true);
-            //}
-
-            //if (true == Obj.activeSelf)
-            //{
-            //    Obj.transform.rotation = Quaternion.identity;
-            //    Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-            //}
-
-            //if (true == GridObj.activeSelf)
-            //{
-            //   GridObj.transform.rotation = Quaternion.identity;
-            //   GridObj.transform.localScale = new Vector3(1f, 1f, 1f);
-            //}
+            if (true == GridObj.activeSelf)
+            {
+               GridObj.transform.rotation = Quaternion.identity;
+               GridObj.transform.localScale = new Vector3(1f, 1f, 1f);
+            }
         }
 
 

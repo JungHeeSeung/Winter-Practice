@@ -1,5 +1,6 @@
 ﻿namespace NRKernal.NRExamples
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
     /// <summary>
@@ -23,10 +24,7 @@
         public GameObject FrameUpperRight;
 
         // 이 부분을 아마도 배열같은 자료구조로 처리해야할 듯
-        public GameObject Obj;
-
-        // Obj <-> GridObj 용도
-        public GameObject GridObj;
+        public List<GameObject> Obj = new List<GameObject>();
 
         public void Update()
         {
@@ -36,8 +34,12 @@
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-                Obj.SetActive(false);
-                GridObj.SetActive(false);
+                
+                foreach(var target in Obj)
+                {
+                    target.SetActive(false);
+                }
+                
                 return;
             }
 
@@ -56,8 +58,9 @@
             FrameLowerRight.SetActive(true);
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
-            Obj.SetActive(true);
-            GridObj.SetActive(true);
+
+           
+            Obj[ Image.GetDataBaseIndex() ].SetActive(true);
         }
     }
 }
