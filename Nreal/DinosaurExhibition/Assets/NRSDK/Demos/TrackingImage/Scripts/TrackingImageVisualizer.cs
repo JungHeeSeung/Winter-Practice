@@ -34,12 +34,15 @@
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-                
-                foreach(var target in Obj)
+
+                foreach (var target in Obj)
                 {
-                    target.SetActive(false);
+                    if (target != null)
+                    {
+                        target.SetActive(false);
+                    }
                 }
-                
+
                 return;
             }
 
@@ -59,8 +62,24 @@
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
 
-           
-            Obj[ Image.GetDataBaseIndex() ].SetActive(true);
+
+
+            foreach (var target in Obj)
+            {
+                if (target != null)
+                {
+                    var idx = Image.GetDataBaseIndex();
+
+                    if (target == Obj[idx])
+                    {
+                        target.SetActive(true);
+                    }
+                    else
+                    {
+                        target.SetActive(false);
+                    }
+                }
+            }
         }
     }
 }

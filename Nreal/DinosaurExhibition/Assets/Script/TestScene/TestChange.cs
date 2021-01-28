@@ -19,18 +19,7 @@ public class TestChange : MonoBehaviour
     [SerializeField]
     public List<GameObject> target = new List<GameObject>();
 
-    private void Start()
-    {
-        Childrens.AddRange(GetComponentsInChildren<MeshRenderer>());
-
-        foreach (var child in Childrens)
-        {
-            m_Mat.Add(child.material);
-        }
-
-        Debug.Log(Childrens.ToString());
-    }
-
+    public int targetIndex = 0;
 
 
     void Update()
@@ -52,30 +41,69 @@ public class TestChange : MonoBehaviour
             isChange = !isChange;
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (targetIndex + 1 < target.Count)
+            {
+                targetIndex++;
+            }
+            else
+            {
+                targetIndex = 0;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+
+            List<MeshRenderer> temp = new List<MeshRenderer>();
+            temp.AddRange(target[targetIndex].GetComponentsInChildren<MeshRenderer>());
+
+
+            if (Childrens.Count == 0)
+            {
+                Childrens = temp;
+            }
+            else
+            {
+               if(false == Childrens.Equals(temp))
+                {
+                    Childrens.Clear();
+                    Childrens = temp;
+                }
+            }
+
+
+            foreach (var child in Childrens)
+            {
+                m_Mat.Add(child.material);
+            }
+        }
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
-           
+
             Vector3 delta = new Vector3(spd, spd, spd);
 
             transform.localScale += delta;
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
-        { 
+        {
             Vector3 delta = new Vector3(spd, spd, spd);
 
             transform.localScale -= delta;
         }
 
-        if(Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
 
-            transform.Rotate(Vector3.up, spd*10);
+            transform.Rotate(Vector3.up, spd * 10);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
 
-            transform.Rotate(Vector3.up, spd*10);
+            transform.Rotate(Vector3.up, spd * 10);
         }
 
 

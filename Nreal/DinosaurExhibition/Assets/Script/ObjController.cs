@@ -4,6 +4,8 @@ using UnityEngine;
 using NRKernal;
 using NRKernal.NRExamples;
 
+using UnityEngine.UI;
+
 public class ObjController : MonoBehaviour
 {
     public TrackingImageExampleController trackingImage;
@@ -23,18 +25,60 @@ public class ObjController : MonoBehaviour
 
     private List<MeshRenderer> Childrens = new List<MeshRenderer>();    // 대상
 
+    public GameObject oldObj;
+
     // Grid <-> Texture 변경용
 
-    // Update is called once per frame
+
+
+    public Text text;
+
+
+    public List<int> key = new List<int>();
+    public List<TrackingImageVisualizer> value = new List<TrackingImageVisualizer>();
+    void ShowInsepctor(Dictionary<int, TrackingImageVisualizer> dat)
+    {
+        key.Clear();
+        value.Clear();
+
+        foreach (var pair in dat)
+        {
+            key.Add(pair.Key);
+            value.Add(pair.Value);
+        }
+    }
+
     void Update()
     {
         target = trackingImage.data;
+
+
+        // Debug 용....
+        ShowInsepctor(target);
+
+        for (int i = 0; (i < key.Count || i < value.Count); ++i)
+        {
+            if (i < key.Count)
+            {
+                text.text = "key: " + key[i];
+            }
+            if (i < value.Count)
+            {
+                text.text = "value's key: " + value[i].Image.GetDataBaseIndex();
+            }
+        }
+        // Debug 용....
+
+
+        // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
+        // Key를 바탕으로 Value를 찾아야 하나...??
 
         foreach (var TargetVal in target.Values)
         {
             if (TargetVal.Image != null)
             {
                 var img = TargetVal.Image.GetDataBaseIndex();
+
 
                 //      Rotation & Single Touch                      //
                 if (Input.touchCount == 1)
@@ -68,20 +112,38 @@ public class ObjController : MonoBehaviour
                     ResetObj(TargetVal.Obj[img]);
                 }
             }
+            else
+            {
+                text.text = "Image is Null\n";
+            }
         }
     }
 
 
-    void SwapTextureObj(GameObject obj)
+    void SwapTextureObj(GameObject obj, bool reset = false)
     {
+        List<MeshRenderer> temp = new List<MeshRenderer>();
+        temp.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+
+
         if (Childrens.Count == 0)
         {
-            Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+            Childrens = temp;
         }
+        else
+        {
+            Childrens.Equals(temp);
+        }
+
 
         foreach (var child in Childrens)
         {
             m_Mat.Add(child.material);
+        }
+
+        if (true == reset)
+        {
+            isChange = false;
         }
 
         for (int i = 0; i < Childrens.Count; ++i)
@@ -96,7 +158,9 @@ public class ObjController : MonoBehaviour
                 Childrens[i].material = m_Mat[i];
             }
         }
+
         isChange = !isChange;
+
     }
 
     void ZoomInAndOutObj(GameObject obj)
@@ -135,6 +199,6 @@ public class ObjController : MonoBehaviour
     {
         Obj.transform.rotation = Quaternion.identity;
         Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-
+        SwapTextureObj(Obj, true);
     }
 }
