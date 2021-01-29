@@ -7,10 +7,6 @@ public class TestChange : MonoBehaviour
     public float spd = 0.1f;
 
     public Material mat;
-
-    [SerializeField]
-    private List<Material> m_Mat = new List<Material>();
-
     [SerializeField]
     private bool isChange = false;
 
@@ -21,6 +17,24 @@ public class TestChange : MonoBehaviour
 
     public int targetIndex = 0;
 
+
+    private void Start()
+    {
+        // List 에 LIst 넣기...
+        // 생각보다 까다로움
+
+        // 두개만 신경쓰자
+        // 초기화를 신경써줄것 --> NULL이라도 넣어야 에러가 안 뜬다
+        // NULL 체크 신경써줄것 --> NULL을 넣었는데 접근하려고 하면 에러가 뜸
+
+        // 코드 리팩토링 할 때가 온 것 같다...
+        for (int i=0;i<target.Count;++i)
+        {
+            //tarMat[i].list.Add(null);
+        }
+
+        // 구조 다시 잡기..
+    }
 
     void Update()
     {
@@ -35,7 +49,7 @@ public class TestChange : MonoBehaviour
                 }
                 else
                 {
-                    Childrens[i].material = m_Mat[i];
+                   // Childrens[i].material = tarMat[targetIndex].list[i];
                 }
             }
             isChange = !isChange;
@@ -51,10 +65,6 @@ public class TestChange : MonoBehaviour
             {
                 targetIndex = 0;
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
 
             List<MeshRenderer> temp = new List<MeshRenderer>();
             temp.AddRange(target[targetIndex].GetComponentsInChildren<MeshRenderer>());
@@ -66,46 +76,52 @@ public class TestChange : MonoBehaviour
             }
             else
             {
-               if(false == Childrens.Equals(temp))
+                if (false == Childrens.Equals(temp))
                 {
                     Childrens.Clear();
                     Childrens = temp;
                 }
             }
 
+            
 
-            foreach (var child in Childrens)
+            //if (tarMat[targetIndex].list.Count == 0)
+            //{
+            //    foreach (var child in Childrens)
+            //    {
+            //        tarMat[targetIndex].list.Add(child.material);
+            //    }
+            //}
+        }
+
+
+        // UP & DOWN : Scale || LEFT & RIGHT : Rotation
+        {
+            if (Input.GetKey(KeyCode.UpArrow))
             {
-                m_Mat.Add(child.material);
+
+                Vector3 delta = new Vector3(spd, spd, spd);
+
+                transform.localScale += delta;
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                Vector3 delta = new Vector3(spd, spd, spd);
+
+                transform.localScale -= delta;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+
+                transform.Rotate(Vector3.up, spd * 10);
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+
+                transform.Rotate(Vector3.up, spd * 10);
             }
         }
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-
-            Vector3 delta = new Vector3(spd, spd, spd);
-
-            transform.localScale += delta;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            Vector3 delta = new Vector3(spd, spd, spd);
-
-            transform.localScale -= delta;
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-
-            transform.Rotate(Vector3.up, spd * 10);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-
-            transform.Rotate(Vector3.up, spd * 10);
-        }
-
+        //
 
 
         if (Input.GetKey(KeyCode.R))

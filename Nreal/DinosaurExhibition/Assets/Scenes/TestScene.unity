@@ -131,6 +131,8 @@ GameObject:
   m_Component:
   - component: {fileID: 967081995}
   - component: {fileID: 967081994}
+  - component: {fileID: 967081996}
+  - component: {fileID: 967081997}
   m_Layer: 0
   m_Name: GameObject (2)
   m_TagString: Untagged
@@ -145,14 +147,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967081993}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e839d237ae90b3409fbf8a6b75add5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spd: 0.1
   mat: {fileID: 2100000, guid: 6833a623d1b4df54abdfe933a1483a27, type: 2}
-  m_Mat: []
   isChange: 0
   Childrens: []
   target:
@@ -175,6 +176,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &967081996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967081993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0601578f4117f5e4e9acc6de99690d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointLists: []
+  count: 2
+--- !u!114 &967081997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967081993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8358c560c14a03d4784039745e1f5adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: []
 --- !u!1 &1124231645
 GameObject:
   m_ObjectHideFlags: 0

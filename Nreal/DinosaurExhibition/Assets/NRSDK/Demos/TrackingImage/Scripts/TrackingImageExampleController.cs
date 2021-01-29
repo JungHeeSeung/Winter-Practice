@@ -20,6 +20,7 @@
 
         public Dictionary<int, TrackingImageVisualizer> data
         {
+            set => m_Visualizers = value;
             get => m_Visualizers;
         }
 
@@ -63,6 +64,8 @@
                 {
                     m_Visualizers.Remove(image.GetDataBaseIndex());
                     Destroy(visualizer.gameObject);
+
+                    FitToScanOverlay.SetActive(true);
                 }
 
                 FitToScanOverlay.SetActive(false);

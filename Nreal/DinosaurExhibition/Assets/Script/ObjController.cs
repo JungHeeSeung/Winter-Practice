@@ -19,21 +19,34 @@ public class ObjController : MonoBehaviour
 
     public Material mat;    // Grid용
 
-    private List<Material> m_Mat = new List<Material>();    // 원본
+    public class MatList
+    {
+        public List<Material> list = new List<Material>();
+    }
+
+    private List<MatList> originMat = new List<MatList>();    // 원본
 
     private bool isChange = false;
 
     private List<MeshRenderer> Childrens = new List<MeshRenderer>();    // 대상
 
-    public GameObject oldObj;
+    void InitializeList(int cnt)
+    {
+        if (originMat.Count <= cnt)
+        {
+            for (int i = originMat.Count; i <= cnt; ++i)
+            {
+                originMat.Add(null);
+            }
+        }
+    }
 
     // Grid <-> Texture 변경용
 
 
 
+    // Debug
     public Text text;
-
-
     public List<int> key = new List<int>();
     public List<TrackingImageVisualizer> value = new List<TrackingImageVisualizer>();
     void ShowInsepctor(Dictionary<int, TrackingImageVisualizer> dat)
@@ -47,43 +60,48 @@ public class ObjController : MonoBehaviour
             value.Add(pair.Value);
         }
     }
+    // Debug
 
     void Update()
     {
         target = trackingImage.data;
 
 
-        // Debug 용....
-        ShowInsepctor(target);
-
-        for (int i = 0; (i < key.Count || i < value.Count); ++i)
-        {
-            if (i < key.Count)
-            {
-                text.text = "key: " + key[i];
-            }
-            if (i < value.Count)
-            {
-                text.text = "value's key: " + value[i].Image.GetDataBaseIndex();
-            }
-        }
-        // Debug 용....
-
 
         // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
         // Key를 바탕으로 Value를 찾아야 하나...??
-
         foreach (var TargetVal in target.Values)
         {
             if (TargetVal.Image != null)
             {
                 var img = TargetVal.Image.GetDataBaseIndex();
 
+                InitializeList(TargetVal.Obj.Count);
 
                 //      Rotation & Single Touch                      //
                 if (Input.touchCount == 1)
                 {
-                    RotateObj(TargetVal.Obj[img]);
+                    //RotateObj(TargetVal.Obj[img]);
+
+
+                    // Debug 용....
+                    ShowInsepctor(target);
+
+                    for (int i = 0; (i < Mathf.Max(key.Count, value.Count)); ++i)
+                    {
+                        if (i < key.Count)
+                        {
+                            text.text += "key: " + key[i];
+                        }
+                        if (i < value.Count)
+                        {
+                            text.text += "value's key: " + value[i].Image.GetDataBaseIndex();
+                        }
+                    }
+
+                    text.text += " " + target.Count + " in Dict \n";
+                    // Debug 용....
+
 
                 }
                 //      Rotation With Single Touch                   //
@@ -93,7 +111,9 @@ public class ObjController : MonoBehaviour
                 //      Zoom in & out With Double Touch              // 
                 if (Input.touchCount == 2)
                 {
-                    ZoomInAndOutObj(TargetVal.Obj[img]);
+                    //ZoomInAndOutObj(TargetVal.Obj[img]);
+
+                    text.text = "";
 
                 }
                 //      Zoom in & out With Double Touch              // 
@@ -103,13 +123,13 @@ public class ObjController : MonoBehaviour
                 //      Grid <-> Texture With Home Button            //
                 if (NRInput.GetButtonDown(ControllerButton.HOME))
                 {
-                    SwapTextureObj(TargetVal.Obj[img]);
+                    SwapTextureObj(img, TargetVal.Obj[img]);
                 }
                 //      Grid <-> Texture With Home Button            //
 
                 if (NRInput.GetButtonDown(ControllerButton.APP))
                 {
-                    ResetObj(TargetVal.Obj[img]);
+                    ResetObj(img, TargetVal.Obj[img]);
                 }
             }
             else
@@ -119,8 +139,7 @@ public class ObjController : MonoBehaviour
         }
     }
 
-
-    void SwapTextureObj(GameObject obj, bool reset = false)
+    void SwapTextureObj(int idx, GameObject obj, bool reset = false)
     {
         List<MeshRenderer> temp = new List<MeshRenderer>();
         temp.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
@@ -132,19 +151,32 @@ public class ObjController : MonoBehaviour
         }
         else
         {
-            Childrens.Equals(temp);
+            if (false == Childrens.Equals(temp))
+            {
+                Childrens.Clear();
+                Childrens = temp;
+            }
         }
 
-
+        // 여기 못 고치면 답이 없다
         foreach (var child in Childrens)
         {
-            m_Mat.Add(child.material);
+            if (originMat[idx] == null)
+            {
+                originMat[idx] = new MatList();
+                originMat[idx].list.Add(child.material);
+            }
+            else
+            {
+                break;
+            }
         }
 
         if (true == reset)
         {
             isChange = false;
         }
+
 
         for (int i = 0; i < Childrens.Count; ++i)
         {
@@ -155,11 +187,15 @@ public class ObjController : MonoBehaviour
             }
             else
             {
-                Childrens[i].material = m_Mat[i];
+                Childrens[i].material = originMat[idx].list[i];
             }
         }
 
-        isChange = !isChange;
+        if (reset != true)
+        {
+            isChange = !isChange;
+        }
+
 
     }
 
@@ -195,10 +231,10 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    void ResetObj(GameObject Obj)
+    void ResetObj(int idx, GameObject Obj)
     {
         Obj.transform.rotation = Quaternion.identity;
         Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-        SwapTextureObj(Obj, true);
+        SwapTextureObj(idx, Obj, true);
     }
 }
