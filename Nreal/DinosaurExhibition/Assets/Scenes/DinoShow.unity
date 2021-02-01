@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492cc0813c4064ed79f2671a7c2633fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrackingImageVisualizerPrefab: {fileID: 8709647761393435183, guid: 8e48e70ac72e1124a86f03de311cd86c,
+  TrackingImageVisualizerPrefab: {fileID: 2131810394017741462, guid: 8e48e70ac72e1124a86f03de311cd86c,
     type: 3}
   FitToScanOverlay: {fileID: 1180201240}
 --- !u!4 &1517053444

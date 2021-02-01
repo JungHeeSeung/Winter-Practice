@@ -66,23 +66,21 @@ public class ObjController : MonoBehaviour
     {
         target = trackingImage.data;
 
-
-
         // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
         // Key를 바탕으로 Value를 찾아야 하나...??
         foreach (var TargetVal in target.Values)
         {
             if (TargetVal.Image != null)
             {
-                var img = TargetVal.Image.GetDataBaseIndex();
+                var img = TargetVal.idx;
 
                 InitializeList(TargetVal.Obj.Count);
 
+                
                 //      Rotation & Single Touch                      //
-                if (Input.touchCount == 1)
+                if (Input.touchCount == 1 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
                 {
-                    //RotateObj(TargetVal.Obj[img]);
-
+                    RotateObj(TargetVal.Obj[img]);
 
                     // Debug 용....
                     ShowInsepctor(target);
@@ -109,9 +107,9 @@ public class ObjController : MonoBehaviour
 
 
                 //      Zoom in & out With Double Touch              // 
-                if (Input.touchCount == 2)
+                if (Input.touchCount == 2 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
                 {
-                    //ZoomInAndOutObj(TargetVal.Obj[img]);
+                    ZoomInAndOutObj(TargetVal.Obj[img]);
 
                     text.text = "";
 
@@ -183,7 +181,6 @@ public class ObjController : MonoBehaviour
             if (false == isChange)
             {
                 Childrens[i].material = mat;
-
             }
             else
             {
