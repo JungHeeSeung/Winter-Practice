@@ -23,77 +23,8 @@
         // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
-        public GameObject canvas;
-
-        public canvasUI ui;
-
-        public int idx;
-        public enum State
-        {
-            Rotate,
-            Scaled,
-            Texture,
-            WireFrame
-        }
-
-        public State state;
-        public State drawState;
-
         // 이 부분을 아마도 배열같은 자료구조로 처리해야할 듯
         public List<GameObject> Obj = new List<GameObject>();
-
-
-        private void Start()
-        {
-            ui = canvas.GetComponent<canvasUI>();
-            SetFunctionUI();
-        }
-
-        void IsRotate(bool isSelected)
-        {
-            if (isSelected)
-            {
-                state = State.Rotate;
-            }
-        }
-
-        void IsScale(bool isSelected)
-        {
-            if (isSelected)
-            {
-                state = State.Scaled;
-            }
-        }
-
-        void IsTexture(bool isSelected)
-        {
-            if (isSelected)
-            {
-                drawState = State.Texture;
-            }
-        }
-
-        void IsWireFrame(bool isSelected)
-        {
-            if (isSelected)
-            {
-                drawState = State.WireFrame;
-            }
-        }
-
-        public void SetFunctionUI()
-        {
-            ui.rotate.onValueChanged.RemoveAllListeners();
-            ui.scale.onValueChanged.RemoveAllListeners();
-            ui.texture.onValueChanged.RemoveAllListeners();
-            ui.wireFrame.onValueChanged.RemoveAllListeners();
-
-
-            ui.rotate.onValueChanged.AddListener(IsRotate);
-            ui.scale.onValueChanged.AddListener(IsScale);
-            ui.texture.onValueChanged.AddListener(IsTexture);
-            ui.wireFrame.onValueChanged.AddListener(IsWireFrame);
-        }
 
         public void Update()
         {
@@ -103,8 +34,6 @@
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-
-                canvas.SetActive(false);
 
                 foreach (var target in Obj)
                 {
@@ -133,13 +62,14 @@
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
 
-            canvas.SetActive(true);
 
 
             foreach (var target in Obj)
             {
                 if (target != null)
                 {
+                    var idx = Image.GetDataBaseIndex();
+
                     if (target == Obj[idx])
                     {
                         target.SetActive(true);
