@@ -18,7 +18,6 @@
         private Dictionary<int, TrackingImageVisualizer> m_Visualizers
             = new Dictionary<int, TrackingImageVisualizer>();
 
-
         public Dictionary<int, TrackingImageVisualizer> data
         {
             set => m_Visualizers = value;
@@ -51,12 +50,13 @@
                 {
                     NRDebugger.Log("Create new TrackingImageVisualizer!");
                     // Create an anchor to ensure that NRSDK keeps tracking this augmented image.
-                    visualizer = Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
+                    visualizer = (TrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;
                     visualizer.transform.parent = transform;
 
+                    visualizer.idx = image.GetDataBaseIndex();
                     // 항상 사람이 봤을 때 수직으로 서 있게
-                    visualizer.Obj.transform.rotation = Quaternion.identity;
+                    visualizer.Obj[visualizer.idx].transform.rotation = Quaternion.identity;
                     visualizer.ui.transform.rotation = Quaternion.identity;
                     // 
 
@@ -67,7 +67,7 @@
                     m_Visualizers.Remove(image.GetDataBaseIndex());
                     Destroy(visualizer.gameObject);
 
-                    //FitToScanOverlay.SetActive(true);
+                    FitToScanOverlay.SetActive(true);
                 }
 
                 FitToScanOverlay.SetActive(false);

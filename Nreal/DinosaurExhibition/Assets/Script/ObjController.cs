@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using NRKernal;
 using NRKernal.NRExamples;
 
@@ -20,67 +19,126 @@ public class ObjController : MonoBehaviour
 
     public Material mat;    // Grid용
 
-    private List<Material> originMat = new List<Material>();    // 원본
+    public class MatList
+    {
+        public List<Material> list = new List<Material>();
+    }
 
-    public State oldState = State.texture;
+    private List<MatList> originMat = new List<MatList>();    // 원본
+
+    private bool isChange = false;
 
     private List<MeshRenderer> Childrens = new List<MeshRenderer>();    // 대상
 
+    void InitializeList(int cnt)
+    {
+        if (originMat.Count <= cnt)
+        {
+            for (int i = originMat.Count; i <= cnt; ++i)
+            {
+                originMat.Add(null);
+            }
+        }
+    }
+
     // Grid <-> Texture 변경용
+
+
+
+    // Debug
+    public Text text;
+    public List<int> key = new List<int>();
+    public List<TrackingImageVisualizer> value = new List<TrackingImageVisualizer>();
+    void ShowInsepctor(Dictionary<int, TrackingImageVisualizer> dat)
+    {
+        key.Clear();
+        value.Clear();
+
+        foreach (var pair in dat)
+        {
+            key.Add(pair.Key);
+            value.Add(pair.Value);
+        }
+    }
+    // Debug
 
     void Update()
     {
         target = trackingImage.data;
 
-        var list = new List<TrackingImageVisualizer>(target.Values);
-
-        TrackingImageVisualizer TargetVal = null;
-
-        if (list.Count != 0)
+        // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
+        // Key를 바탕으로 Value를 찾아야 하나...??
+        foreach (var TargetVal in target.Values)
         {
-            TargetVal = list[0];
-
-            //      Rotation                       //
-            if (TargetVal.state == State.rotate)
+            if (TargetVal.Image != null)
             {
-                RotateObj(TargetVal.Obj);
+                var img = TargetVal.idx;
 
+                InitializeList(TargetVal.Obj.Count);
+
+                
+                //      Rotation & Single Touch                      //
+                if (Input.touchCount == 1 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
+                {
+                    RotateObj(TargetVal.Obj[img]);
+
+                    // Debug 용....
+                    ShowInsepctor(target);
+
+                    for (int i = 0; (i < Mathf.Max(key.Count, value.Count)); ++i)
+                    {
+                        if (i < key.Count)
+                        {
+                            text.text += "key: " + key[i];
+                        }
+                        if (i < value.Count)
+                        {
+                            text.text += "value's key: " + value[i].Image.GetDataBaseIndex();
+                        }
+                    }
+
+                    text.text += " " + target.Count + " in Dict \n";
+                    // Debug 용....
+
+
+                }
+                //      Rotation With Single Touch                   //
+
+
+
+                //      Zoom in & out With Double Touch              // 
+                if (Input.touchCount == 2 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
+                {
+                    ZoomInAndOutObj(TargetVal.Obj[img]);
+
+                    text.text = "";
+
+                }
+                //      Zoom in & out With Double Touch              // 
+
+
+
+                //      Grid <-> Texture With Home Button            //
+                if (NRInput.GetButtonDown(ControllerButton.HOME))
+                {
+                    SwapTextureObj(img, TargetVal.Obj[img]);
+                }
+                //      Grid <-> Texture With Home Button            //
+
+                if (NRInput.GetButtonDown(ControllerButton.APP))
+                {
+                    ResetObj(img, TargetVal.Obj[img]);
+                }
             }
-            //      Rotation                        //
-
-
-            //      Zoom in & out              // 
-            if (TargetVal.state == State.scale)
+            else
             {
-                ZoomInAndOutObj(TargetVal.Obj);
-
-            }
-            //      Zoom in & out               // 
-
-
-            //      Grid <-> Texture            //
-
-            SwapTextureObj(TargetVal.Obj, TargetVal.DrawState);
-
-            //      Grid <-> Texture            //
-
-            if (NRInput.GetButtonDown(ControllerButton.HOME))
-            {
-                ResetObj(TargetVal.Obj);
-                TargetVal.ResetState();
+                text.text = "Image is Null\n";
             }
         }
     }
 
-
-    void SwapTextureObj(GameObject obj, State state)
+    void SwapTextureObj(int idx, GameObject obj, bool reset = false)
     {
-        if(state == oldState)
-        {
-            return;
-        }
-
-
         List<MeshRenderer> temp = new List<MeshRenderer>();
         temp.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
 
@@ -101,9 +159,10 @@ public class ObjController : MonoBehaviour
         // 여기 못 고치면 답이 없다
         foreach (var child in Childrens)
         {
-            if (originMat.Count == 0)
+            if (originMat[idx] == null)
             {
-                originMat.Add(child.material);
+                originMat[idx] = new MatList();
+                originMat[idx].list.Add(child.material);
             }
             else
             {
@@ -111,20 +170,30 @@ public class ObjController : MonoBehaviour
             }
         }
 
+        if (true == reset)
+        {
+            isChange = false;
+        }
+
 
         for (int i = 0; i < Childrens.Count; ++i)
         {
-            if (State.grid == state)
+            if (false == isChange)
             {
                 Childrens[i].material = mat;
             }
             else
             {
-                Childrens[i].material = originMat[i];
+                Childrens[i].material = originMat[idx].list[i];
             }
         }
 
-        oldState = state;
+        if (reset != true)
+        {
+            isChange = !isChange;
+        }
+
+
     }
 
     void ZoomInAndOutObj(GameObject obj)
@@ -142,11 +211,7 @@ public class ObjController : MonoBehaviour
 
         Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
 
-
-        if ((obj.transform.localScale + delta).magnitude > 0)
-        {
-            obj.transform.localScale += delta;
-        }
+        obj.transform.localScale += delta;
     }
 
     void RotateObj(GameObject obj)
@@ -155,18 +220,18 @@ public class ObjController : MonoBehaviour
 
         if (touch.phase == TouchPhase.Moved)
         {
-            // deltaPosition으로 한 방에 해결이 가능한가?
-            float deltaX = touch.deltaPosition.x;
 
+            float deltaX = touch.deltaPosition.x;
             float rotX = deltaX * Time.deltaTime * rotSpd;
 
             obj.transform.Rotate(Vector3.up, rotX);
         }
     }
 
-    void ResetObj(GameObject Obj)
+    void ResetObj(int idx, GameObject Obj)
     {
         Obj.transform.rotation = Quaternion.identity;
         Obj.transform.localScale = new Vector3(1f, 1f, 1f);
+        SwapTextureObj(idx, Obj, true);
     }
 }

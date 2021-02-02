@@ -10,8 +10,5 @@ public class canvasUI : MonoBehaviour
     public Toggle texture;
     public Toggle wireFrame;
 
-    private void Start()
-    {
-        
-    }
+
 }
