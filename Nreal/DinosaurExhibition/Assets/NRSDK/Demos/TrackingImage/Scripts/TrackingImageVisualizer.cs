@@ -3,6 +3,15 @@
     using System.Collections.Generic;
     using UnityEngine;
 
+
+    public enum State
+    {
+        Rotate,
+        Scaled,
+        Texture,
+        WireFrame
+    }
+
     /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
     /// </summary>
@@ -27,20 +36,11 @@
 
         public canvasUI ui;
 
-        public int idx;
-        public enum State
-        {
-            Rotate,
-            Scaled,
-            Texture,
-            WireFrame
-        }
-
+     
         public State state;
         public State drawState;
 
-        // 이 부분을 아마도 배열같은 자료구조로 처리해야할 듯
-        public List<GameObject> Obj = new List<GameObject>();
+        public GameObject  Obj;
 
 
         private void Start()
@@ -106,14 +106,6 @@
 
                 canvas.SetActive(false);
 
-                foreach (var target in Obj)
-                {
-                    if (target != null)
-                    {
-                        target.SetActive(false);
-                    }
-                }
-
                 return;
             }
 
@@ -134,22 +126,7 @@
             FrameUpperRight.SetActive(true);
 
             canvas.SetActive(true);
-
-
-            foreach (var target in Obj)
-            {
-                if (target != null)
-                {
-                    if (target == Obj[idx])
-                    {
-                        target.SetActive(true);
-                    }
-                    else
-                    {
-                        target.SetActive(false);
-                    }
-                }
-            }
+            Obj.SetActive(true);
         }
     }
 }
