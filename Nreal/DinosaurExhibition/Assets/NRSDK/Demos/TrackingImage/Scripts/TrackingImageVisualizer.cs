@@ -1,15 +1,7 @@
 ﻿namespace NRKernal.NRExamples
 {
+    using System.Collections.Generic;
     using UnityEngine;
-
-    public enum State
-    {
-        None,
-        rotate,
-        scale,
-        texture,
-        grid
-    }
 
     /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
@@ -31,97 +23,97 @@
         // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
+        public GameObject canvas;
+
+        public canvasUI ui;
+
+        public int idx;
+        public enum State
+        {
+            Rotate,
+            Scaled,
+            Texture,
+            WireFrame
+        }
+
+        public State state;
+        public State drawState;
+
         // 이 부분을 아마도 배열같은 자료구조로 처리해야할 듯
-        public GameObject Obj;
+        public List<GameObject> Obj = new List<GameObject>();
 
-        public GameObject ui;
-
-        public canvasUI but;
-
-        public State state = State.None;
-
-        public State DrawState = State.texture;
-
-        void SetRotation(bool isSelected)
-        {
-            if(isSelected)
-            {
-                state = State.rotate;
-            }
-            else
-            {
-                state = State.None;
-            }
-        }
-        void SetScale(bool isSelected)
-        {
-            if (isSelected)
-            {
-                state = State.scale;
-            }
-            else
-            {
-                state = State.None;
-            }
-        }
-        void SetTexture(bool isSelected)
-        {
-            if (isSelected)
-            {
-                DrawState = State.texture;
-            }
-        }
-        void SetGrid(bool isSelected)
-        {
-            if (isSelected)
-            {
-                DrawState = State.grid;
-            }
-        }
-
-        public void ResetState()
-        {
-            state = State.None;
-            DrawState = State.texture;
-
-            but.rotate.isOn = false;
-            but.scale.isOn = false;
-            but.texture.isOn = true;
-            but.wireFrame.isOn = false;
-        }
 
         private void Start()
         {
-            but = ui.GetComponent<canvasUI>();
+            ui = canvas.GetComponent<canvasUI>();
+            SetFunctionUI();
+        }
 
-            but.rotate.onValueChanged.RemoveAllListeners();
-            but.scale.onValueChanged.RemoveAllListeners();
-            but.texture.onValueChanged.RemoveAllListeners();
-            but.wireFrame.onValueChanged.RemoveAllListeners();
+        void IsRotate(bool isSelected)
+        {
+            if (isSelected)
+            {
+                state = State.Rotate;
+            }
+        }
 
-            but.rotate.onValueChanged.AddListener(SetRotation);
-            but.scale.onValueChanged.AddListener(SetScale);
-            but.texture.onValueChanged.AddListener(SetTexture);
-            but.wireFrame.onValueChanged.AddListener(SetGrid);
+        void IsScale(bool isSelected)
+        {
+            if (isSelected)
+            {
+                state = State.Scaled;
+            }
+        }
+
+        void IsTexture(bool isSelected)
+        {
+            if (isSelected)
+            {
+                drawState = State.Texture;
+            }
+        }
+
+        void IsWireFrame(bool isSelected)
+        {
+            if (isSelected)
+            {
+                drawState = State.WireFrame;
+            }
+        }
+
+        public void SetFunctionUI()
+        {
+            ui.rotate.onValueChanged.RemoveAllListeners();
+            ui.scale.onValueChanged.RemoveAllListeners();
+            ui.texture.onValueChanged.RemoveAllListeners();
+            ui.wireFrame.onValueChanged.RemoveAllListeners();
+
+
+            ui.rotate.onValueChanged.AddListener(IsRotate);
+            ui.scale.onValueChanged.AddListener(IsScale);
+            ui.texture.onValueChanged.AddListener(IsTexture);
+            ui.wireFrame.onValueChanged.AddListener(IsWireFrame);
         }
 
         public void Update()
         {
             if (Image == null || Image.GetTrackingState() != TrackingState.Tracking)
             {
-                ResetState();
-                Obj.transform.rotation = Quaternion.identity;
-                Obj.transform.localScale = new Vector3(1f, 1f, 1f);
-                ui.transform.rotation = Quaternion.identity;
-                ui.transform.localScale = new Vector3(1f, 1f, 1f);
-
-
                 FrameLowerLeft.SetActive(false);
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-                Obj.SetActive(false);
-                ui.SetActive(false);
+
+                canvas.SetActive(false);
+
+                foreach (var target in Obj)
+                {
+                    if (target != null)
+                    {
+                        target.SetActive(false);
+                    }
+                }
+
                 return;
             }
 
@@ -141,8 +133,23 @@
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
 
-            Obj.SetActive(true);
-            ui.SetActive(true);
+            canvas.SetActive(true);
+
+
+            foreach (var target in Obj)
+            {
+                if (target != null)
+                {
+                    if (target == Obj[idx])
+                    {
+                        target.SetActive(true);
+                    }
+                    else
+                    {
+                        target.SetActive(false);
+                    }
+                }
+            }
         }
     }
 }
