@@ -54,8 +54,14 @@
                     visualizer.Image = image;
                     visualizer.transform.parent = transform;
 
+                    visualizer.idx = image.GetDataBaseIndex();
                     // 항상 사람이 봤을 때 수직으로 서 있게
+<<<<<<< HEAD
                     visualizer.Obj[visualizer.Image.GetDataBaseIndex()].transform.rotation = Quaternion.identity;
+=======
+                    visualizer.Obj[visualizer.idx].transform.rotation = Quaternion.identity;
+                    visualizer.ui.transform.rotation = Quaternion.identity;
+>>>>>>> parent of 4220a2b5... 2/1
                     // 
 
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);

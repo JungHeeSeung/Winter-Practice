@@ -66,6 +66,7 @@ public class ObjController : MonoBehaviour
     {
         target = trackingImage.data;
 
+<<<<<<< HEAD
 
 
         // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
@@ -119,6 +120,59 @@ public class ObjController : MonoBehaviour
                 //      Zoom in & out With Double Touch              // 
 
 
+=======
+        // key value 쌍에 대해 접근이 잘못되고 있는 것 같음..
+        // Key를 바탕으로 Value를 찾아야 하나...??
+        foreach (var TargetVal in target.Values)
+        {
+            if (TargetVal.Image != null)
+            {
+                var img = TargetVal.idx;
+
+                InitializeList(TargetVal.Obj.Count);
+
+                
+                //      Rotation & Single Touch                      //
+                if (Input.touchCount == 1 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
+                {
+                    RotateObj(TargetVal.Obj[img]);
+
+                    // Debug 용....
+                    ShowInsepctor(target);
+
+                    for (int i = 0; (i < Mathf.Max(key.Count, value.Count)); ++i)
+                    {
+                        if (i < key.Count)
+                        {
+                            text.text += "key: " + key[i];
+                        }
+                        if (i < value.Count)
+                        {
+                            text.text += "value's key: " + value[i].Image.GetDataBaseIndex();
+                        }
+                    }
+
+                    text.text += " " + target.Count + " in Dict \n";
+                    // Debug 용....
+
+
+                }
+                //      Rotation With Single Touch                   //
+
+
+
+                //      Zoom in & out With Double Touch              // 
+                if (Input.touchCount == 2 && (TargetVal.state == TrackingImageVisualizer.State.Rotate))
+                {
+                    ZoomInAndOutObj(TargetVal.Obj[img]);
+
+                    text.text = "";
+
+                }
+                //      Zoom in & out With Double Touch              // 
+
+
+>>>>>>> parent of 4220a2b5... 2/1
 
                 //      Grid <-> Texture With Home Button            //
                 if (NRInput.GetButtonDown(ControllerButton.HOME))
