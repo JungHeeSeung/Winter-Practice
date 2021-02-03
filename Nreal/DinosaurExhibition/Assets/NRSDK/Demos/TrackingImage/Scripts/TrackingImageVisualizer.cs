@@ -4,13 +4,6 @@
     using UnityEngine;
 
 
-    public enum State
-    {
-        Rotate,
-        Scaled,
-        Texture,
-        WireFrame
-    }
 
     /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
@@ -36,64 +29,8 @@
 
         public canvasUI ui;
 
-     
-        public State state;
-        public State drawState;
+        public GameObject Obj;
 
-        public GameObject  Obj;
-
-
-        private void Start()
-        {
-            ui = canvas.GetComponent<canvasUI>();
-            SetFunctionUI();
-        }
-
-        void IsRotate(bool isSelected)
-        {
-            if (isSelected)
-            {
-                state = State.Rotate;
-            }
-        }
-
-        void IsScale(bool isSelected)
-        {
-            if (isSelected)
-            {
-                state = State.Scaled;
-            }
-        }
-
-        void IsTexture(bool isSelected)
-        {
-            if (isSelected)
-            {
-                drawState = State.Texture;
-            }
-        }
-
-        void IsWireFrame(bool isSelected)
-        {
-            if (isSelected)
-            {
-                drawState = State.WireFrame;
-            }
-        }
-
-        public void SetFunctionUI()
-        {
-            ui.rotate.onValueChanged.RemoveAllListeners();
-            ui.scale.onValueChanged.RemoveAllListeners();
-            ui.texture.onValueChanged.RemoveAllListeners();
-            ui.wireFrame.onValueChanged.RemoveAllListeners();
-
-
-            ui.rotate.onValueChanged.AddListener(IsRotate);
-            ui.scale.onValueChanged.AddListener(IsScale);
-            ui.texture.onValueChanged.AddListener(IsTexture);
-            ui.wireFrame.onValueChanged.AddListener(IsWireFrame);
-        }
 
         public void Update()
         {
@@ -105,7 +42,7 @@
                 FrameUpperRight.SetActive(false);
 
                 canvas.SetActive(false);
-
+                Obj.SetActive(false);
                 return;
             }
 

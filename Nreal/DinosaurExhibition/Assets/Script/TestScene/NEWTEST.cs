@@ -4,31 +4,13 @@ using UnityEngine;
 
 public class NEWTEST : MonoBehaviour
 {
-    [System.Serializable]
-    public class PointList
+    public float rotSpd = 100f;
+
+    private void Update()
     {
-        public List<Vector3> list = new List<Vector3>();
-    }
+        float rotX = Time.deltaTime * rotSpd;
 
-    public List<PointList> pointLists = new List<PointList>();
-
-    public int count = 0;
-
-    private void Start()
-    {
-        if(pointLists.Count < count)
-        {
-            for(int i = pointLists.Count; i<=count; ++i)
-            {
-                pointLists.Add(null);
-                Debug.Log(i);
-            }
-        }
-        if(pointLists[0] == null)
-        {
-            pointLists[0] = new PointList();
-        }
-       
+        transform.Rotate(Vector3.up, rotX);
     }
 
 }

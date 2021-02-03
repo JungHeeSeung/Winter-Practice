@@ -37,13 +37,13 @@ namespace NRKernal.Record
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space) || NRInput.GetButtonDown(ControllerButton.APP))
-            {
-                Root.SetActive(!Root.activeInHierarchy);
+            //if (Input.GetKeyDown(KeyCode.Space) || NRInput.GetButtonDown(ControllerButton.APP))
+            //{
+            //    Root.SetActive(!Root.activeInHierarchy);
 
-                NRInput.LaserVisualActive = !Root.activeInHierarchy;
-                NRInput.ReticleVisualActive = !Root.activeInHierarchy;
-            }
+            //    NRInput.LaserVisualActive = !Root.activeInHierarchy;
+            //    NRInput.ReticleVisualActive = !Root.activeInHierarchy;
+            //}
             if (isBindToController)
             {
                 this.BindPreviewTOController();

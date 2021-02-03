@@ -254,8 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0601578f4117f5e4e9acc6de99690d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointLists: []
-  count: 2
+  rotSpd: 50
 --- !u!114 &967081997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,11 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8358c560c14a03d4784039745e1f5adf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target:
-  - {fileID: 7911982570312917822}
-  - {fileID: 1949941547}
-  vList: []
-  UI: {fileID: 4599972665976029950}
 --- !u!1 &1124231645
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,10 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6b222c5ee7f324aabfae4ade4d43c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TrackingImageVisualizerPrefab: {fileID: 8709647761393435183, guid: 8e48e70ac72e1124a86f03de311cd86c,
-    type: 3}
-  key: 
-  value: []
 --- !u!4 &1124231647
 Transform:
   m_ObjectHideFlags: 0
@@ -1361,19 +1351,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Rotate
---- !u!114 &4599972665976029941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4599972665976030124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6750858741a2f3744a27ca80b2f55710, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
 --- !u!114 &4599972665976029942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1602,10 +1579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c118d7b46e90d4d459cb5eee926f0568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotate: {fileID: 4599972665976029946}
-  scale: {fileID: 4599972665976029929}
-  texture: {fileID: 4599972665976029945}
-  wireFrame: {fileID: 4599972665976029943}
+  Rotate: {fileID: 0}
+  DrawMode: {fileID: 0}
+  Reset: {fileID: 0}
+  In: {fileID: 0}
+  Out: {fileID: 0}
+  reset: {fileID: 0}
 --- !u!114 &4599972665976029951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2292,14 +2271,26 @@ GameObject:
   - component: {fileID: 4599972665976029932}
   - component: {fileID: 4599972665976029947}
   - component: {fileID: 4599972665976029950}
-  - component: {fileID: 4599972665976029941}
+  - component: {fileID: 4599972665976030125}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!114 &4599972665976030125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599972665976030124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6b222c5ee7f324aabfae4ade4d43c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4599972665976030126
 GameObject:
   m_ObjectHideFlags: 0
