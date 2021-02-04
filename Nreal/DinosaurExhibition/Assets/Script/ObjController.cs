@@ -10,7 +10,7 @@ public class ObjController : MonoBehaviour
 {
     public TrackingImageExampleController trackingImage;
 
-    public float rotSpd = 100f;
+    public float rotSpd = 10f;
     public float zoomSpd = 10f;
 
     private Dictionary<int, TrackingImageVisualizer> target;
@@ -35,45 +35,53 @@ public class ObjController : MonoBehaviour
 
         foreach (var TargetVal in target.Values)
         {
+            var obj = TargetVal.Obj;
+
+
+            RotateObjWithTouch(obj);
+            ZoomInAndOutObjWithTouch(obj);
+
+
             if (true == TargetVal.ui.Rotate.isOn)
             {
-                RotateObj(TargetVal.Obj);
+                RotateObj(obj);
             }
 
             if (true == TargetVal.ui.In.isDown)
             {
-                ZoomIn(TargetVal.Obj);
+                ZoomIn(obj);
             }
 
             if (true == TargetVal.ui.Out.isDown)
             {
-                ZoomOut(TargetVal.Obj);
+                ZoomOut(obj);
             }
 
             if (true == TargetVal.ui.DrawMode.isOn)
             {
-                DrawTexture(TargetVal.Obj);
+                DrawTexture(obj);
             }
             else
             {
-                DrawGrid(TargetVal.Obj);
+                DrawGrid(obj);
             }
+
 
             if (true == TargetVal.ui.reset.isDown)
             {
-                ResetObj(TargetVal.Obj);
-                TargetVal.ui.DrawMode.isOn = true;
+                ResetObj(obj);
+
+                if (TargetVal.ui.DrawMode.isOn == false)
+                {
+                    TargetVal.ui.DrawMode.isOn = true;
+                }
             }
 
-            text.text = "Zoom IN is " + TargetVal.ui.In.isDown;
-            text.text += "Texture Mode is " + TargetVal.ui.DrawMode.isOn;
         }
-
     }
 
     void extractTexture(GameObject obj)
     {
-
         Childrens.Clear();
         Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
 
@@ -96,7 +104,15 @@ public class ObjController : MonoBehaviour
 
         for (int i = 0; i < Childrens.Count; ++i)
         {
-            Childrens[i].material = originMat[i];
+            if (originMat.Count <= i)
+            {
+                Childrens[i].material = originMat[originMat.Count - 1];
+            }
+            else
+            {
+                Childrens[i].material = originMat[i];
+            }
+
         }
     }
 
@@ -137,7 +153,52 @@ public class ObjController : MonoBehaviour
         float rotX = Time.deltaTime * rotSpd * 10;
 
         obj.transform.Rotate(Vector3.up, rotX);
+    }
 
+    void ZoomInAndOutObjWithTouch(GameObject obj)
+    {
+        if (Input.touchCount != 2)
+        {
+            return;
+        }
+
+        Touch touchOne = Input.GetTouch(0);
+        Touch touchTwo = Input.GetTouch(1);
+
+        Vector2 oldPosTouchOne = touchOne.position - touchOne.deltaPosition;
+        Vector2 oldPosTouchTwo = touchTwo.position - touchTwo.deltaPosition;
+
+        float oldDis = (oldPosTouchOne - oldPosTouchTwo).magnitude;
+        float newDis = (touchOne.position - touchTwo.position).magnitude;
+
+        float diff = newDis - oldDis;
+
+        Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
+
+        obj.transform.localScale += delta;
+    }
+
+    void RotateObjWithTouch(GameObject obj)
+    {
+        if (Input.touchCount != 1)
+        {
+            return;
+        }
+
+        Touch touch = Input.GetTouch(0);
+
+        if (touch.phase == TouchPhase.Moved)
+        {
+
+            float deltaX = touch.deltaPosition.x;
+            float deltaY = touch.deltaPosition.y;
+
+            float rotX = deltaX * Time.deltaTime * rotSpd;
+            float rotY = deltaY * Time.deltaTime * rotSpd;
+
+            obj.transform.Rotate(Vector3.up, rotX);
+            obj.transform.Rotate(Vector3.forward, rotY);
+        }
     }
 
     public void ResetObj(GameObject Obj)

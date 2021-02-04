@@ -29,6 +29,7 @@
 
         public canvasUI ui;
 
+        // 여기가 아마 자료구조로 해결해야 할듯
         public GameObject Obj;
 
 
@@ -61,6 +62,11 @@
             FrameLowerRight.SetActive(true);
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
+
+            var pos = canvas.transform.position;
+            pos.y = center.position.y - halfHeight/2;
+            canvas.transform.position = pos;
+            canvas.transform.rotation = Quaternion.identity;
 
             canvas.SetActive(true);
             Obj.SetActive(true);
