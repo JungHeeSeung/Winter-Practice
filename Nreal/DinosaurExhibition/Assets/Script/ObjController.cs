@@ -117,7 +117,7 @@ public class ObjController : MonoBehaviour
 
         Vector3 delta = new Vector3(diff, diff, diff);
 
-        obj.transform.localScale = (obj.transform.localScale + delta).magnitude < 6f ?
+        obj.transform.localScale = (obj.transform.localScale + delta).magnitude < 10f ?
               (obj.transform.localScale + delta) : obj.transform.localScale;
     }
 
@@ -127,7 +127,7 @@ public class ObjController : MonoBehaviour
 
         Vector3 delta = new Vector3(diff, diff, diff);
 
-        obj.transform.localScale = (obj.transform.localScale - delta).magnitude > 0.6f ?
+        obj.transform.localScale = (obj.transform.localScale - delta).magnitude > 0.5f ?
               (obj.transform.localScale - delta) : obj.transform.localScale;
 
     }
