@@ -28,6 +28,7 @@ public class ObjController : MonoBehaviour
     // Grid <-> Texture 변경용
 
     public Text text;
+    private int count = 0;
 
     void Update()
     {

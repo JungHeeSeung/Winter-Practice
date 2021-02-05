@@ -24,6 +24,7 @@
             get => m_Visualizers;
         }
 
+        private int cnt = 0;
 
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
@@ -39,13 +40,13 @@
             // Get updated augmented images for this frame.
             NRFrame.GetTrackables<NRTrackableImage>(m_TempTrackingImages, NRTrackableQueryFilter.New);
 
-
             // Create visualizers and anchors for updated augmented images that are tracking and do not previously
             // have a visualizer. Remove visualizers for stopped images.
             foreach (var image in m_TempTrackingImages)
             {
                 TrackingImageVisualizer visualizer = null;
                 m_Visualizers.TryGetValue(image.GetDataBaseIndex(), out visualizer);
+
                 if (image.GetTrackingState() == TrackingState.Tracking && visualizer == null)
                 {
                     NRDebugger.Log("Create new TrackingImageVisualizer!");
@@ -61,20 +62,36 @@
 
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);
                 }
-                else if (image.GetTrackingState() == TrackingState.Stopped && visualizer != null)
+                else if (image.GetTrackingState() != TrackingState.Tracking && visualizer != null)
                 {
                     m_Visualizers.Remove(image.GetDataBaseIndex());
                     Destroy(visualizer.gameObject);
-
-                    FitToScanOverlay.SetActive(true);
                 }
 
                 FitToScanOverlay.SetActive(false);
             }
 
+            foreach (var val in m_Visualizers.Values)
+            {
+                if (true == val.Obj.activeSelf)
+                {
+                    break;
+                }
+
+                if(cnt < m_Visualizers.Values.Count)
+                {
+                    continue;
+                }
+                else
+                {
+                    FitToScanOverlay.SetActive(true);
+                }
+                cnt++;
+            }
+            cnt = 0;
         }
 
-      
+
 
         public void EnableImageTracking()
         {
