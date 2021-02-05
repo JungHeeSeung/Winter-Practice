@@ -1,38 +1,42 @@
-﻿namespace NRKernal.NRExamples
+﻿/****************************************************************************
+* Copyright 2019 Nreal Techonology Limited. All rights reserved.
+*                                                                                                                                                          
+* This file is part of NRSDK.                                                                                                          
+*                                                                                                                                                           
+* https://www.nreal.ai/        
+* 
+*****************************************************************************/
+
+namespace NRKernal.NRExamples
 {
-    using System.Collections.Generic;
     using UnityEngine;
 
-
-
-    /// <summary>
-    /// Uses 4 frame corner objects to visualize an TrackingImage.
-    /// </summary>
+    /// <summary> Uses 4 frame corner objects to visualize an TrackingImage. </summary>
     public class TrackingImageVisualizer : MonoBehaviour
     {
-        // The TrackingImage to visualize.
+        /// <summary> The TrackingImage to visualize. </summary>
         public NRTrackableImage Image;
 
-        // A model for the lower left corner of the frame to place when an image is detected.
+        /// <summary>
+        /// A model for the lower left corner of the frame to place when an image is detected. </summary>
         public GameObject FrameLowerLeft;
 
-        // A model for the lower right corner of the frame to place when an image is detected.
+        /// <summary>
+        /// A model for the lower right corner of the frame to place when an image is detected. </summary>
         public GameObject FrameLowerRight;
 
-        // A model for the upper left corner of the frame to place when an image is detected.
+        /// <summary>
+        /// A model for the upper left corner of the frame to place when an image is detected. </summary>
         public GameObject FrameUpperLeft;
 
-        // A model for the upper right corner of the frame to place when an image is detected.
+        /// <summary>
+        /// A model for the upper right corner of the frame to place when an image is detected. </summary>
         public GameObject FrameUpperRight;
 
-        public GameObject canvas;
+        /// <summary> The axis. </summary>
+        public GameObject Axis;
 
-        public canvasUI ui;
-
-        // 여기가 아마 자료구조로 해결해야 할듯
-        public GameObject Obj;
-
-
+        /// <summary> Updates this object. </summary>
         public void Update()
         {
             if (Image == null || Image.GetTrackingState() != TrackingState.Tracking)
@@ -41,9 +45,7 @@
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-
-                canvas.SetActive(false);
-                Obj.SetActive(false);
+                Axis.SetActive(false);
                 return;
             }
 
@@ -62,14 +64,7 @@
             FrameLowerRight.SetActive(true);
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
-
-            var pos = canvas.transform.position;
-            pos.y = center.position.y - halfHeight/2;
-            canvas.transform.position = pos;
-            canvas.transform.rotation = Quaternion.identity;
-
-            canvas.SetActive(true);
-            Obj.SetActive(true);
+            Axis.SetActive(true);
         }
     }
 }

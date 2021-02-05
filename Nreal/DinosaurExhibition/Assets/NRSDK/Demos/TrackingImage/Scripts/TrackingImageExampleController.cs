@@ -1,33 +1,35 @@
-﻿namespace NRKernal.NRExamples
+﻿/****************************************************************************
+* Copyright 2019 Nreal Techonology Limited. All rights reserved.
+*                                                                                                                                                          
+* This file is part of NRSDK.                                                                                                          
+*                                                                                                                                                           
+* https://www.nreal.ai/        
+* 
+*****************************************************************************/
+
+namespace NRKernal.NRExamples
 {
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary>
-    /// Controller for TrackingImage example.
-    /// </summary>
+    /// <summary> Controller for TrackingImage example. </summary>
     [HelpURL("https://developer.nreal.ai/develop/unity/image-tracking")]
     public class TrackingImageExampleController : MonoBehaviour
     {
-        // A prefab for visualizing an TrackingImage.
+        /// <summary> A prefab for visualizing an TrackingImage. </summary>
         public TrackingImageVisualizer TrackingImageVisualizerPrefab;
 
-        // The overlay containing the fit to scan user guide.
+        /// <summary> The overlay containing the fit to scan user guide. </summary>
         public GameObject FitToScanOverlay;
 
+        /// <summary> The visualizers. </summary>
         private Dictionary<int, TrackingImageVisualizer> m_Visualizers
             = new Dictionary<int, TrackingImageVisualizer>();
 
-        public Dictionary<int, TrackingImageVisualizer> data
-        {
-            set => m_Visualizers = value;
-            get => m_Visualizers;
-        }
-
-        private int cnt = 0;
-
+        /// <summary> The temporary tracking images. </summary>
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
+        /// <summary> Updates this object. </summary>
         public void Update()
         {
 #if !UNITY_EDITOR
@@ -46,23 +48,16 @@
             {
                 TrackingImageVisualizer visualizer = null;
                 m_Visualizers.TryGetValue(image.GetDataBaseIndex(), out visualizer);
-
                 if (image.GetTrackingState() == TrackingState.Tracking && visualizer == null)
                 {
-                    NRDebugger.Log("Create new TrackingImageVisualizer!");
+                    NRDebugger.Info("Create new TrackingImageVisualizer!");
                     // Create an anchor to ensure that NRSDK keeps tracking this augmented image.
                     visualizer = (TrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;
                     visualizer.transform.parent = transform;
-
-                    // 항상 사람이 봤을 때 수직으로 서 있게
-                    visualizer.Obj.transform.rotation = Quaternion.identity;
-                    visualizer.ui.transform.rotation = Quaternion.identity;
-                    // 
-
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);
                 }
-                else if (image.GetTrackingState() != TrackingState.Tracking && visualizer != null)
+                else if (image.GetTrackingState() == TrackingState.Stopped && visualizer != null)
                 {
                     m_Visualizers.Remove(image.GetDataBaseIndex());
                     Destroy(visualizer.gameObject);
@@ -71,28 +66,9 @@
                 FitToScanOverlay.SetActive(false);
             }
 
-            foreach (var val in m_Visualizers.Values)
-            {
-                if (true == val.Obj.activeSelf)
-                {
-                    break;
-                }
-
-                if(cnt < m_Visualizers.Values.Count)
-                {
-                    continue;
-                }
-                else
-                {
-                    FitToScanOverlay.SetActive(true);
-                }
-                cnt++;
-            }
-            cnt = 0;
         }
 
-
-
+        /// <summary> Enables the image tracking. </summary>
         public void EnableImageTracking()
         {
             var config = NRSessionManager.Instance.NRSessionBehaviour.SessionConfig;
@@ -100,6 +76,7 @@
             NRSessionManager.Instance.SetConfiguration(config);
         }
 
+        /// <summary> Disables the image tracking. </summary>
         public void DisableImageTracking()
         {
             var config = NRSessionManager.Instance.NRSessionBehaviour.SessionConfig;
