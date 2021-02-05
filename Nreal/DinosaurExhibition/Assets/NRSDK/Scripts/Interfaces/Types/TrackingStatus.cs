@@ -9,7 +9,9 @@
 
 namespace NRKernal
 {
-    /// <summary> Device Tracking State. </summary>
+    /// <summary>
+    /// Device Tracking State.
+    /// </summary>
     public enum TrackingState
     {
         /// <summary>
@@ -29,7 +31,9 @@ namespace NRKernal
         Stopped = 2
     }
 
-    /// <summary> Device Tracking Mode. </summary>
+    /// <summary>
+    /// Device Tracking State.
+    /// </summary>
     public enum TrackingMode
     {
         /// <summary>

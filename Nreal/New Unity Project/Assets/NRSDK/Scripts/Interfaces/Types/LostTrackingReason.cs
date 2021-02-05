@@ -9,24 +9,36 @@
 
 namespace NRKernal
 {
-    /// <summary> The reason of HMD untracked. </summary>
+    /**
+     * The reason of HMD untracked.
+     */
     public enum LostTrackingReason
     {
         NONE = 0,
 
-        /// <summary> Initializing.. </summary>
+        /**
+         * Initializing.
+         */
         INITIALIZING = 1,
 
-        /// <summary> Move too fast.. </summary>
+        /**
+         * Move too fast.
+         */
         EXCESSIVE_MOTION = 2,
 
-        /// <summary> Feature point deficiency.. </summary>
+        /**
+        * Feature point deficiency.
+        */
         INSUFFICIENT_FEATURES = 3,
 
-        /// <summary> Reposition. </summary>
+        /**
+         * Reposition.
+         */
         RELOCALIZING = 4,
 
-        /// <summary> Reposition. </summary>
+        /**
+         * Reposition.
+         */
         ENTER_VRMODE = 5,
     }
 }

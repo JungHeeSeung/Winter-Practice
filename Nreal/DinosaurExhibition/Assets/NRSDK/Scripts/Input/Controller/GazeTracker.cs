@@ -9,20 +9,17 @@
 
 namespace NRKernal
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using UnityEngine;
 
-    
-    /// <summary> A gaze tracker. </summary>
+    /// @cond EXCLUDE_FROM_DOXYGEN
     public class GazeTracker : MonoBehaviour
     {
-        /// <summary> The raycaster. </summary>
         [SerializeField]
         private NRPointerRaycaster m_Raycaster;
-        /// <summary> True if is enabled, false if not. </summary>
         private bool m_IsEnabled;
 
-        /// <summary> Gets the camera center. </summary>
-        /// <value> The camera center. </value>
         private Transform CameraCenter
         {
             get
@@ -31,31 +28,26 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Starts this object. </summary>
         private void Start()
         {
             OnControllerStatesUpdated();
         }
 
-        /// <summary> Executes the 'enable' action. </summary>
         private void OnEnable()
         {
             NRInput.OnControllerStatesUpdated += OnControllerStatesUpdated;
         }
 
-        /// <summary> Executes the 'disable' action. </summary>
         private void OnDisable()
         {
             NRInput.OnControllerStatesUpdated -= OnControllerStatesUpdated;
         }
 
-        /// <summary> Executes the 'controller states updated' action. </summary>
         private void OnControllerStatesUpdated()
         {
             UpdateTracker();
         }
 
-        /// <summary> Updates the tracker. </summary>
         private void UpdateTracker()
         {
             if (CameraCenter == null)
@@ -69,5 +61,5 @@ namespace NRKernal
             }
         }
     }
-    
+    /// @endcond
 }

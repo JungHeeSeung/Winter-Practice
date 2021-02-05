@@ -3,78 +3,74 @@ using UnityEngine.UI;
 
 namespace NRKernal.NRExamples
 {
-    /// <summary> A nr home menu. </summary>
     public class NRHomeMenu : MonoBehaviour
     {
-        /// <summary> The confirm control. </summary>
         public Button confirmBtn;
-        /// <summary> The cancel control. </summary>
         public Button cancelBtn;
 
-        /// <summary> The instance. </summary>
         private static NRHomeMenu m_Instance;
-        /// <summary> True if is showing, false if not. </summary>
         private static bool m_IsShowing = false;
-        /// <summary> Full pathname of the menu prefab file. </summary>
         private static string m_MenuPrefabPath = "NRUI/NRHomeMenu";
 
-        private Transform m_CenterCamera;
-        private Transform CenterCamera
+        private Transform _MainCamera;
+        public Transform mainCamera
         {
             get
             {
-                if (m_CenterCamera == null)
+                if (_MainCamera == null)
                 {
-                    m_CenterCamera = NRSessionManager.Instance.CenterCameraAnchor;
+                    if (Camera.main != null)
+                    {
+                        _MainCamera = Camera.main.transform;
+                    }
+                    else if (NRSessionManager.Instance.NRHMDPoseTracker != null)
+                    {
+                        _MainCamera = NRSessionManager.Instance.NRHMDPoseTracker.centerCamera.transform;
+                    }
                 }
-                return m_CenterCamera;
+
+                return _MainCamera;
             }
         }
 
-        /// <summary> Starts this object. </summary>
         void Start()
         {
             confirmBtn.onClick.AddListener(OnComfirmButtonClick);
             cancelBtn.onClick.AddListener(OnCancelButtonClick);
         }
 
-        /// <summary> Updates this object. </summary>
         void Update()
         {
             if (m_IsShowing && NRInput.RaycastMode == RaycastModeEnum.Laser)
                 FollowCamera();
         }
 
-        /// <summary> Executes the 'comfirm button click' action. </summary>
         private void OnComfirmButtonClick()
         {
             Hide();
             AppManager.QuitApplication();
         }
 
-        /// <summary> Executes the 'cancel button click' action. </summary>
         private void OnCancelButtonClick()
         {
             Hide();
         }
 
-        /// <summary> Follow camera. </summary>
         private void FollowCamera()
         {
-            if (m_Instance && CenterCamera)
+            if (m_Instance && mainCamera)
             {
-                m_Instance.transform.position = CenterCamera.transform.position;
-                m_Instance.transform.rotation = CenterCamera.transform.rotation;
+                m_Instance.transform.position = mainCamera.transform.position;
+                m_Instance.transform.rotation = mainCamera.transform.rotation;
             }
         }
 
-        /// <summary> Creates the menu. </summary>
         private static void CreateMenu()
         {
             GameObject menuPrefab = Resources.Load<GameObject>(m_MenuPrefabPath);
             if (menuPrefab == null)
             {
-                NRDebugger.Error("Can not find prefab: " + m_MenuPrefabPath);
+                Debug.LogError("Can not find prefab: " + m_MenuPrefabPath);
                 return;
             }
             GameObject menuGo = Instantiate(menuPrefab);
@@ -85,7 +81,6 @@ namespace NRKernal.NRExamples
                 Destroy(menuGo);
         }
 
-        /// <summary> Toggles this object. </summary>
         public static void Toggle()
         {
             if (m_IsShowing)
@@ -94,7 +89,6 @@ namespace NRKernal.NRExamples
                 Show();
         }
 
-        /// <summary> Shows this object. </summary>
         public static void Show()
         {
             if (m_Instance == null)
@@ -108,7 +102,6 @@ namespace NRKernal.NRExamples
             }
         }
 
-        /// <summary> Hides this object. </summary>
         public static void Hide()
         {
             if (m_Instance)

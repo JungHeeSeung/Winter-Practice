@@ -1,16 +1,8 @@
-﻿/****************************************************************************
-* Copyright 2019 Nreal Techonology Limited. All rights reserved.
-*                                                                                                                                                          
-* This file is part of NRSDK.                                                                                                          
-*                                                                                                                                                           
-* https://www.nreal.ai/        
-* 
-*****************************************************************************/
-
-namespace NRKernal.Record
+﻿namespace NRKernal.Record
 {
     /// <summary>
-    /// The encoded image or video pixel format to use for PhotoCapture and VideoCapture. </summary>
+    /// The encoded image or video pixel format to use for PhotoCapture and VideoCapture.
+    /// </summary>
     public enum CapturePixelFormat
     {
         /// <summary>

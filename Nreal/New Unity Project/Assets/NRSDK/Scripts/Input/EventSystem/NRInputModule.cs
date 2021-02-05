@@ -15,28 +15,17 @@ namespace NRKernal
     using UnityEngine;
     using UnityEngine.EventSystems;
 
-    
-    /// <summary> A nr input module. </summary>
+    /// @cond EXCLUDE_FROM_DOXYGEN
     public class NRInputModule : BaseInputModule
     {
-        /// <summary> The processed frame. </summary>
         private int m_processedFrame;
-        /// <summary> The raycasters. </summary>
         private static readonly List<NRPointerRaycaster> raycasters = new List<NRPointerRaycaster>();
 
-        /// <summary> Gets a value indicating whether the active. </summary>
-        /// <value> True if active, false if not. </value>
         public static bool Active { get { return m_Instance != null; } }
-        /// <summary> Gets the screen center point. </summary>
-        /// <value> The screen center point. </value>
         public static Vector2 ScreenCenterPoint { get { return new Vector2(Screen.width * 0.5f, Screen.height * 0.5f); } }
-        /// <summary> True if is application quitting, false if not. </summary>
         private static bool isApplicationQuitting = false;
 
-        /// <summary> The instance. </summary>
         private static NRInputModule m_Instance;
-        /// <summary> Gets the instance. </summary>
-        /// <value> The instance. </value>
         public static NRInputModule Instance
         {
             get
@@ -46,7 +35,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> <para>Update the internal state of the Module.</para> </summary>
         public override void UpdateModule()
         {
             Initialize();
@@ -54,7 +42,6 @@ namespace NRKernal
                 ProcessRaycast();
         }
 
-        /// <summary> Process the raycast. </summary>
         protected virtual void ProcessRaycast()
         {
             if (m_processedFrame == Time.frameCount)
@@ -64,7 +51,6 @@ namespace NRKernal
             RaycastAll();
         }
 
-        /// <summary> Raycast all. </summary>
         private void RaycastAll()
         {
             for (int i = 0; i < raycasters.Count; i++)
@@ -127,7 +113,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Initializes this object. </summary>
         public static void Initialize()
         {
             if (Active || isApplicationQuitting) { return; }
@@ -137,7 +122,7 @@ namespace NRKernal
             {
                 m_Instance = instances[0];
                 if (instances.Length > 1)
-                    NRDebugger.Warning("Multiple NRInputModule not supported!");
+                    NRDebugger.LogWarning("Multiple NRInputModule not supported!");
             }
 
             if (!Active)
@@ -153,7 +138,7 @@ namespace NRKernal
                 }
                 if (eventSystem == null)
                 {
-                    NRDebugger.Warning("EventSystem not found or create fail!");
+                    NRDebugger.LogWarning("EventSystem not found or create fail!");
                     return;
                 }
 
@@ -162,7 +147,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> <para>Process the current tick for the module.</para> </summary>
         public override void Process()
         {
             Initialize();
@@ -172,14 +156,11 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Executes the 'application quit' action. </summary>
         private void OnApplicationQuit()
         {
             isApplicationQuitting = true;
         }
 
-        /// <summary> Adds a raycaster. </summary>
-        /// <param name="raycaster"> The raycaster.</param>
         public static void AddRaycaster(NRPointerRaycaster raycaster)
         {
             if (raycaster == null)
@@ -190,19 +171,12 @@ namespace NRKernal
             raycasters.Add(raycaster);
         }
 
-        /// <summary> Removes the raycaster described by raycaster. </summary>
-        /// <param name="raycaster"> The raycaster.</param>
         public static void RemoveRaycaster(NRPointerRaycaster raycaster)
         {
             raycasters.Remove(raycaster);
         }
 
-        /// <summary> The default raycast comparer. </summary>
         public static readonly Comparison<RaycastResult> defaultRaycastComparer = RaycastComparer;
-        /// <summary> Raycast comparer. </summary>
-        /// <param name="lhs"> The left hand side.</param>
-        /// <param name="rhs"> The right hand side.</param>
-        /// <returns> An int. </returns>
         private static int RaycastComparer(RaycastResult lhs, RaycastResult rhs)
         {
             if (lhs.module != rhs.module)
@@ -250,8 +224,6 @@ namespace NRKernal
             return lhs.index.CompareTo(rhs.index);
         }
 
-        /// <summary> Process the move described by eventData. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
         protected virtual void ProcessMove(PointerEventData eventData)
         {
             var hoverGO = eventData.pointerCurrentRaycast.gameObject;
@@ -261,8 +233,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Process the press described by eventData. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
         protected virtual void ProcessPress(NRPointerEventData eventData)
         {
             if (eventData.GetPress())
@@ -281,8 +251,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Process the press down described by eventData. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
         protected void ProcessPressDown(NRPointerEventData eventData)
         {
             var currentOverGo = eventData.pointerCurrentRaycast.gameObject;
@@ -340,8 +308,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Process the press up described by eventData. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
         protected void ProcessPressUp(NRPointerEventData eventData)
         {
             var currentOverGo = eventData.pointerCurrentRaycast.gameObject;
@@ -379,9 +345,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Determine if we should start drag. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
-        /// <returns> True if it succeeds, false if it fails. </returns>
         protected bool ShouldStartDrag(NRPointerEventData eventData)
         {
             if (!eventData.useDragThreshold || eventData.raycaster == null) { return true; }
@@ -391,8 +354,6 @@ namespace NRKernal
             return (currentPos - pressPos).sqrMagnitude >= threshold * threshold;
         }
 
-        /// <summary> Process the drag described by eventData. </summary>
-        /// <param name="eventData"> Information describing the event.</param>
         protected void ProcessDrag(NRPointerEventData eventData)
         {
             var moving = !Mathf.Approximately(eventData.position3DDelta.sqrMagnitude, 0f) || !Mathf.Approximately(Quaternion.Angle(Quaternion.identity, eventData.rotationDelta), 0f);
@@ -417,9 +378,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Handles the press exit and enter. </summary>
-        /// <param name="eventData">      Information describing the event.</param>
-        /// <param name="newEnterTarget"> The new enter target.</param>
         protected static void HandlePressExitAndEnter(NRPointerEventData eventData, GameObject newEnterTarget)
         {
             if (eventData.pressEnter == newEnterTarget) { return; }
@@ -449,9 +407,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Deselect if selection changed. </summary>
-        /// <param name="currentOverGo"> The current over go.</param>
-        /// <param name="pointerEvent">  The pointer event.</param>
         protected void DeselectIfSelectionChanged(GameObject currentOverGo, BaseEventData pointerEvent)
         {
             var selectHandlerGO = ExecuteEvents.GetEventHandler<ISelectHandler>(currentOverGo);
@@ -461,5 +416,5 @@ namespace NRKernal
             }
         }
     }
-    
+    /// @endcond
 }

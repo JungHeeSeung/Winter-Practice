@@ -15,35 +15,23 @@ namespace NRKernal
     using UnityEngine;
     using LitJson;
 
-    
-    /// <summary> A tracking image database inspector. </summary>
+    /// @cond EXCLUDE_FROM_DOXYGEN
     [CustomEditor(typeof(NRTrackingImageDatabase))]
     public class TrackingImageDatabaseInspector : Editor
     {
-        /// <summary> Height of the image spacer. </summary>
         private const float m_ImageSpacerHeight = 55f;
-        /// <summary> Size of the page. </summary>
         private const int m_PageSize = 5;
-        /// <summary> Height of the header. </summary>
         private const float m_HeaderHeight = 30f;
-        /// <summary> The container start. </summary>
         private static readonly Vector2 m_ContainerStart = new Vector2(14f, 87f);
 
-        /// <summary> The quality background executor. </summary>
         private static BackgroundJobExecutor m_QualityBackgroundExecutor = new BackgroundJobExecutor();
-        /// <summary> The database for quality jobs. </summary>
         private static NRTrackingImageDatabase m_DatabaseForQualityJobs = null;
-        /// <summary> The updated quality scores. </summary>
         private static Dictionary<string, JsonData> m_UpdatedQualityScores = new Dictionary<string, JsonData>();
-        /// <summary> Dictionary of temporary widths. </summary>
         private static Dictionary<string, float> m_TempWidthDict = new Dictionary<string, float>();
 
-        /// <summary> Zero-based index of the page. </summary>
         private int m_PageIndex = 0;
-        /// <summary> The default width. </summary>
         private const float defaultWidth = 0.4f;
 
-        /// <summary> <para>Implement this function to make a custom inspector.</para> </summary>
         public override void OnInspectorGUI()
         {
             NRTrackingImageDatabase database = target as NRTrackingImageDatabase;
@@ -90,13 +78,11 @@ namespace NRKernal
             DrawPageField(database.Count);
         }
 
-        /// <summary> Executes the 'dirty quality jobs' operation. </summary>
-        /// <param name="database"> The database.</param>
         private static void RunDirtyQualityJobs(NRTrackingImageDatabase database)
         {
             if (database == null)
             {
-                NRDebugger.Info("database is null");
+                Debug.Log("database is null");
                 return;
             }
             if (m_DatabaseForQualityJobs != database)
@@ -155,14 +141,12 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Builds data base. </summary>
-        /// <param name="database"> The database.</param>
         public static void BuildDataBase(NRTrackingImageDatabase database)
         {
-            NRDebugger.Info("Start to build database...");
+            Debug.Log("Start to build database...");
             if (database == null)
             {
-                NRDebugger.Info("database is null");
+                Debug.Log("database is null");
                 return;
             }
 
@@ -175,7 +159,7 @@ namespace NRKernal
             {
                 return;
             }
-            NRDebugger.Info("dirtyEntries count:" + dirtyEntries.Count);
+            Debug.Log("dirtyEntries count:" + dirtyEntries.Count);
 
             string cliBinaryPath;
             if (!NRTrackingImageDatabase.FindCliBinaryPath(out cliBinaryPath))
@@ -208,7 +192,7 @@ namespace NRKernal
                     NRTrackingImageDatabaseEntry image = dirtyEntries[i];
                     var textureGUID = image.TextureGUID;
 
-                    //NRDebugger.Info("update quality dict " + image.Name);
+                    //Debug.Log("update quality dict " + image.Name);
                     var image_info = json_obj[image.Name];
                     m_UpdatedQualityScores.Remove(textureGUID);
                     m_UpdatedQualityScores.Add(textureGUID, image_info);
@@ -217,17 +201,11 @@ namespace NRKernal
                 for (int i = 0; i < database.Count; i++)
                 {
                     NRTrackingImageDatabaseEntry image = database[i];
-                    NRDebugger.Info(image.ToString());
+                    Debug.Log(image.ToString());
                 }
             }
         }
 
-        /// <summary> Builds an image. </summary>
-        /// <param name="cliBinaryPath"> Full pathname of the CLI binary file.</param>
-        /// <param name="image">         The image.</param>
-        /// <param name="imagepath">     The imagepath.</param>
-        /// <param name="outpath">       The outpath.</param>
-        /// <param name="resultjson">    The resultjson.</param>
         private static void BuildImage(string cliBinaryPath, NRTrackingImageDatabaseEntry image, string imagepath, string outpath, string resultjson)
         {
             var textureGUID = image.TextureGUID;
@@ -259,12 +237,10 @@ namespace NRKernal
 
             //if (!string.IsNullOrEmpty(error))
             //{
-            //    NRDebugger.Info("BuildImage error :" + error);
+            //    Debug.Log("BuildImage error :" + error);
             //}
         }
 
-        /// <summary> Updates the database quality described by database. </summary>
-        /// <param name="database"> The database.</param>
         private static void UpdateDatabaseQuality(NRTrackingImageDatabase database)
         {
             lock (m_UpdatedQualityScores)
@@ -285,7 +261,7 @@ namespace NRKernal
                         updatedImage.Width = float.Parse(float.Parse(image_info["physical_width"].ToString()).ToString("#"));
                         updatedImage.Height = float.Parse(float.Parse(image_info["physical_height"].ToString()).ToString("#"));
                         database[i] = updatedImage;
-                        //NRDebugger.Info("UpdateDatabaseQuality :" + updatedImage.Name);
+                        //Debug.Log("UpdateDatabaseQuality :" + updatedImage.Name);
                     }
                 }
 
@@ -299,7 +275,6 @@ namespace NRKernal
             EditorUtility.SetDirty(database);
         }
 
-        /// <summary> Draw title. </summary>
         private void DrawTitle()
         {
             const string TITLE_STRING = "Images in Database";
@@ -317,7 +292,6 @@ namespace NRKernal
             EditorGUILayout.EndVertical();
         }
 
-        /// <summary> Draw container. </summary>
         private void DrawContainer()
         {
             var containerRect = new Rect(m_ContainerStart.x, m_ContainerStart.y, EditorGUIUtility.currentViewWidth - 30,
@@ -325,7 +299,6 @@ namespace NRKernal
             GUI.Box(containerRect, string.Empty);
         }
 
-        /// <summary> Draw column names. </summary>
         private void DrawColumnNames()
         {
             EditorGUILayout.BeginVertical();
@@ -349,9 +322,6 @@ namespace NRKernal
             EditorGUILayout.EndVertical();
         }
 
-        /// <summary> Quality for display. </summary>
-        /// <param name="quality"> The quality.</param>
-        /// <returns> A string. </returns>
         private string QualityForDisplay(string quality)
         {
             if (string.IsNullOrEmpty(quality))
@@ -367,10 +337,6 @@ namespace NRKernal
             return quality + "/100";
         }
 
-        /// <summary> Draw image field. </summary>
-        /// <param name="image">        The image.</param>
-        /// <param name="updatedImage"> [out] The updated image.</param>
-        /// <param name="wasRemoved">   [out] True if was removed.</param>
         private void DrawImageField(NRTrackingImageDatabaseEntry image, out NRTrackingImageDatabaseEntry updatedImage, out bool wasRemoved)
         {
             updatedImage = new NRTrackingImageDatabaseEntry();
@@ -451,8 +417,6 @@ namespace NRKernal
             EditorGUILayout.EndVertical();
         }
 
-        /// <summary> Draw image spacers. </summary>
-        /// <param name="displayedImageCount"> Number of displayed images.</param>
         private void DrawImageSpacers(int displayedImageCount)
         {
             EditorGUILayout.BeginVertical();
@@ -460,8 +424,6 @@ namespace NRKernal
             EditorGUILayout.EndVertical();
         }
 
-        /// <summary> Draw page field. </summary>
-        /// <param name="imageCount"> Number of images.</param>
         private void DrawPageField(int imageCount)
         {
             var lastPageIndex = Mathf.Max(imageCount - 1, 0) / m_PageSize;
@@ -502,5 +464,5 @@ namespace NRKernal
             EditorGUILayout.EndHorizontal();
         }
     }
-    
+    /// @endcond
 }

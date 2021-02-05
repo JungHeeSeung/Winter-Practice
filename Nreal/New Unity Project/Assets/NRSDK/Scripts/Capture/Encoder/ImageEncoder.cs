@@ -13,31 +13,21 @@ namespace NRKernal.Record
     using UnityEngine;
     using UnityEngine.Rendering;
 
-    /// <summary> An image encoder. </summary>
     public class ImageEncoder : IEncoder
     {
-        /// <summary> The current frame. </summary>
         RenderTexture m_CurrentFrame;
-        /// <summary> The requests. </summary>
         Queue<AsyncGPUReadbackRequest> m_Requests;
-        /// <summary> The tasks. </summary>
         Queue<CaptureTask> m_Tasks;
-        /// <summary> Options for controlling the camera. </summary>
         CameraParameters m_CameraParameters;
-        /// <summary> A temp texture for capture. </summary>
+        // A temp texture for capture.
         Texture2D m_EncodeTempTex = null;
 
         #region Interface
-        /// <summary> Commits. </summary>
-        /// <param name="rt">        The right.</param>
-        /// <param name="timestamp"> The timestamp.</param>
         public void Commit(RenderTexture rt, ulong timestamp)
         {
             m_CurrentFrame = rt;
         }
 
-        /// <summary> Configurations the given parameter. </summary>
-        /// <param name="param"> The parameter.</param>
         public void Config(CameraParameters param)
         {
             this.m_CameraParameters = param;
@@ -45,20 +35,17 @@ namespace NRKernal.Record
             m_Tasks = new Queue<CaptureTask>();
         }
 
-        /// <summary> Starts this object. </summary>
         public void Start()
         {
-            NRKernalUpdater.OnUpdate -= Update;
-            NRKernalUpdater.OnUpdate += Update;
+            NRKernalUpdater.Instance.OnUpdate -= Update;
+            NRKernalUpdater.Instance.OnUpdate += Update;
         }
 
-        /// <summary> Stops this object. </summary>
         public void Stop()
         {
-            NRKernalUpdater.OnUpdate -= Update;
+            NRKernalUpdater.Instance.OnUpdate -= Update;
         }
 
-        /// <summary> Releases this object. </summary>
         public void Release()
         {
             if (m_EncodeTempTex != null)
@@ -69,8 +56,6 @@ namespace NRKernal.Record
         }
         #endregion
 
-        /// <summary> Commits the given task. </summary>
-        /// <param name="task"> The task.</param>
         public void Commit(CaptureTask task)
         {
             if (m_CurrentFrame != null)
@@ -80,11 +65,10 @@ namespace NRKernal.Record
             }
             else
             {
-                NRDebugger.Warning("[ImageEncoder] Lost frame data.");
+                NRDebugger.LogWarning("[ImageEncoder] Lost frame data.");
             }
         }
 
-        /// <summary> Updates this object. </summary>
         private void Update()
         {
             while (m_Requests.Count > 0)
@@ -94,7 +78,7 @@ namespace NRKernal.Record
 
                 if (req.hasError)
                 {
-                    NRDebugger.Info("GPU readback error detected");
+                    NRDebugger.Log("GPU readback error detected");
                     m_Requests.Dequeue();
 
                     CommitResult(null, task);
@@ -127,7 +111,7 @@ namespace NRKernal.Record
                         if (m_EncodeTempTex.width != task.Width || m_EncodeTempTex.height != task.Height)
                         {
                             Texture2D scaledtexture;
-                            NRDebugger.Info("[BlendCamera] need to scale the texture which origin width:{0} and out put width:{1}",
+                            NRDebugger.LogFormat("[BlendCamera] need to scale the texture which origin width:{0} and out put width:{1}",
                                 m_EncodeTempTex.width, task.Width);
                             scaledtexture = ImageEncoder.ScaleTexture(m_EncodeTempTex, task.Width, task.Height);
                             CommitResult(scaledtexture, task);
@@ -149,9 +133,6 @@ namespace NRKernal.Record
             }
         }
 
-        /// <summary> Commits a result. </summary>
-        /// <param name="texture"> The texture.</param>
-        /// <param name="task">    The task.</param>
         private void CommitResult(Texture2D texture, CaptureTask task)
         {
             if (task.OnReceive == null)
@@ -180,16 +161,11 @@ namespace NRKernal.Record
             task.OnReceive(task, result);
         }
 
-        /// <summary> Encodes. </summary>
-        /// <param name="width">  The width.</param>
-        /// <param name="height"> The height.</param>
-        /// <param name="format"> Describes the format to use.</param>
-        /// <returns> A byte[]. </returns>
         public byte[] Encode(int width, int height, PhotoCaptureFileOutputFormat format)
         {
             if (m_CurrentFrame == null)
             {
-                NRDebugger.Warning("Current frame is empty!");
+                NRDebugger.LogWarning("Current frame is empty!");
                 return null;
             }
             byte[] data = null;
@@ -234,14 +210,9 @@ namespace NRKernal.Record
             return data;
         }
 
-        /// <summary> Scale texture. </summary>
-        /// <param name="source">       Source for the.</param>
-        /// <param name="targetWidth">  Width of the target.</param>
-        /// <param name="targetHeight"> Height of the target.</param>
-        /// <returns> A Texture2D. </returns>
         public static Texture2D ScaleTexture(Texture2D source, int targetWidth, int targetHeight)
         {
-            NRDebugger.Info("[ImageEncoder] ScaleTexture..");
+            NRDebugger.Log("[ImageEncoder] ScaleTexture..");
             Texture2D result = new Texture2D(targetWidth, targetHeight, source.format, false);
 
             for (int i = 0; i < result.height; ++i)

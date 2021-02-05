@@ -1,16 +1,8 @@
-﻿/****************************************************************************
-* Copyright 2019 Nreal Techonology Limited. All rights reserved.
-*                                                                                                                                                          
-* This file is part of NRSDK.                                                                                                          
-*                                                                                                                                                           
-* https://www.nreal.ai/        
-* 
-*****************************************************************************/
-
-
-namespace NRKernal.Record
+﻿namespace NRKernal.Record
 {
-    /// <summary> Image Encoding Format. </summary>
+    /// <summary>
+    /// Image Encoding Format.
+    /// </summary>
     public enum PhotoCaptureFileOutputFormat
     {
         /// <summary>

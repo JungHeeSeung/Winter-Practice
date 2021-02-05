@@ -1,21 +1,9 @@
-﻿/****************************************************************************
-* Copyright 2019 Nreal Techonology Limited. All rights reserved.
-*                                                                                                                                                          
-* This file is part of NRSDK.                                                                                                          
-*                                                                                                                                                           
-* https://www.nreal.ai/        
-* 
-*****************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NRKernal.NRExamples
 {
-    /// <summary> A trackable plane behaviour. </summary>
     public class TrackablePlaneBehaviour : NRTrackableBehaviour
     {
-        /// <summary> Gets the trackable plane. </summary>
-        /// <value> The trackable plane. </value>
         public NRTrackablePlane TrackablePlane
         {
             get
@@ -24,7 +12,6 @@ namespace NRKernal.NRExamples
             }
         }
 
-        /// <summary> Updates this object. </summary>
         private void Update()
         {
             if (TrackablePlane != null && TrackablePlane.GetTrackingState() == TrackingState.Tracking)

@@ -1,57 +1,42 @@
-﻿/****************************************************************************
-* Copyright 2019 Nreal Techonology Limited. All rights reserved.
-*                                                                                                                                                          
-* This file is part of NRSDK.                                                                                                          
-*                                                                                                                                                           
-* https://www.nreal.ai/        
-* 
-*****************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NRKernal.NRExamples
 {
     public class MoveWithCamera : MonoBehaviour
     {
-        /// <summary> The origin distance. </summary>
         private float originDistance;
-        /// <summary> True to use relative. </summary>
         [SerializeField]
         private bool useRelative = true;
 
-        private Transform m_CenterCamera;
-        private Transform CenterCamera
+        private Transform _MainCamera;
+        private Transform mainCamera
         {
             get
             {
-                if (m_CenterCamera == null)
+                if (_MainCamera == null)
                 {
-                    if (NRSessionManager.Instance.CenterCameraAnchor != null)
+                    if (Camera.main != null)
                     {
-                        m_CenterCamera = NRSessionManager.Instance.CenterCameraAnchor;
+                        _MainCamera = Camera.main.transform;
                     }
-                    else if (Camera.main != null)
+                    else
                     {
-                        m_CenterCamera = Camera.main.transform;
+                        _MainCamera = NRSessionManager.Instance.NRHMDPoseTracker.centerCamera.transform;
                     }
                 }
-                return m_CenterCamera;
+                return _MainCamera;
             }
         }
 
-        private void Start()
+        private void Awake()
         {
-            originDistance = useRelative ? Vector3.Distance(transform.position, CenterCamera == null ? Vector3.zero : CenterCamera.position) : 0;
+            originDistance = useRelative ? Vector3.Distance(transform.position, mainCamera.position) : 0;
         }
 
-        /// <summary> Late update. </summary>
         void LateUpdate()
         {
-            if (CenterCamera != null)
-            {
-                transform.position = CenterCamera.transform.position + CenterCamera.transform.forward * originDistance;
-                transform.rotation = CenterCamera.transform.rotation;
-            }
+            transform.position = mainCamera.transform.position + mainCamera.transform.forward * originDistance;
+            transform.rotation = mainCamera.transform.rotation;
         }
     }
 }

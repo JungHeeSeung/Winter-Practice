@@ -11,26 +11,17 @@ namespace NRKernal
 {
     using System;
 
-    
-    /// <summary> A controller provider factory. </summary>
+    /// @cond EXCLUDE_FROM_DOXYGEN
     internal static class ControllerProviderFactory
     {
-        /// <summary> Type of the android controller provider. </summary>
         public static Type androidControllerProviderType = typeof(NRControllerProvider);
 
-        /// <summary> Creates controller provider. </summary>
-        /// <param name="states"> The states.</param>
-        /// <returns> The new controller provider. </returns>
         public static ControllerProviderBase CreateControllerProvider(ControllerState[] states)
         {
             ControllerProviderBase provider = CreateControllerProvider(androidControllerProviderType, states);
             return provider;
         }
 
-        /// <summary> Creates controller provider. </summary>
-        /// <param name="providerType"> Type of the provider.</param>
-        /// <param name="states">       The states.</param>
-        /// <returns> The new controller provider. </returns>
         private static ControllerProviderBase CreateControllerProvider(Type providerType, ControllerState[] states)
         {
             if (providerType != null)
@@ -42,5 +33,5 @@ namespace NRKernal
             return null;
         }
     }
-    
+    /// @endcond
 }

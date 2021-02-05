@@ -4,16 +4,11 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary> An object pool. </summary>
     public class ObjectPool
     {
-        /// <summary> Dictionary of cache pools. </summary>
         private Dictionary<Type, Queue<object>> m_CachePoolDict = new Dictionary<Type, Queue<object>>();
-        /// <summary> Number of initializes. </summary>
         public int InitCount = 100;
 
-        /// <summary> Expansions this object. </summary>
-        /// <typeparam name="T"> Generic type parameter.</typeparam>
         public void Expansion<T>() where T : new()
         {
             var queue = GetQueue<T>();
@@ -24,9 +19,6 @@
             }
         }
 
-        /// <summary> Gets the get. </summary>
-        /// <typeparam name="T"> Generic type parameter.</typeparam>
-        /// <returns> A T. </returns>
         public T Get<T>() where T : new()
         {
             var queue = GetQueue<T>();
@@ -38,18 +30,12 @@
             return (T)queue.Dequeue();
         }
 
-        /// <summary> Puts the given data. </summary>
-        /// <typeparam name="T"> Generic type parameter.</typeparam>
-        /// <param name="data"> The data.</param>
         public void Put<T>(T data) where T : new()
         {
             var queue = GetQueue<T>();
             queue.Enqueue(data);
         }
 
-        /// <summary> Gets the queue. </summary>
-        /// <typeparam name="T"> Generic type parameter.</typeparam>
-        /// <returns> The queue. </returns>
         private Queue<object> GetQueue<T>() where T : new()
         {
             Queue<object> queue = null;
@@ -63,20 +49,15 @@
         }
     }
 
-    /// <summary> The bytes pool. </summary>
     public class BytesPool
     {
-        /// <summary> Dictionary of bytes. </summary>
         public Dictionary<int, Queue<byte[]>> BytesDict = new Dictionary<int, Queue<byte[]>>();
 
-        /// <summary> Gets a byte[] using the given length. </summary>
-        /// <param name="len"> The Length to get.</param>
-        /// <returns> A byte[]. </returns>
         public byte[] Get(int len)
         {
             if (len <= 0)
             {
-                NRDebugger.Info("BytesPool get len is not valid :" + len);
+                Debug.Log("BytesPool get len is not valid :" + len);
                 return null;
             }
             Queue<byte[]> que = null;
@@ -98,13 +79,11 @@
             return que.Dequeue();
         }
 
-        /// <summary> Puts the given data. </summary>
-        /// <param name="data"> The data to put.</param>
         public void Put(byte[] data)
         {
             if (data == null || data.Length == 0)
             {
-                NRDebugger.Info("BytesPool retrieve data is null.");
+                Debug.Log("BytesPool retrieve data is null.");
                 return;
             }
 

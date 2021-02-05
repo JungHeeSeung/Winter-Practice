@@ -9,7 +9,9 @@
 
 namespace NRKernal.Record
 {
-    /// <summary> The camera mode of capture. </summary>
+    /// <summary>
+    /// The camera mode of capture.
+    /// </summary>
     public enum CamMode
     {
         /// <summary>

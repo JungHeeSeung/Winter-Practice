@@ -8,19 +8,19 @@ using UnityEngine.UI;
 
 public class ObjController : MonoBehaviour
 {
-    public TrackingImageExampleController trackingImage;
+    public CustomTrackingImageController trackingImage;
 
     public float rotSpd = 10f;
     public float zoomSpd = 10f;
 
-    private Dictionary<int, TrackingImageVisualizer> target;
+    private List<CustomTrackingImageVisualizer> target;
 
 
     // Grid <-> Texture 변경용
 
     public Material mat;    // Grid용
 
-    private List<Material> originMat = new List<Material>();    // 원본
+    private Dictionary<int, List<Material>> originMat = new Dictionary<int, List<Material>>();    // 원본
 
 
     private List<MeshRenderer> Childrens = new List<MeshRenderer>();    // 대상
@@ -32,15 +32,26 @@ public class ObjController : MonoBehaviour
 
     void Update()
     {
-        target = trackingImage.data;
+        target = new List<CustomTrackingImageVisualizer>(trackingImage.data.Values);
 
-        foreach (var TargetVal in target.Values)
+        foreach (var TargetVal in target)
         {
-            var obj = TargetVal.Obj;
+            var idx = TargetVal.idx;
+            var obj = TargetVal.Obj[idx];
 
+            if(TargetVal.Obj.Count < idx)
+            {
+                // 고민
+            }
+
+            if (false == TargetVal.Obj[TargetVal.idx].activeSelf)
+            {
+                continue;
+            }
 
             RotateObjWithTouch(obj);
             ZoomInAndOutObjWithTouch(obj);
+
 
 
             if (true == TargetVal.ui.Rotate.isOn)
@@ -60,11 +71,11 @@ public class ObjController : MonoBehaviour
 
             if (true == TargetVal.ui.DrawMode.isOn)
             {
-                DrawTexture(obj);
+                DrawTexture(idx, obj);
             }
             else
             {
-                DrawGrid(obj);
+                DrawGrid(idx, obj);
             }
 
 
@@ -81,45 +92,46 @@ public class ObjController : MonoBehaviour
         }
     }
 
-    void extractTexture(GameObject obj)
+    void extractTexture(int idx, GameObject obj)
     {
         Childrens.Clear();
         Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
 
-        foreach (var child in Childrens)
+        List<Material> mt = null;
+
+        originMat.TryGetValue(idx, out mt);
+
+        if (mt == null)
         {
-            if (originMat.Count == 0)
+            foreach (var child in Childrens)
             {
-                originMat.Add(child.material);
+                mt.Add(child.material);
             }
-            else
-            {
-                return;
-            }
+            originMat.Add(idx, mt);
         }
     }
 
-    void DrawTexture(GameObject obj)
+    void DrawTexture(int idx, GameObject obj)
     {
-        extractTexture(obj);
+        extractTexture(idx, obj);
 
         for (int i = 0; i < Childrens.Count; ++i)
         {
-            if (originMat.Count <= i)
+            if (originMat[idx].Count <= i)
             {
-                Childrens[i].material = originMat[originMat.Count - 1];
+                Childrens[i].material = originMat[idx][originMat[idx].Count - 1];
             }
             else
             {
-                Childrens[i].material = originMat[i];
+                Childrens[i].material = originMat[idx][i];
             }
 
         }
     }
 
-    void DrawGrid(GameObject obj)
+    void DrawGrid(int idx, GameObject obj)
     {
-        extractTexture(obj);
+        extractTexture(idx, obj);
 
         for (int i = 0; i < Childrens.Count; ++i)
         {
@@ -176,7 +188,14 @@ public class ObjController : MonoBehaviour
 
         Vector3 delta = new Vector3(diff * 0.01f, diff * 0.01f, diff * 0.01f);
 
-        obj.transform.localScale += delta;
+
+        var temp = obj.transform.localScale + delta;
+
+
+        if (temp.magnitude > 0.5f && temp.magnitude < 10f)
+        {
+            obj.transform.localScale = temp;
+        }
     }
 
     void RotateObjWithTouch(GameObject obj)

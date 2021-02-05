@@ -14,7 +14,6 @@ namespace NRKernal.Record
     using AOT;
     using System.Runtime.InteropServices;
 
-    /// <summary> A video encoder. </summary>
     public class VideoEncoder : IEncoder
     {
 #if !UNITY_EDITOR
@@ -24,16 +23,12 @@ namespace NRKernal.Record
         private static RenderEventDelegate RenderThreadHandle = new RenderEventDelegate(RunOnRenderThread);
         private static IntPtr RenderThreadHandlePtr = Marshal.GetFunctionPointerForDelegate(RenderThreadHandle);
 #endif
-        /// <summary> True if is started, false if not. </summary>
         private bool m_IsStarted = false;
 
-        /// <summary> The encode configuration. </summary>
         public NativeEncodeConfig EncodeConfig;
 
-        /// <summary> The tex pointer. </summary>
         private IntPtr m_TexPtr = IntPtr.Zero;
 
-        /// <summary> Default constructor. </summary>
         public VideoEncoder()
         {
 #if !UNITY_EDITOR
@@ -53,22 +48,17 @@ namespace NRKernal.Record
         }
 #endif
 
-        /// <summary> Configurations the given parameter. </summary>
-        /// <param name="param"> The parameter.</param>
         public void Config(CameraParameters param)
         {
             Config(new NativeEncodeConfig(param));
         }
 
-        /// <summary> Configurations the given configuration. </summary>
-        /// <param name="config"> The configuration.</param>
         public void Config(NativeEncodeConfig config)
         {
             EncodeConfig = config;
-            NRDebugger.Info("Encode record Config：" + config.ToString());
+            NRDebugger.Log("Encode record Config：" + config.ToString());
         }
 
-        /// <summary> Starts this object. </summary>
         public void Start()
         {
             if (m_IsStarted)
@@ -79,13 +69,10 @@ namespace NRKernal.Record
             NativeEncoder.SetConfigration(EncodeConfig);
             GL.IssuePluginEvent(RenderThreadHandlePtr, STARTENCODEEVENT);
 #endif
-            NRDebugger.Info("Encode record Start");
+            NRDebugger.Log("Encode record Start");
             m_IsStarted = true;
         }
 
-        /// <summary> Commits. </summary>
-        /// <param name="rt">        The right.</param>
-        /// <param name="timestamp"> The timestamp.</param>
         public void Commit(RenderTexture rt, UInt64 timestamp)
         {
             if (!m_IsStarted)
@@ -101,7 +88,6 @@ namespace NRKernal.Record
 #endif
         }
 
-        /// <summary> Stops this object. </summary>
         public void Stop()
         {
             if (!m_IsStarted)
@@ -111,14 +97,13 @@ namespace NRKernal.Record
 #if !UNITY_EDITOR
             NativeEncoder.Stop();
 #endif
-            NRDebugger.Info("Encode record Stop");
+            NRDebugger.Log("Encode record Stop");
             m_IsStarted = false;
         }
 
-        /// <summary> Releases this object. </summary>
         public void Release()
         {
-            NRDebugger.Info("Encode record Release...");
+            NRDebugger.Log("Encode record Release...");
 #if !UNITY_EDITOR
             NativeEncoder.Destroy();
 #endif

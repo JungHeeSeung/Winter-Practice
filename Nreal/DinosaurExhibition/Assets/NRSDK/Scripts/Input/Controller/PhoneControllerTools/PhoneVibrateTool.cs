@@ -12,7 +12,6 @@ namespace NRKernal
     using System;
     using UnityEngine;
 
-    /// <summary> A phone vibrate tool. </summary>
     internal class PhoneVibrateTool
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -58,8 +57,6 @@ namespace NRKernal
         }
 #endif
 
-        /// <summary> Trigger vibrate. </summary>
-        /// <param name="durationSeconds"> (Optional) The duration in seconds.</param>
         public static void TriggerVibrate(float durationSeconds = 0.1f)
         {
 #if UNITY_ANDROID && !UNITY_EDITOR

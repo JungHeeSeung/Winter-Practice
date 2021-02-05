@@ -13,62 +13,38 @@ namespace NRKernal
     using System.Collections.Generic;
     using UnityEngine;
 
-    /// <summary> A controller for handling nr emulators. </summary>
     public class NREmulatorController : MonoBehaviour
     {
-        /// <summary> regular speed. </summary>
-        public float HeadMoveSpeed = 1.0f;
-        /// <summary> How sensitive it with mouse. </summary>
-        public float HeadRotateSpeed = 1.0f;
+        public float HeadMoveSpeed = 1.0f; //regular speed
+        public float HeadRotateSpeed = 1.0f; //How sensitive it with mouse
 
-        /// <summary> The default controller panel. </summary>
         public GameObject DefaultControllerPanel;
-        /// <summary> The image default. </summary>
         public GameObject ImageDefault;
-        /// <summary> The image application. </summary>
         public GameObject ImageApp;
-        /// <summary> The image confirm. </summary>
         public GameObject ImageConfirm;
-        /// <summary> The image home. </summary>
         public GameObject ImageHome;
-        /// <summary> The image left. </summary>
         public GameObject ImageLeft;
-        /// <summary> The image right. </summary>
         public GameObject ImageRight;
-        /// <summary> The image up. </summary>
         public GameObject ImageUp;
-        /// <summary> The image down. </summary>
         public GameObject ImageDown;
 
-        /// <summary> The width. </summary>
         private const int kWidth = 2;
-        /// <summary> The height. </summary>
         private const int kHeight = 2;
 
-        /// <summary> The touch action. </summary>
         private TouchActionState m_TouchAction;
-        /// <summary> The touch action current frame. </summary>
         private int m_TouchActionCurFrame;
-        /// <summary> Target for the. </summary>
         private GameObject m_Target;
 
-        /// <summary> Values that represent touch action states. </summary>
         enum TouchActionState
         {
-            /// <summary> An enum constant representing the idle option. </summary>
             Idle,
-            /// <summary> An enum constant representing the left option. </summary>
             Left,
-            /// <summary> An enum constant representing the right option. </summary>
             Right,
-            /// <summary> An enum constant representing the up option. </summary>
             Up,
-            /// <summary> An enum constant representing the down option. </summary>
             Down,
         };
 
 #if UNITY_EDITOR
-        /// <summary> Starts this object. </summary>
         void Start()
         {
             DontDestroyOnLoad(this);
@@ -79,7 +55,6 @@ namespace NRKernal
 #endif
 
 #if UNITY_EDITOR
-        /// <summary> Late update. </summary>
         void LateUpdate()
         {
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -102,19 +77,18 @@ namespace NRKernal
 
             if (NRInput.GetButtonDown(ControllerButton.TRIGGER))
             {
-                NRDebugger.Info("Click down Trigger button !!!");
+                NRDebugger.Log("Click down Trigger button !!!");
             }
             else if (NRInput.GetButtonDown(ControllerButton.APP))
             {
-                NRDebugger.Info("Click down App button !!!");
+                NRDebugger.Log("Click down App button !!!");
             }
             else if (NRInput.GetButtonDown(ControllerButton.HOME))
             {
-                NRDebugger.Info("Click down Home button !!!");
+                NRDebugger.Log("Click down Home button !!!");
             }
         }
 
-        /// <summary> Updates the default controller buttons. </summary>
         private void UpdateDefaultControllerButtons()
         {
             if (Input.GetMouseButtonDown(0))
@@ -183,7 +157,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Updates the virtual controller buttons. </summary>
         private void UpdateVirtualControllerButtons()
         {
             NREmulatorManager.Instance.NativeEmulatorApi.SetControllerButtonState(0);
@@ -192,7 +165,6 @@ namespace NRKernal
         }
 #endif
 
-        /// <summary> Updates the touch action. </summary>
         private void UpdateTouchAction()
         {
             NREmulatorManager.Instance.NativeEmulatorApi.SetControllerIsTouching(true);
@@ -236,7 +208,6 @@ namespace NRKernal
 
         }
 
-        /// <summary> Updates the controller rotate by input. </summary>
         private void UpdateControllerRotateByInput()
         {
             float mouse_x = Input.GetAxis("Mouse X") * HeadRotateSpeed;
@@ -249,8 +220,6 @@ namespace NRKernal
 
         }
 
-        /// <summary> Sets application button. </summary>
-        /// <param name="touch"> True to touch.</param>
         public void SetAppButton(bool touch)
         {
             if (touch)
@@ -266,8 +235,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Sets home button. </summary>
-        /// <param name="touch"> True to touch.</param>
         public void SetHomeButton(bool touch)
         {
             if (touch)
@@ -283,8 +250,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Sets confirm button. </summary>
-        /// <param name="touch"> True to touch.</param>
         public void SetConfirmButton(bool touch)
         {
             if (touch)

@@ -14,13 +14,15 @@ namespace NRKernal
     using UnityEngine;
 
     /// <summary>
-    /// Holds information about NR Device's pose in the world coordinate, trackables, etc.. Through
-    /// this class, application can get the information of current frame. It contains session status,
-    /// lost tracking reason, device pose, trackables, etc. </summary>
-    public class NRFrame
+    /// Holds information about NR Device's pose in the world coordinate, trackables, etc..
+    /// Through this class, application can get the information of current frame.
+    /// It contains session status, lost tracking reason, device pose, trackables, etc..
+    /// </summary>
+    public partial class NRFrame
     {
-        /// <summary> Get the tracking state of HMD. </summary>
-        /// <value> The session status. </value>
+        /// <summary>
+        /// Get the tracking state of HMD.
+        /// </summary>
         public static SessionState SessionStatus
         {
             get
@@ -29,8 +31,9 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Get the lost tracking reason of HMD. </summary>
-        /// <value> The lost tracking reason. </value>
+        /// <summary>
+        /// Get the lost tracking reason of HMD.
+        /// </summary>
         public static LostTrackingReason LostTrackingReason
         {
             get
@@ -39,11 +42,12 @@ namespace NRKernal
             }
         }
 
-        /// <summary> The head pose. </summary>
         private static Pose m_HeadPose;
 
-        /// <summary> Get the pose of device in unity world coordinate. </summary>
-        /// <value> Pose of device. </value>
+        /// <summary>
+        /// Get the pose of device in unity world coordinate.
+        /// </summary>
+        /// <returns>Pose of device.</returns>
         public static Pose HeadPose
         {
             get
@@ -52,31 +56,23 @@ namespace NRKernal
             }
         }
 
-        public static bool isHeadPoseReady { get; private set; }
-
-        /// <summary> Gets head pose by time. </summary>
-        /// <param name="pose">      [in,out] The pose.</param>
-        /// <param name="timestamp"> (Optional) The timestamp.</param>
-        /// <param name="predict">   (Optional) The predict.</param>
-        /// <returns> True if it succeeds, false if it fails. </returns>
         public static bool GetHeadPoseByTime(ref Pose pose, UInt64 timestamp = 0, UInt64 predict = 0)
         {
             if (SessionStatus == SessionState.Running)
             {
-                isHeadPoseReady = NRSessionManager.Instance.NativeAPI.NativeHeadTracking.GetHeadPose(ref pose, timestamp, predict);
-                return isHeadPoseReady;
+                return NRSessionManager.Instance.NativeAPI.NativeHeadTracking.GetHeadPose(ref pose, timestamp, predict);
             }
             return false;
         }
 
-        /// <summary> Clears the pose. </summary>
         public static void ClearPose()
         {
             m_HeadPose = Pose.identity;
         }
 
-        /// <summary> Get the pose of center camera between left eye and right eye. </summary>
-        /// <value> The center eye pose. </value>
+        /// <summary>
+        /// Get the pose of center camera between left eye and right eye.
+        /// </summary>
         public static Pose CenterEyePose
         {
             get
@@ -91,30 +87,29 @@ namespace NRKernal
             }
         }
 
-        /// <summary> The eye position from head. </summary>
         private static EyePoseData m_EyePosFromHead;
 
-        /// <summary> Get the offset position between eye and head. </summary>
-        /// <value> The eye pose from head. </value>
-        public static EyePoseData EyePoseFromHead
+        /// <summary>
+        /// Get the offset position between eye and head.
+        /// </summary>
+        public static EyePoseData EyePosFromHead
         {
             get
             {
                 if (SessionStatus == SessionState.Running)
                 {
-                    m_EyePosFromHead.LEyePose = NRDevice.Instance.NativeHMD.GetEyePoseFromHead((int)NativeEye.LEFT);
-                    m_EyePosFromHead.REyePose = NRDevice.Instance.NativeHMD.GetEyePoseFromHead((int)NativeEye.RIGHT);
-                    m_EyePosFromHead.RGBEyePos = NRDevice.Instance.NativeHMD.GetEyePoseFromHead((int)NativeEye.RGB);
+                    m_EyePosFromHead.LEyePose = NRDevice.Instance.NativeHMD.GetEyePoseFromHead(NativeEye.LEFT);
+                    m_EyePosFromHead.REyePose = NRDevice.Instance.NativeHMD.GetEyePoseFromHead(NativeEye.RIGHT);
+                    m_EyePosFromHead.RGBEyePos = NRDevice.Instance.NativeHMD.GetEyePoseFromHead(NativeEye.RGB);
                 }
                 return m_EyePosFromHead;
             }
         }
 
-        /// <summary> Get the project matrix of camera in unity. </summary>
-        /// <param name="result"> [out] True to result.</param>
-        /// <param name="znear">  The znear.</param>
-        /// <param name="zfar">   The zfar.</param>
-        /// <returns> project matrix of camera. </returns>
+        /// <summary>
+        /// Get the project matrix of camera in unity.
+        /// </summary>
+        /// <returns>project matrix of camera.</returns>
         public static EyeProjectMatrixData GetEyeProjectMatrix(out bool result, float znear, float zfar)
         {
             result = false;
@@ -123,25 +118,28 @@ namespace NRKernal
             return m_EyeProjectMatrix;
         }
 
-        /// <summary> Get the intrinsic matrix of rgb camera. </summary>
-        /// <returns> The RGB camera intrinsic matrix. </returns>
+        /// <summary>
+        /// Get the intrinsic matrix of rgb camera.
+        /// </summary>
+        /// <returns></returns>
         public static NativeMat3f GetRGBCameraIntrinsicMatrix()
         {
             NativeMat3f result = new NativeMat3f();
-            NRDevice.Instance.NativeHMD.GetCameraIntrinsicMatrix((int)NativeEye.RGB, ref result);
+            NRDevice.Instance.NativeHMD.GetCameraIntrinsicMatrix(NativeEye.RGB, ref result);
             return result;
         }
 
-        /// <summary> Get the Distortion of rgbcamera. </summary>
-        /// <returns> The RGB camera distortion. </returns>
+        /// <summary>
+        /// Get the Distortion of rgbcamera.
+        /// </summary>
+        /// <returns></returns>
         public static NRDistortionParams GetRGBCameraDistortion()
         {
             NRDistortionParams result = new NRDistortionParams();
-            NRDevice.Instance.NativeHMD.GetCameraDistortion((int)NativeEye.RGB, ref result);
+            NRDevice.Instance.NativeHMD.GetCameraDistortion(NativeEye.RGB, ref result);
             return result;
         }
 
-        /// <summary> Executes the 'update' action. </summary>
         internal static void OnUpdate()
         {
             // Update head pos
@@ -152,11 +150,11 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Get the list of trackables with specified filter. </summary>
-        /// <typeparam name="T"> Generic type parameter.</typeparam>
-        /// <param name="trackables"> A list where the returned trackable is stored. The previous values
-        ///                           will be cleared.</param>
-        /// <param name="filter">     Query filter.</param>
+        /// <summary>
+        /// Get the list of trackables with specified filter.
+        /// </summary>
+        /// <param name="trackables">A list where the returned trackable is stored. The previous values will be cleared.</param>
+        /// <param name="filter">Query filter.</param>
         public static void GetTrackables<T>(List<T> trackables, NRTrackableQueryFilter filter) where T : NRTrackable
         {
             if (SessionStatus != SessionState.Running)

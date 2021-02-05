@@ -13,22 +13,17 @@ namespace NRKernal
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Runtime.InteropServices;
     using UnityEngine;
 
     /// <summary>
-    /// NRNativeRender operate rendering-related things, provides the feature of optimized rendering
-    /// and low latency. </summary>
-    [ScriptOrder(-300)]
-    public class NRRenderer : MonoBehaviour
+    /// NRNativeRender operate rendering-related things, provides the feature of optimized rendering and low latency.
+    /// </summary>
+    public partial class NRRenderer : MonoBehaviour
     {
-        /// <summary> Renders the event delegate described by eventID. </summary>
-        /// <param name="eventID"> Identifier for the event.</param>
+        /// @cond EXCLUDE_FROM_DOXYGEN
         private delegate void RenderEventDelegate(int eventID);
-        /// <summary> Handle of the render thread. </summary>
         private static RenderEventDelegate RenderThreadHandle = new RenderEventDelegate(RunOnRenderThread);
-        /// <summary> The render thread handle pointer. </summary>
         private static IntPtr RenderThreadHandlePtr = Marshal.GetFunctionPointerForDelegate(RenderThreadHandle);
 
         private const int SETRENDERTEXTUREEVENT = 0x0001;
@@ -37,37 +32,23 @@ namespace NRKernal
         private const int PAUSENATIVERENDEREVENT = 0x0004;
         private const int STOPNATIVERENDEREVENT = 0x0005;
 
-        /// <summary> Values that represent eyes. </summary>
         public enum Eyes
         {
-            /// <summary> An enum constant representing the left option. </summary>
             Left = 0,
-            /// <summary> An enum constant representing the right option. </summary>
             Right = 1,
-            /// <summary> An enum constant representing the count option. </summary>
             Count = 2
         }
 
-        /// <summary> The left camera. </summary>
         public Camera leftCamera;
-        /// <summary> The right camera. </summary>
         public Camera rightCamera;
-        /// <summary> Gets or sets the native renderring. </summary>
-        /// <value> The m native renderring. </value>
         static NativeRenderring m_NativeRenderring { get; set; }
+        /// @endcond
 
-        /// <summary> The scale factor. </summary>
         public static float ScaleFactor = 1f;
-        private const float m_DefaultFocusDistance = 1.4f;
-        private float m_FocusDistance = 1.4f;
-        /// <summary> Number of eye textures. </summary>
         private const int EyeTextureCount = 3 * (int)Eyes.Count;
-        /// <summary> The eye textures. </summary>
         private readonly RenderTexture[] eyeTextures = new RenderTexture[EyeTextureCount];
-        /// <summary> Dictionary of rights. </summary>
         private Dictionary<RenderTexture, IntPtr> m_RTDict = new Dictionary<RenderTexture, IntPtr>();
 
-        /// <summary> Values that represent renderer states. </summary>
         public enum RendererState
         {
             UnInitialized,
@@ -77,10 +58,7 @@ namespace NRKernal
             Destroyed
         }
 
-        /// <summary> The current state. </summary>
         private RendererState m_CurrentState = RendererState.UnInitialized;
-        /// <summary> Gets the current state. </summary>
-        /// <value> The current state. </value>
         public RendererState currentState
         {
             get
@@ -94,8 +72,6 @@ namespace NRKernal
         private int nextEyeTextureIdx = 0;
 #endif
 
-        /// <summary> Gets a value indicating whether this object is linear color space. </summary>
-        /// <value> True if this object is linear color space, false if not. </value>
         public static bool isLinearColorSpace
         {
             get
@@ -104,25 +80,28 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Initialize the render pipleline. </summary>
-        /// <param name="leftcamera">  Left Eye.</param>
-        /// <param name="rightcamera"> Right Eye.</param>
-        ///
-        /// ### <param name="poseprovider"> provide the pose of camera every frame.</param>
+        /// <summary>
+        /// Initialize the render pipleline.
+        /// </summary>
+        /// <param name="leftcamera">Left Eye.</param>
+        /// <param name="rightcamera">Right Eye.</param>
+        /// <param name="poseprovider">provide the pose of camera every frame.</param>
         public void Initialize(Camera leftcamera, Camera rightcamera)
         {
-            NRDebugger.Info("[NRRender] Initialize");
+            NRDebugger.Log("[NRRender] Initialize");
             if (m_CurrentState != RendererState.UnInitialized)
             {
                 return;
             }
 
+            NRSessionManager.SetAppSettings(true);
+
             leftCamera = leftcamera;
             rightCamera = rightcamera;
 
 #if !UNITY_EDITOR
-            leftCamera.depthTextureMode = DepthTextureMode.None;
-            rightCamera.depthTextureMode = DepthTextureMode.None;
+            leftCamera.depthTextureMode = DepthTextureMode.Depth;
+            rightCamera.depthTextureMode = DepthTextureMode.Depth;
             leftCamera.rect = new Rect(0, 0, 1, 1);
             rightCamera.rect = new Rect(0, 0, 1, 1);
             leftCamera.enabled = false;
@@ -132,14 +111,12 @@ namespace NRKernal
 #endif
         }
 
-        /// <summary> Prepares this object for use. </summary>
-        /// <returns> An IEnumerator. </returns>
         private IEnumerator StartUp()
         {
             var virtualDisplay = GameObject.FindObjectOfType<NRVirtualDisplayer>();
             while (virtualDisplay == null || !virtualDisplay.IsPlaying)
             {
-                NRDebugger.Info("[NRRender] Wait virtual display ready...");
+                NRDebugger.Log("[NRRender] Wait virtual display ready...");
                 yield return new WaitForEndOfFrame();
                 if (virtualDisplay == null)
                 {
@@ -151,8 +128,11 @@ namespace NRKernal
             yield return new WaitForEndOfFrame();
             yield return new WaitForEndOfFrame();
 
-            NRDebugger.Info("[NRRender] StartUp");
+            NRDebugger.Log("[NRRender] StartUp");
             CreateRenderTextures();
+
+            leftCamera.enabled = true;
+            rightCamera.enabled = true;
 #if !UNITY_EDITOR
             m_NativeRenderring = new NativeRenderring();
             m_NativeRenderring.Create();
@@ -165,10 +145,12 @@ namespace NRKernal
             GL.IssuePluginEvent(RenderThreadHandlePtr, STARTNATIVERENDEREVENT);
         }
 
-        /// <summary> Pause render. </summary>
+        /// <summary>
+        /// Pause render.
+        /// </summary>
         public void Pause()
         {
-            NRDebugger.Info("[NRRender] Pause");
+            Debug.Log("[NRRender] Pause");
             if (m_CurrentState != RendererState.Running)
             {
                 return;
@@ -177,16 +159,17 @@ namespace NRKernal
             GL.IssuePluginEvent(RenderThreadHandlePtr, PAUSENATIVERENDEREVENT);
         }
 
-        /// <summary> Resume render. </summary>
+        /// <summary>
+        /// Resume render.
+        /// </summary>
         public void Resume()
         {
             Invoke("DelayResume", 0.3f);
         }
 
-        /// <summary> Delay resume. </summary>
         private void DelayResume()
         {
-            NRDebugger.Info("[NRRender] Resume");
+            Debug.Log("[NRRender] Resume");
             if (m_CurrentState != RendererState.Paused)
             {
                 return;
@@ -204,16 +187,10 @@ namespace NRKernal
                 rightCamera.targetTexture = eyeTextures[currentEyeTextureIdx + 1];
                 currentEyeTextureIdx = nextEyeTextureIdx;
                 nextEyeTextureIdx = (nextEyeTextureIdx + 2) % EyeTextureCount;
-                leftCamera.enabled = true;
-                rightCamera.enabled = true;
             }
         }
 #endif
 
-        /// <summary> Generates a render texture. </summary>
-        /// <param name="width">  The width.</param>
-        /// <param name="height"> The height.</param>
-        /// <returns> The render texture. </returns>
         private RenderTexture GenRenderTexture(int width, int height)
         {
             RenderTexture renderTexture = new RenderTexture((int)(width * ScaleFactor), (int)(height * ScaleFactor), 24, RenderTextureFormat.Default);
@@ -227,11 +204,10 @@ namespace NRKernal
             return renderTexture;
         }
 
-        /// <summary> Creates render textures. </summary>
         private void CreateRenderTextures()
         {
-            var resolution = NRDevice.Instance.NativeHMD.GetEyeResolution((int)NativeEye.LEFT);
-            NRDebugger.Info("[CreateRenderTextures]  resolution :" + resolution.ToString());
+            var resolution = NRDevice.Instance.NativeHMD.GetEyeResolution(NativeEye.LEFT);
+            NRDebugger.Log("[CreateRenderTextures]  resolution :" + resolution.ToString());
 
             for (int i = 0; i < EyeTextureCount; i++)
             {
@@ -240,8 +216,6 @@ namespace NRKernal
             }
         }
 
-        /// <summary> Renders the coroutine. </summary>
-        /// <returns> An IEnumerator. </returns>
         private IEnumerator RenderCoroutine()
         {
             WaitForEndOfFrame delay = new WaitForEndOfFrame();
@@ -262,24 +236,11 @@ namespace NRKernal
                 IntPtr left_target, right_target;
                 if (!m_RTDict.TryGetValue(leftCamera.targetTexture, out left_target)) continue;
                 if (!m_RTDict.TryGetValue(rightCamera.targetTexture, out right_target)) continue;
-                FrameInfo info = new FrameInfo(left_target, right_target, apiPose, new Vector3(0, 0, -m_FocusDistance), Vector3.forward);
+                FrameInfo info = new FrameInfo(left_target, right_target, apiPose);
                 SetRenderFrameInfo(info);
-                // reset focuse distance to default value every frame.
-                m_FocusDistance = m_DefaultFocusDistance;
             }
         }
 
-
-        /// <summary> Sets the focus plane for render thread. </summary>
-        /// <param name="distance"> The distance from plane to center camera.</param>
-        [Conditional("NRSDK_BETA")]
-        public void SetFocusDistance(float distance)
-        {
-            m_FocusDistance = distance;
-        }
-
-        /// <summary> Executes the 'on render thread' operation. </summary>
-        /// <param name="eventID"> Identifier for the event.</param>
         [MonoPInvokeCallback(typeof(RenderEventDelegate))]
         private static void RunOnRenderThread(int eventID)
         {
@@ -304,12 +265,10 @@ namespace NRKernal
             else if (eventID == SETRENDERTEXTUREEVENT)
             {
                 FrameInfo framinfo = (FrameInfo)Marshal.PtrToStructure(m_NativeRenderring.FrameInfoPtr, typeof(FrameInfo));
-                m_NativeRenderring?.DoRender(framinfo.leftTex, framinfo.rightTex, ref framinfo.pose, ref framinfo.focusPosition, ref framinfo.normalPosition);
+                m_NativeRenderring?.DoRender(framinfo.leftTex, framinfo.rightTex, ref framinfo.pose);
             }
         }
 
-        /// <summary> Sets render frame information. </summary>
-        /// <param name="frame"> The frame.</param>
         private static void SetRenderFrameInfo(FrameInfo frame)
         {
             Marshal.StructureToPtr(frame, m_NativeRenderring.FrameInfoPtr, true);
@@ -323,10 +282,7 @@ namespace NRKernal
                 return;
             }
             m_CurrentState = RendererState.Destroyed;
-            //GL.IssuePluginEvent(RenderThreadHandlePtr, STOPNATIVERENDEREVENT);
-
-            m_NativeRenderring?.Destroy();
-            m_NativeRenderring = null;
+            GL.IssuePluginEvent(RenderThreadHandlePtr, STOPNATIVERENDEREVENT);
         }
 
         private void OnDestroy()

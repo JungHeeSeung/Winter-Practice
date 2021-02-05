@@ -12,28 +12,35 @@ namespace NRKernal
     using UnityEngine;
     using UnityEngine.EventSystems;
 
-    /// <summary> A controller for handling multi screens. </summary>
-    public class MultiScreenController : MonoBehaviour, ISystemButtonStateProvider
+    public class SystemButtonState
     {
-        private SystemButtonState m_SystemButtonState = new SystemButtonState();
-        private ISystemButtonStateReceiver m_Receiver;
-        /// <summary> System defined button. </summary>
+        //TRIGGER APP HOME
+        public bool[] buttons = new bool[3];
+        public Vector2 touch;
+        public Vector2 originTouch;
+
+        public bool pressing;
+        public bool pressDown;
+        public bool pressUp;
+    }
+
+    public class MultiScreenController : MonoBehaviour
+    {
+        public static SystemButtonState SystemButtonState = new SystemButtonState();
+
+        // System defined button.
         [SerializeField]
         private NRButton Trigger;
-        /// <summary> The application. </summary>
         [SerializeField]
         private NRButton App;
-        /// <summary> The home. </summary>
         [SerializeField]
         private NRButton Home;
 
-        public void BindReceiver(ISystemButtonStateReceiver receiver)
+        public void Init()
         {
-            this.m_Receiver = receiver;
             InitSystemButtonEvent();
         }
 
-        /// <summary> Initializes the system button event. </summary>
         private void InitSystemButtonEvent()
         {
             Trigger.TriggerEvent += OnBtnTrigger;
@@ -41,40 +48,36 @@ namespace NRKernal
             Home.TriggerEvent += OnBtnTrigger;
         }
 
-        /// <summary> Executes the 'button trigger' action. </summary>
-        /// <param name="key">        The key.</param>
-        /// <param name="go">         The go.</param>
-        /// <param name="racastInfo"> Information describing the racast.</param>
         private void OnBtnTrigger(string key, GameObject go, RaycastResult racastInfo)
         {
             if (key.Equals(NRButton.Enter))
             {
-                if (go == App.gameObject)
-                {
-                    m_SystemButtonState.buttons[0] = true;
-                }
                 if (go == Trigger.gameObject)
                 {
-                    m_SystemButtonState.buttons[1] = true;
+                    SystemButtonState.buttons[0] = true;
+                }
+                if (go == App.gameObject)
+                {
+                    SystemButtonState.buttons[1] = true;
                 }
                 if (go == Home.gameObject)
                 {
-                    m_SystemButtonState.buttons[2] = true;
+                    SystemButtonState.buttons[2] = true;
                 }
             }
             else if (key.Equals(NRButton.Exit))
             {
-                if (go == App.gameObject)
-                {
-                    m_SystemButtonState.buttons[0] = false;
-                }
                 if (go == Trigger.gameObject)
                 {
-                    m_SystemButtonState.buttons[1] = false;
+                    SystemButtonState.buttons[0] = false;
+                }
+                if (go == App.gameObject)
+                {
+                    SystemButtonState.buttons[1] = false;
                 }
                 if (go == Home.gameObject)
                 {
-                    m_SystemButtonState.buttons[2] = false;
+                    SystemButtonState.buttons[2] = false;
                 }
             }
 
@@ -85,16 +88,10 @@ namespace NRKernal
             }
             else
             {
-                m_SystemButtonState.touch_x = 0f;
-                m_SystemButtonState.touch_y = 0f;
+                SystemButtonState.touch = Vector2.zero;
             }
-
-            this.m_Receiver?.OnDataReceived(m_SystemButtonState);
         }
 
-        /// <summary> Calculates the touch position. </summary>
-        /// <param name="go">         The go.</param>
-        /// <param name="racastInfo"> Information describing the racast.</param>
         private void CalculateTouchPos(GameObject go, RaycastResult racastInfo)
         {
             RectTransform rect = go.GetComponent<RectTransform>();
@@ -115,19 +112,16 @@ namespace NRKernal
 
             var touchx = touchToX > halfWidth ? (x_forward ? 1f : -1f) : (x_forward ? touchToX / halfWidth : -touchToX / halfWidth);
             var touchy = touchToY > halfHeight ? (y_forward ? 1f : -1f) : (y_forward ? touchToY / halfHeight : -touchToY / halfHeight);
-            m_SystemButtonState.touch_x = touchx;
-            m_SystemButtonState.touch_y = touchy;
+            SystemButtonState.touch = new Vector2(touchx, touchy);
         }
 
 #if UNITY_EDITOR
-        /// <summary> Executes the 'disable' action. </summary>
         private void OnDisable()
         {
             if (!NRInput.EmulateVirtualDisplayInEditor)
                 ClearSystemButtonState();
         }
 
-        /// <summary> Clears the system button state. </summary>
         private void ClearSystemButtonState()
         {
 

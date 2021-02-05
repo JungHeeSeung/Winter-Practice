@@ -9,7 +9,9 @@
 
 namespace NRKernal
 {
-    /// <summary> A filter for trackable queries. </summary>
+    /// <summary>
+    /// A filter for trackable queries.
+    /// </summary>
     public enum NRTrackableQueryFilter
     {
         /// <summary>

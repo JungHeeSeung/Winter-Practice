@@ -9,24 +9,19 @@
 
 namespace NRKernal.NREditor
 {
+    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEditor;
 
-    /// <summary> Editor for nr trackable image. </summary>
     [CanEditMultipleObjects, CustomEditor(typeof(NRTrackableImageBehaviour))]
     public class NRTrackableImageEditor : Editor
     {
-        /// <summary> The serialized object. </summary>
         private NRSerializedImageTarget m_SerializedObj;
-        /// <summary> The database. </summary>
         private static NRTrackingImageDatabase m_Database;
-        /// <summary> Name of the images. </summary>
         private static string[] m_ImagesName;
-        /// <summary> imageIndex; </summary>
-        private int m_PreSelectOption = -1;
+        private int m_PreSelectOption = -1; // imageIndex;
 
-        /// <summary> Executes the 'enable' action. </summary>
         private void OnEnable()
         {
             NRTrackableImageBehaviour itb = (NRTrackableImageBehaviour)target;
@@ -34,24 +29,26 @@ namespace NRKernal.NREditor
             m_Database = GameObject.FindObjectOfType<NRSessionBehaviour>().SessionConfig.TrackingImageDatabase;
 
             if (m_Database == null) return;
+
             m_ImagesName = new string[m_Database.Count];
+
             EditorDatabase(itb, m_SerializedObj);
         }
 
-        /// <summary> <para>Implement this function to make a custom inspector.</para> </summary>
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
+
             DrawInspectorGUI();
+
             serializedObject.ApplyModifiedProperties();
         }
 
-        /// <summary> Draw inspector graphical user interface. </summary>
         private void DrawInspectorGUI()
         {
             if (m_Database == null)
             {
-                NRDebugger.Error("NRKernalSessionConfig.TrackingImageDatabase is null");
+                Debug.LogError("NRKernalSessionConfig.TrackingImageDatabase is null");
                 return;
             }
             EditorGUI.BeginDisabledGroup(true);
@@ -100,9 +97,6 @@ namespace NRKernal.NREditor
 
         }
 
-        /// <summary> Editor database. </summary>
-        /// <param name="itb">           The itb.</param>
-        /// <param name="serializedObj"> The serialized object.</param>
         public void EditorDatabase(NRTrackableImageBehaviour itb, NRSerializedImageTarget serializedObj)
         {
             if (!NREditorSceneManager.Instance.SceneInitialized)
@@ -114,10 +108,9 @@ namespace NRKernal.NREditor
             {
                 CheckMesh(serializedObj);
             }
+
         }
 
-        /// <summary> Updates the properties described by sit. </summary>
-        /// <param name="sit"> The sit.</param>
         private void UpdateProperties(NRSerializedImageTarget sit)
         {
             NRTrackableImageBehaviour itb = ((NRTrackableImageBehaviour)target);
@@ -126,8 +119,6 @@ namespace NRKernal.NREditor
             itb.DatabaseIndex = m_SerializedObj.DatabaseIndex;
         }
 
-        /// <summary> Updates the appearance described by serializedImageTarget. </summary>
-        /// <param name="serializedImageTarget"> The serialized image target.</param>
         private static void UpdateAppearance(NRSerializedImageTarget serializedImageTarget)
         {
             UpdateAspectRatio(serializedImageTarget);
@@ -135,8 +126,6 @@ namespace NRKernal.NREditor
             UpdateMaterial(serializedImageTarget);
         }
 
-        /// <summary> Updates the aspect ratio described by it. </summary>
-        /// <param name="it"> The iterator.</param>
         internal static void UpdateAspectRatio(NRSerializedImageTarget it)
         {
             Vector2 size = new Vector2(it.Width, it.Height);
@@ -150,8 +139,6 @@ namespace NRKernal.NREditor
             }
         }
 
-        /// <summary> Updates the scale described by it. </summary>
-        /// <param name="it"> The iterator.</param>
         internal static void UpdateScale(NRSerializedImageTarget it)
         {
             Vector2 size = new Vector2(it.Width, it.Height);
@@ -168,11 +155,10 @@ namespace NRKernal.NREditor
             }
         }
 
-        /// <summary> Updates the material described by sit. </summary>
-        /// <param name="sit"> The sit.</param>
         internal static void UpdateMaterial(NRSerializedImageTarget sit)
         {
             Material mat = sit.GetMaterial();
+
             Material loadMat = LoadMat();
 
             if (mat == null || mat == loadMat)
@@ -188,9 +174,6 @@ namespace NRKernal.NREditor
             sit.SetMaterial(mat);
         }
 
-        /// <summary> Updates the mesh. </summary>
-        /// <param name="itObj">       The iterator object.</param>
-        /// <param name="aspectRatio"> The aspect ratio.</param>
         internal static void UpdateMesh(GameObject itObj, float aspectRatio)
         {
             MeshFilter meshFilter = itObj.GetComponent<MeshFilter>();
@@ -229,8 +212,6 @@ namespace NRKernal.NREditor
             NREditorSceneManager.Instance.UnloadUnusedAssets();
         }
 
-        /// <summary> Check mesh. </summary>
-        /// <param name="serializedImageTarget"> The serialized image target.</param>
         private void CheckMesh(NRSerializedImageTarget serializedImageTarget)
         {
             using (List<NRTrackableImageBehaviour>.Enumerator enumerator = serializedImageTarget.GetBehaviours().GetEnumerator())
@@ -251,15 +232,13 @@ namespace NRKernal.NREditor
             }
         }
 
-        /// <summary> Loads the matrix. </summary>
-        /// <returns> The matrix. </returns>
         private static Material LoadMat()
         {
             string text = "Assets/NRSDK/Emulator/Materials/DefaultTarget.mat";
             Material mat = AssetDatabase.LoadAssetAtPath<Material>(text);
             if (mat == null)
             {
-                NRDebugger.Error("Could not find reference material at " + text + " please reimport Unity package.");
+                Debug.LogError("Could not find reference material at " + text + " please reimport Unity package.");
             }
             return mat;
         }
