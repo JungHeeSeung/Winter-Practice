@@ -4,7 +4,6 @@
     using UnityEngine;
 
 
-
     /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
     /// </summary>
@@ -25,13 +24,16 @@
         // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
+        [HideInInspector]
         public GameObject canvas;
 
+        [HideInInspector]
         public canvasUI ui;
 
         // 여기가 아마 자료구조로 해결해야 할듯
         public List<GameObject> Obj;
 
+        [HideInInspector]
         public int idx;
 
         public void Update()
@@ -47,7 +49,10 @@
 
                 foreach (var target in Obj)
                 {
-                    target.SetActive(false);
+                    if (target != null)
+                    {
+                        target.SetActive(false);
+                    }
                 }
                 return;
             }
@@ -77,8 +82,15 @@
 
             foreach (var target in Obj)
             {
-                if (target == Obj[idx])
+                if (target == null)
                 {
+                    continue;
+                }
+
+                if ((idx < Obj.Count) &&
+                    (target == Obj[idx]))
+                {
+                    target.transform.position = center.position;
                     target.SetActive(true);
                 }
                 else

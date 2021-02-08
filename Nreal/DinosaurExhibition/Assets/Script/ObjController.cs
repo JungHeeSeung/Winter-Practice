@@ -28,20 +28,24 @@ public class ObjController : MonoBehaviour
     // Grid <-> Texture 변경용
 
     public Text text;
-    private int count = 0;
 
     void Update()
     {
         target = new List<CustomTrackingImageVisualizer>(trackingImage.data.Values);
+
+       // text.text = "Count: " + target.Count;
 
         foreach (var TargetVal in target)
         {
             var idx = TargetVal.idx;
             var obj = TargetVal.Obj[idx];
 
-            if(TargetVal.Obj.Count < idx)
+           
+
+
+            if (TargetVal.Obj.Count <= idx)
             {
-                // 고민
+                break;
             }
 
             if (false == TargetVal.Obj[TargetVal.idx].activeSelf)
@@ -69,14 +73,6 @@ public class ObjController : MonoBehaviour
                 ZoomOut(obj);
             }
 
-            if (true == TargetVal.ui.DrawMode.isOn)
-            {
-                DrawTexture(idx, obj);
-            }
-            else
-            {
-                DrawGrid(idx, obj);
-            }
 
 
             if (true == TargetVal.ui.reset.isDown)
@@ -89,26 +85,42 @@ public class ObjController : MonoBehaviour
                 }
             }
 
+            if (true == TargetVal.ui.DrawMode.isOn)
+            {
+                DrawTexture(idx, obj);
+            }
+            else
+            {
+                DrawGrid(idx, obj);
+            }
         }
     }
 
     void extractTexture(int idx, GameObject obj)
     {
-        Childrens.Clear();
-        Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
-
         List<Material> mt = null;
 
         originMat.TryGetValue(idx, out mt);
 
         if (mt == null)
         {
-            foreach (var child in Childrens)
-            {
-                mt.Add(child.material);
-            }
-            originMat.Add(idx, mt);
+            mt = new List<Material>();
         }
+        else
+        {
+            return;
+        }
+
+        Childrens.Clear();
+        Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+
+        foreach (var child in Childrens)
+        {
+            mt.Add(child.material);
+        }
+        originMat.Add(idx, mt);
+
+
     }
 
     void DrawTexture(int idx, GameObject obj)
@@ -125,7 +137,6 @@ public class ObjController : MonoBehaviour
             {
                 Childrens[i].material = originMat[idx][i];
             }
-
         }
     }
 
