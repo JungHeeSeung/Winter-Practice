@@ -41,8 +41,6 @@ public class ObjController : MonoBehaviour
             var obj = TargetVal.Obj[idx];
 
            
-
-
             if (TargetVal.Obj.Count <= idx)
             {
                 break;
@@ -55,7 +53,6 @@ public class ObjController : MonoBehaviour
 
             RotateObjWithTouch(obj);
             ZoomInAndOutObjWithTouch(obj);
-
 
 
             if (true == TargetVal.ui.Rotate.isOn)

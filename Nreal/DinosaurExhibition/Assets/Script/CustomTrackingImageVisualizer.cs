@@ -82,20 +82,18 @@
 
             foreach (var target in Obj)
             {
-                if (target == null)
+                if (target != null)
                 {
-                    continue;
-                }
-
-                if ((idx < Obj.Count) &&
-                    (target == Obj[idx]))
-                {
-                    target.transform.position = center.position;
-                    target.SetActive(true);
-                }
-                else
-                {
-                    target.SetActive(false);
+                    if ((idx < Obj.Count) &&
+                        (target == Obj[idx]))
+                    {
+                        target.transform.position = center.position;
+                        target.SetActive(true);
+                    }
+                    else
+                    {
+                        target.SetActive(false);
+                    }
                 }
             }
         }

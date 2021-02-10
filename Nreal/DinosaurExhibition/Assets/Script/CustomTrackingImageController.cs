@@ -24,10 +24,11 @@
             get => m_Visualizers;
         }
 
-        private int cnt = 0;
 
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
+        private int cnt = 1;
+       
         public void Update()
         {
 #if !UNITY_EDITOR
@@ -73,6 +74,7 @@
                 //FitToScanOverlay.SetActive(false);
             }
 
+            cnt = 1;
             foreach (var val in m_Visualizers.Values)
             {
                 if (true == val.Obj[val.idx].activeSelf)
@@ -81,17 +83,18 @@
                     break;
                 }
 
-                if(cnt < m_Visualizers.Values.Count - 1)
+                if(cnt == m_Visualizers.Values.Count)
                 {
-                    continue;
+                    // last element
+                    FitToScanOverlay.SetActive(true);
                 }
                 else
                 {
-                    FitToScanOverlay.SetActive(true);
+                    cnt++;
                 }
-                cnt++;
+
             }
-            cnt = 0;
+                
         }
 
 
