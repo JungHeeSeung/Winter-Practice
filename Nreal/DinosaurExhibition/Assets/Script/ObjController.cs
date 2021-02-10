@@ -99,6 +99,8 @@ public class ObjController : MonoBehaviour
 
         originMat.TryGetValue(idx, out mt);
 
+        // dictinoary 문제가 좀 있는 것 같은데 체크 한 번 해볼것
+
         if (mt == null)
         {
             mt = new List<Material>();
@@ -111,6 +113,8 @@ public class ObjController : MonoBehaviour
         Childrens.Clear();
         Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
 
+
+        
         foreach (var child in Childrens)
         {
             mt.Add(child.material);
