@@ -27,20 +27,16 @@ public class ObjController : MonoBehaviour
 
     // Grid <-> Texture 변경용
 
-    public Text text;
-
     void Update()
     {
         target = new List<CustomTrackingImageVisualizer>(trackingImage.data.Values);
-
-       // text.text = "Count: " + target.Count;
 
         foreach (var TargetVal in target)
         {
             var idx = TargetVal.idx;
             var obj = TargetVal.Obj[idx];
 
-           
+
             if (TargetVal.Obj.Count <= idx)
             {
                 break;
@@ -99,29 +95,18 @@ public class ObjController : MonoBehaviour
 
         originMat.TryGetValue(idx, out mt);
 
-        // dictinoary 문제가 좀 있는 것 같은데 체크 한 번 해볼것
+        Childrens.Clear();
+        Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
 
         if (mt == null)
         {
             mt = new List<Material>();
+            foreach (var child in Childrens)
+            {
+                mt.Add(child.material);
+            }
+            originMat.Add(idx, mt);
         }
-        else
-        {
-            return;
-        }
-
-        Childrens.Clear();
-        Childrens.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
-
-
-        
-        foreach (var child in Childrens)
-        {
-            mt.Add(child.material);
-        }
-        originMat.Add(idx, mt);
-
-
     }
 
     void DrawTexture(int idx, GameObject obj)

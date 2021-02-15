@@ -28,7 +28,7 @@
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
         private int cnt = 1;
-       
+
         public void Update()
         {
 #if !UNITY_EDITOR
@@ -50,7 +50,7 @@
 
                 if (image.GetTrackingState() == TrackingState.Tracking && visualizer == null)
                 {
-                   
+
                     // Create an anchor to ensure that NRSDK keeps tracking this augmented image.
                     visualizer = (CustomTrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;
@@ -74,16 +74,19 @@
                 //FitToScanOverlay.SetActive(false);
             }
 
+
+            /// 오브젝트가 비활성화 되어있으면 UI 활성화
             cnt = 1;
             foreach (var val in m_Visualizers.Values)
             {
+
                 if (true == val.Obj[val.idx].activeSelf)
                 {
                     FitToScanOverlay.SetActive(false);
                     break;
                 }
 
-                if(cnt == m_Visualizers.Values.Count)
+                if (cnt == m_Visualizers.Values.Count)
                 {
                     // last element
                     FitToScanOverlay.SetActive(true);
@@ -92,9 +95,9 @@
                 {
                     cnt++;
                 }
-
             }
-                
+            /// 오브젝트가 비활성화 되어있으면 UI 활성화
+
         }
 
 

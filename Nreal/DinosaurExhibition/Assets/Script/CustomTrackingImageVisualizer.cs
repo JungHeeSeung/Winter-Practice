@@ -24,13 +24,13 @@
         // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
-        [HideInInspector]
+    
         public GameObject canvas;
 
-        [HideInInspector]
+    
         public canvasUI ui;
 
-        // 여기가 아마 자료구조로 해결해야 할듯
+
         public List<GameObject> Obj;
 
         [HideInInspector]
@@ -47,6 +47,7 @@
 
                 canvas.SetActive(false);
 
+                /// 가지고 있는 모든 오브젝트 비활성화
                 foreach (var target in Obj)
                 {
                     if (target != null)
@@ -80,6 +81,8 @@
 
             canvas.SetActive(true);
 
+            /// 간혹 특정 오브젝트가 비활성화 되지가 않아서
+            /// 지금 활성화하는 오브젝트 빼고 전부 비활성화
             foreach (var target in Obj)
             {
                 if (target != null)
@@ -96,6 +99,7 @@
                     }
                 }
             }
+            ///
         }
     }
 }

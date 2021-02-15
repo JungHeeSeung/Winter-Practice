@@ -12,5 +12,4 @@ public class canvasUI : MonoBehaviour
     public BtnDownCheck In;
     public BtnDownCheck Out;
     public BtnDownCheck reset;
-
 }
