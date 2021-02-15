@@ -1,9 +1,6 @@
 ﻿namespace NRKernal.NRExamples
 {
-    using System.Collections.Generic;
     using UnityEngine;
-
-
 
     /// <summary>
     /// Uses 4 frame corner objects to visualize an TrackingImage.
@@ -19,18 +16,13 @@
         // A model for the lower right corner of the frame to place when an image is detected.
         public GameObject FrameLowerRight;
 
-        // A model for the upper left corner of the frame to place when an image is detected.
+        /// A model for the upper left corner of the frame to place when an image is detected.
         public GameObject FrameUpperLeft;
 
         // A model for the upper right corner of the frame to place when an image is detected.
         public GameObject FrameUpperRight;
 
-        public GameObject canvas;
-
-        public canvasUI ui;
-
-        public GameObject Obj;
-
+        public GameObject Axis;
 
         public void Update()
         {
@@ -40,9 +32,7 @@
                 FrameLowerRight.SetActive(false);
                 FrameUpperLeft.SetActive(false);
                 FrameUpperRight.SetActive(false);
-
-                canvas.SetActive(false);
-
+                Axis.SetActive(false);
                 return;
             }
 
@@ -61,9 +51,7 @@
             FrameLowerRight.SetActive(true);
             FrameUpperLeft.SetActive(true);
             FrameUpperRight.SetActive(true);
-
-            canvas.SetActive(true);
-            Obj.SetActive(true);
+            Axis.SetActive(true);
         }
     }
 }

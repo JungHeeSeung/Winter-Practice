@@ -18,13 +18,6 @@
         private Dictionary<int, TrackingImageVisualizer> m_Visualizers
             = new Dictionary<int, TrackingImageVisualizer>();
 
-        public Dictionary<int, TrackingImageVisualizer> data
-        {
-            set => m_Visualizers = value;
-            get => m_Visualizers;
-        }
-
-
         private List<NRTrackableImage> m_TempTrackingImages = new List<NRTrackableImage>();
 
         public void Update()
@@ -39,7 +32,6 @@
             // Get updated augmented images for this frame.
             NRFrame.GetTrackables<NRTrackableImage>(m_TempTrackingImages, NRTrackableQueryFilter.New);
 
-
             // Create visualizers and anchors for updated augmented images that are tracking and do not previously
             // have a visualizer. Remove visualizers for stopped images.
             foreach (var image in m_TempTrackingImages)
@@ -53,28 +45,18 @@
                     visualizer = (TrackingImageVisualizer)Instantiate(TrackingImageVisualizerPrefab, image.GetCenterPose().position, image.GetCenterPose().rotation);
                     visualizer.Image = image;
                     visualizer.transform.parent = transform;
-
-                    // 항상 사람이 봤을 때 수직으로 서 있게
-                    visualizer.Obj.transform.rotation = Quaternion.identity;
-                    visualizer.ui.transform.rotation = Quaternion.identity;
-                    // 
-
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);
                 }
                 else if (image.GetTrackingState() == TrackingState.Stopped && visualizer != null)
                 {
                     m_Visualizers.Remove(image.GetDataBaseIndex());
                     Destroy(visualizer.gameObject);
-
-                    FitToScanOverlay.SetActive(true);
                 }
 
                 FitToScanOverlay.SetActive(false);
             }
 
         }
-
-      
 
         public void EnableImageTracking()
         {

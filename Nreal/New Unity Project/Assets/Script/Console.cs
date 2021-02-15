@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace Consolation
 {
     /// <summary>
@@ -71,8 +72,8 @@ namespace Consolation
 
        // static readonly GUIContent clearLabel = new GUIContent("Clear", "Clear the contents of the console.");
        // static readonly GUIContent collapseLabel = new GUIContent("Collapse", "Hide repeated messages.");
-     //   const int margin = 20;
-     //   const string windowTitle = "Console";
+       // const int margin = 20;
+       // const string windowTitle = "Console";
         
         //static readonly Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color>
         //{
@@ -90,7 +91,7 @@ namespace Consolation
 
         Vector2 scrollPosition;
         readonly Rect titleBarRect = new Rect(0, 0, 10000, 20);
-       // float windowX = margin;
+        //float windowX = margin;
         //float windowY = margin;
 
         readonly Dictionary<LogType, bool> logTypeFilters = new Dictionary<LogType, bool>
