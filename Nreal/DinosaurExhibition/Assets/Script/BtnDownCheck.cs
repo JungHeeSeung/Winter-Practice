@@ -6,8 +6,6 @@ public class BtnDownCheck : MonoBehaviour
 {
     public bool isDown = false;
 
-  
-
     public void PointerDown()
     {
         isDown = true;

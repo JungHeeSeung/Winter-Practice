@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d147dff73310941b29fc513aaef4af, type: 3}
   m_Name: NRKernalSessionConfig
   m_EditorClassIdentifier: 
-  OptimizedRendering: 1
   PlaneFindingMode: 3
   ImageTrackingMode: 1
   TrackingImageDatabase: {fileID: 11400000, guid: d93c6fe88c18b17439d18fa9df248a35,

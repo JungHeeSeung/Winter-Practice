@@ -27,9 +27,7 @@
     
         public GameObject canvas;
 
-    
         public canvasUI ui;
-
 
         public List<GameObject> Obj;
 
