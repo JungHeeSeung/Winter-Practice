@@ -38,7 +38,6 @@ namespace NRKernal.NRExamples
                 return m_CenterCamera;
             }
         }
-
         private void Start()
         {
             originDistance = useRelative ? Vector3.Distance(transform.position, CenterCamera == null ? Vector3.zero : CenterCamera.position) : 0;

@@ -86,6 +86,7 @@ public class ObjController : MonoBehaviour
             {
                 DrawGrid(idx, obj);
             }
+
         }
     }
 
@@ -220,7 +221,7 @@ public class ObjController : MonoBehaviour
 
     public void ResetObj(GameObject Obj)
     {
-        Obj.transform.rotation = Quaternion.identity;
+        Obj.transform.rotation = Player.CenterCamera.transform.rotation;
         Obj.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 }

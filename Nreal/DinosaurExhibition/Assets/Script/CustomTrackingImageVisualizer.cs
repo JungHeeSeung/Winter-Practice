@@ -75,7 +75,7 @@
             var pos = canvas.transform.position;
             pos.y = center.position.y - halfHeight / 2;
             canvas.transform.position = pos;
-            canvas.transform.rotation = Quaternion.identity;
+            canvas.transform.rotation = Player.CenterCamera.transform.rotation;
 
             canvas.SetActive(true);
 
