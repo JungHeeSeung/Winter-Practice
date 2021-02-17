@@ -75,6 +75,7 @@ public class ObjController : MonoBehaviour
                 if (TargetVal.ui.DrawMode.isOn == false)
                 {
                     TargetVal.ui.DrawMode.isOn = true;
+                    TargetVal.ui.Rotate.isOn = false;
                 }
             }
 

@@ -58,9 +58,8 @@
 
 
                     visualizer.idx = image.GetDataBaseIndex();
-                    // 항상 사람이 봤을 때 수직으로 서 있게
-                    visualizer.Obj[visualizer.idx].transform.rotation = Quaternion.identity;
-                    visualizer.ui.transform.rotation = Quaternion.identity;
+                    // 항상 사람이 봤을 때 마주보게
+                    visualizer.Obj[visualizer.idx].transform.rotation = Player.CenterCamera.transform.rotation;
                     // 
 
                     m_Visualizers.Add(image.GetDataBaseIndex(), visualizer);
